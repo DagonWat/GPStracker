@@ -3,7 +3,7 @@ pygame_sdl2.import_as_pygame()
 
 import pygame
 import os
-
+x = 0
 def main():
     pygame.init()
 
