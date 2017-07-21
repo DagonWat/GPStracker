@@ -1,5 +1,5 @@
-#import pygame_sdl2
-#pygame_sdl2.import_as_pygame()
+import pygame_sdl2
+pygame_sdl2.import_as_pygame()
 
 import pygame
 import os
@@ -7,7 +7,7 @@ import os
 def main():
     pygame.init()
 
-    screen = pygame.display.set_mode((1280, 720))
+    screen = pygame.display.set_mode((1920, 1080))
 
     sleeping = False
 
@@ -30,13 +30,13 @@ def main():
             screen.fill((0, 0, 0, 255))
 
             while clicked:
+
                 screen.fill((0, 0, 0, 255))
-
                 screen.blit(text, (new_x + (pygame.mouse.get_pos()[0] - click_x), new_y + (pygame.mouse.get_pos()[1] - click_y)))
-
                 pygame.display.flip()
 
                 ev = pygame.event.wait()
+
                 if ev.type == pygame.MOUSEBUTTONUP:
                     clicked = False
                     new_x = new_x + (pygame.mouse.get_pos()[0] - click_x)
