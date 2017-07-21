@@ -32,16 +32,15 @@ def main():
             while clicked:
                 screen.fill((0, 0, 0, 255))
 
-                new_x = new_x + pygame.mouse.get_pos()[0] - click_x
-                new_y = new_y + pygame.mouse.get_pos()[1] - click_y
-
-                screen.blit(text, (new_x, new_y))
+                screen.blit(text, (new_x + (pygame.mouse.get_pos()[0] - click_x), new_y + (pygame.mouse.get_pos()[1] - click_y)))
 
                 pygame.display.flip()
 
                 ev = pygame.event.wait()
                 if ev.type == pygame.MOUSEBUTTONUP:
                     clicked = False
+                    new_x = new_x + (pygame.mouse.get_pos()[0] - click_x)
+                    new_y = new_y + (pygame.mouse.get_pos()[1] - click_y)
 
             screen.blit(text, (960 , 540))
 
