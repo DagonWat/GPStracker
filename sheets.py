@@ -3,4 +3,4 @@
 
 import pygame
 
-web = pygame.image.load("setga_.png")
+web = pygame.image.load("setka_.png")

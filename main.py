@@ -29,42 +29,39 @@ def main():
     click_x = 0
     click_y = 0
 
-    new_x = screenX / 2
-    new_y = screenY / 2
+    new_x = 0
+    new_y = 0
 
     while True:
 
-        ev = pygame.event.wait()
-
         if not sleeping:
-            screen.fill(BLACK)
+            screen.fill((GREEN))
 
             while clicked:
 
                 screen.fill((GREEN))
                 screen.blit(web, (new_x + (pygame.mouse.get_pos()[0] - click_x), new_y + (pygame.mouse.get_pos()[1] - click_y)))
-                
+
                 pygame.display.flip()
 
-                ev = pygame.event.wait()
+                for ev in pygame.event.get():
 
-                if ev.type == pygame.MOUSEBUTTONUP:
-                    clicked = False
-                    new_x = new_x + (pygame.mouse.get_pos()[0] - click_x)
-                    new_y = new_y + (pygame.mouse.get_pos()[1] - click_y)
+                    if ev.type == pygame.MOUSEBUTTONUP:
+                        clicked = False
+                        new_x = new_x + (pygame.mouse.get_pos()[0] - click_x)
+                        new_y = new_y + (pygame.mouse.get_pos()[1] - click_y)
 
-            screen.blit(text, (screenX / 2 , screenY / 2))
+            screen.blit(web, (new_x, new_y))
 
+        for ev in pygame.event.get():
 
+            if ev.type == pygame.QUIT:
+                break
 
-        ev = pygame.event.wait()
+            elif ev.type == pygame.MOUSEBUTTONDOWN:
+                clicked = True
+                click_x, click_y = ev.pos
 
-        if ev.type == pygame.QUIT:
-            break
-
-        elif ev.type == pygame.MOUSEBUTTONDOWN:
-            clicked = True
-            click_x, click_y = ev.pos
 
 if __name__ == "__main__":
     main()
