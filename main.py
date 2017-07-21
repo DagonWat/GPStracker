@@ -19,6 +19,9 @@ def main():
     click_x = 0
     click_y = 0
 
+    new_x = 960
+    new_y = 540
+
     while True:
 
         ev = pygame.event.wait()
@@ -26,13 +29,23 @@ def main():
         if not sleeping:
             screen.fill((0, 0, 0, 255))
 
-            if clicked:
-                screen.blit(text, (960 + (pygame.mouse.get_pos()[0] - click_x), 540 + (pygame.mouse.get_pos()[1] - click_y)))
+            while clicked:
+                screen.fill((0, 0, 0, 255))
 
-            else:
-                screen.blit(text, (960 , 540))
+                new_x = new_x + pygame.mouse.get_pos()[0] - click_x
+                new_y = new_y + pygame.mouse.get_pos()[1] - click_y
 
-            pygame.display.flip()
+                screen.blit(text, (new_x, new_y))
+
+                pygame.display.flip()
+
+                ev = pygame.event.wait()
+                if ev.type == pygame.MOUSEBUTTONUP:
+                    clicked = False
+
+            screen.blit(text, (960 , 540))
+
+
 
         ev = pygame.event.wait()
 
@@ -42,9 +55,6 @@ def main():
         elif ev.type == pygame.MOUSEBUTTONDOWN:
             clicked = True
             click_x, click_y = ev.pos
-
-        elif ev.type == pygame.MOUSEBUTTONUP:
-            clicked = False
 
 if __name__ == "__main__":
     main()
