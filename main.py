@@ -1,38 +1,49 @@
-import pygame_sdl2
-pygame_sdl2.import_as_pygame()
+#import pygame_sdl2
+#pygame_sdl2.import_as_pygame()
 
-import pygame
-import os
-x = 0
+import pygame, os
+from sheets import *
+
+pygame.init()
+
+screenX = 1920
+screenY = 1080
+WHITE = (255, 255, 255)
+BLACK = (  0,   0,   0)
+GREEN = (  0, 200,  20)
+BLUE  = (  0,   0, 255)
+RED   = (255,   0,   0)
+GREY  = ( 71,  58,  53)
+
+fontCavier = pygame.font.Font("CaviarDreams.ttf", 24)
+fontDeja = pygame.font.Font("DejaVuSans.ttf", 24)
+
 def main():
-    pygame.init()
-
-    screen = pygame.display.set_mode((1920, 1080))
+    screen = pygame.display.set_mode((screenX, screenY))
 
     sleeping = False
-
-    font = pygame.font.Font("DejaVuSans.ttf", 24)
-    text = font.render("Seriy Petyh.", True, (255, 255, 255, 255))
-    text_w, text_h = text.get_size()
-
     clicked = False
+
+    text = fontCavier.render("Seriy Petyh.", True, (255, 255, 255, 255))
+
     click_x = 0
     click_y = 0
 
-    new_x = 960
-    new_y = 540
+    new_x = screenX / 2
+    new_y = screenY / 2
 
     while True:
 
         ev = pygame.event.wait()
 
         if not sleeping:
-            screen.fill((0, 0, 0, 255))
+            screen.fill(BLACK)
 
             while clicked:
 
-                screen.fill((0, 0, 0, 255))
-                screen.blit(text, (new_x + (pygame.mouse.get_pos()[0] - click_x), new_y + (pygame.mouse.get_pos()[1] - click_y)))
+                screen.fill((GREEN))
+                screen.blit(web, (new_x + (pygame.mouse.get_pos()[0] - click_x), new_y + (pygame.mouse.get_pos()[1] - click_y)))
+                
                 pygame.display.flip()
 
                 ev = pygame.event.wait()
@@ -42,7 +53,7 @@ def main():
                     new_x = new_x + (pygame.mouse.get_pos()[0] - click_x)
                     new_y = new_y + (pygame.mouse.get_pos()[1] - click_y)
 
-            screen.blit(text, (960 , 540))
+            screen.blit(text, (screenX / 2 , screenY / 2))
 
 
 
