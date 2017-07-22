@@ -65,6 +65,7 @@ def main():
         for ev in pygame.event.get():
 
             if ev.type == pygame.QUIT:
+                pygame.quit()
                 break
 
             elif ev.type == pygame.MOUSEBUTTONDOWN:
