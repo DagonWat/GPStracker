@@ -60,7 +60,7 @@ def main():
                         clicked = False
 
             screen.blit(web, (0, 0))
-            screen.blit(circle,(circleX, circleY))
+            screen.blit(circle, (circleX, circleY))
 
         for ev in pygame.event.get():
 
