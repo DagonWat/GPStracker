@@ -1,5 +1,5 @@
-#import pygame_sdl2
-#pygame_sdl2.import_as_pygame()
+import pygame_sdl2
+pygame_sdl2.import_as_pygame()
 
 import pygame, os
 from sheets import *
@@ -30,34 +30,37 @@ def main():
     click_x = 0
     click_y = 0
 
-    new_x = 0
-    new_y = 0
-    circle_start_x=112
-    circle_start_y=108
+    circleX = 112
+    circleY = 108
 
     while True:
 
         if not sleeping:
             screen.fill((GREEN))
 
-            while clicked:
+            if clicked:
 
                 screen.fill((GREEN))
-                screen.blit(web, (new_x , new_y ))
-                
-                for i in range(1,51):
-                    if (web_list[i][0]-click_x)**2 + (web_list[i][1]-click_y)**2 < R**2:
-                        circle_start_x=web_list[i][0]
-                        circle_start_y=web_list[i][1]
-                        screen.blit(circle,(circle_start_x - circle.get_width()/2,circle_start_y-circle.get_height()/2))
+                screen.blit(web, (0, 0))
+
+                for i in range(0, 50):
+
+                    if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
+
+                        circleX = web_list[i][0]
+                        circleY = web_list[i][1]
+
+                        screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
+
                 pygame.display.flip()
+
                 for ev in pygame.event.get():
 
                     if ev.type == pygame.MOUSEBUTTONUP:
                         clicked = False
-                     
-            screen.blit(web, (new_x, new_y))
-            screen.blit(circle,(circle_start_x, circle_start_y))
+
+            screen.blit(web, (0, 0))
+            screen.blit(circle,(circleX, circleY))
 
         for ev in pygame.event.get():
 
@@ -71,3 +74,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+#python android.py --launch build /home/egor/ProjectA release install
