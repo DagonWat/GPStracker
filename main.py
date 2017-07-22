@@ -36,8 +36,9 @@ def main():
     while True:
 
         if not sleeping:
+            screen.fill((GREEN))
 
-            while clicked:
+            if clicked:
 
                 screen.fill((GREEN))
                 screen.blit(web, (0, 0))
@@ -56,17 +57,14 @@ def main():
                 for ev in pygame.event.get():
 
                     if ev.type == pygame.MOUSEBUTTONUP:
-
                         clicked = False
-                        screen.fill((GREEN))
-                        screen.blit(web, (0, 0))
-                        screen.blit(circle,(circleX, circleY))
+
+            screen.blit(web, (0, 0))
+            screen.blit(circle,(circleX, circleY))
 
         for ev in pygame.event.get():
 
             if ev.type == pygame.QUIT:
-                pygame.quit()
-
                 break
 
             elif ev.type == pygame.MOUSEBUTTONDOWN:
