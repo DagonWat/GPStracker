@@ -1,5 +1,5 @@
-import pygame_sdl2
-pygame_sdl2.import_as_pygame()
+#import pygame_sdl2
+#pygame_sdl2.import_as_pygame()
 
 import pygame, os
 from sheets import *
@@ -36,9 +36,8 @@ def main():
     while True:
 
         if not sleeping:
-            screen.fill((GREEN))
 
-            if clicked:
+            while clicked:
 
                 screen.fill((GREEN))
                 screen.blit(web, (0, 0))
@@ -57,14 +56,17 @@ def main():
                 for ev in pygame.event.get():
 
                     if ev.type == pygame.MOUSEBUTTONUP:
-                        clicked = False
 
-            screen.blit(web, (0, 0))
-            screen.blit(circle,(circleX, circleY))
+                        clicked = False
+                        screen.fill((GREEN))
+                        screen.blit(web, (0, 0))
+                        screen.blit(circle,(circleX, circleY))
 
         for ev in pygame.event.get():
 
             if ev.type == pygame.QUIT:
+                pygame.quit()
+
                 break
 
             elif ev.type == pygame.MOUSEBUTTONDOWN:
