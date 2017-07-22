@@ -3,4 +3,7 @@
 
 import pygame
 
-web = pygame.image.load("setka_.png")
+web = pygame.image.load("web_fullHD.png")
+circle = pygame.image.load("circle.png")
+
+

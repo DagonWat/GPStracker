@@ -3,6 +3,7 @@
 
 import pygame, os
 from sheets import *
+from circles import*
 
 pygame.init()
 
@@ -31,6 +32,8 @@ def main():
 
     new_x = 0
     new_y = 0
+    circle_start_x=112
+    circle_start_y=108
 
     while True:
 
@@ -40,18 +43,21 @@ def main():
             while clicked:
 
                 screen.fill((GREEN))
-                screen.blit(web, (new_x + (pygame.mouse.get_pos()[0] - click_x), new_y + (pygame.mouse.get_pos()[1] - click_y)))
-
+                screen.blit(web, (new_x , new_y ))
+                
+                for i in range(1,51):
+                    if (web_list[i][0]-click_x)**2 + (web_list[i][1]-click_y)**2 < R**2:
+                        circle_start_x=web_list[i][0]
+                        circle_start_y=web_list[i][1]
+                        screen.blit(circle,(circle_start_x - circle.get_width()/2,circle_start_y-circle.get_height()/2))
                 pygame.display.flip()
-
                 for ev in pygame.event.get():
 
                     if ev.type == pygame.MOUSEBUTTONUP:
                         clicked = False
-                        new_x = new_x + (pygame.mouse.get_pos()[0] - click_x)
-                        new_y = new_y + (pygame.mouse.get_pos()[1] - click_y)
-
+                     
             screen.blit(web, (new_x, new_y))
+            screen.blit(circle,(circle_start_x, circle_start_y))
 
         for ev in pygame.event.get():
 
