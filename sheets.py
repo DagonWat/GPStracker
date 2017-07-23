@@ -5,5 +5,8 @@ import pygame
 
 web = pygame.image.load("web_fullHD.png")
 circle = pygame.image.load("circle.png")
+your_gex = pygame.image.load("your_gex.png")
+enemy_gex = pygame.image.load("enemy_gex.png")
+
 
 

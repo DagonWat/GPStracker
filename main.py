@@ -33,15 +33,48 @@ def main():
     circleX = 112
     circleY = 108
 
+    gex_pos1 = []
+    gex_pos2 = []
+    turn =1
+
     while True:
 
         if not sleeping:
             screen.fill((GREEN))
 
+
             if clicked:
 
                 screen.fill((GREEN))
                 screen.blit(web, (0, 0))
+
+                
+                for i in range(0, 50):
+
+                    if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
+
+                        circleX = web_list[i][0]
+                        circleY = web_list[i][1]
+
+                        if turn % 2 == 0 :
+
+                            gex_pos1.append((circleX - your_gex.get_width() / 2, circleY - your_gex.get_height() / 2))
+
+                        else :
+
+                            gex_pos2.append((circleX - enemy_gex.get_width() / 2, circleY - enemy_gex.get_height() / 2))
+                    
+                        turn+=1
+                        break
+
+                for i in range(len(gex_pos1)):
+
+                    screen.blit(your_gex, gex_pos1[i])
+
+                for i in range(len(gex_pos2)):
+
+                    screen.blit(enemy_gex, gex_pos2[i])
+
 
                 for i in range(0, 50):
 
