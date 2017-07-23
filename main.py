@@ -30,70 +30,55 @@ def main():
     click_x = 0
     click_y = 0
 
-    circleX = 112
-    circleY = 108
+    circleX = 10000
+    circleY = 10000
 
-    gex_pos1 = []
-    gex_pos2 = []
-    turn =1
+    player1 = []
+    player2 = []
+
+    turn = 0
 
     while True:
 
         if not sleeping:
             screen.fill((GREEN))
 
+            while clicked:
 
-            if clicked:
-
-                screen.fill((GREEN))
-                screen.blit(web, (0, 0))
-
-                
                 for i in range(0, 50):
 
                     if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
+
+                        turn += 1
 
                         circleX = web_list[i][0]
                         circleY = web_list[i][1]
 
                         if turn % 2 == 0 :
-
-                            gex_pos1.append((circleX - your_gex.get_width() / 2, circleY - your_gex.get_height() / 2))
+                            player1.append((circleX - your_gex.get_width() / 2, circleY - your_gex.get_height() / 2))
+                            clicked = False
+                            break
 
                         else :
+                            player2.append((circleX - enemy_gex.get_width() / 2, circleY - enemy_gex.get_height() / 2))
+                            clicked = False
+                            break
 
-                            gex_pos2.append((circleX - enemy_gex.get_width() / 2, circleY - enemy_gex.get_height() / 2))
-                    
-                        turn+=1
-                        break
-
-                for i in range(len(gex_pos1)):
-
-                    screen.blit(your_gex, gex_pos1[i])
-
-                for i in range(len(gex_pos2)):
-
-                    screen.blit(enemy_gex, gex_pos2[i])
-
-
-                for i in range(0, 50):
-
-                    if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
-
-                        circleX = web_list[i][0]
-                        circleY = web_list[i][1]
-
-                        screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
-
-                pygame.display.flip()
-
-                for ev in pygame.event.get():
-
-                    if ev.type == pygame.MOUSEBUTTONUP:
+                    elif (i == 49):
                         clicked = False
 
+            for i in range(len(player1)):
+
+                screen.blit(your_gex, player1[i])
+
+            for i in range(len(player2)):
+
+                screen.blit(enemy_gex, player2[i])
+
             screen.blit(web, (0, 0))
-            screen.blit(circle, (circleX, circleY))
+            screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
+
+            pygame.display.flip()
 
         for ev in pygame.event.get():
 
