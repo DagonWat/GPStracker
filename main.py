@@ -1,5 +1,5 @@
-#import pygame_sdl2
-#pygame_sdl2.import_as_pygame()
+import pygame_sdl2
+pygame_sdl2.import_as_pygame()
 
 import pygame, os
 from sheets import *
@@ -38,10 +38,12 @@ def main():
 
     turn = 0
 
+    screen.fill((GREEN))
+    screen.blit(web, (0, 0))
+
     while True:
 
         if not sleeping:
-            screen.fill((GREEN))
 
             while clicked:
 
@@ -75,7 +77,6 @@ def main():
 
                 screen.blit(enemy_gex, player2[i])
 
-            screen.blit(web, (0, 0))
             screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
 
             pygame.display.flip()
