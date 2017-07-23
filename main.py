@@ -16,8 +16,8 @@ BLUE  = (  0,   0, 255)
 RED   = (255,   0,   0)
 GREY  = ( 71,  58,  53)
 
-fontCavier = pygame.font.Font("CaviarDreams.ttf", 24)
-fontDeja = pygame.font.Font("DejaVuSans.ttf", 24)
+fontCavier = pygame.font.Font(os.path.join("fonts", "CaviarDreams.ttf"), 24)
+fontDeja = pygame.font.Font(os.path.join("fonts", "DejaVuSans.ttf"), 24)
 
 def main():
     screen = pygame.display.set_mode((screenX, screenY))
