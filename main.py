@@ -29,8 +29,7 @@ def main():
     click_x = 0
     click_y = 0
 
-    circleX = 10000
-    circleY = 10000
+    memory = [10000, 10000]
 
     player1 = []
     player2 = []
@@ -42,7 +41,7 @@ def main():
         player2.append(0)
 
 
-    turn = 47
+    turn = 0
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
@@ -59,24 +58,37 @@ def main():
 
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
-                            circleX = web_list[i][0]
-                            circleY = web_list[i][1]
-
                             if turn % 2 == 0 and player2[i] == 0 and player1[i] == 0:
-                                screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
+                                screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
+                                screen.blit(player2_gex, (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
+
+                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                screen.blit(circle, (web_list[i][0] - circle.get_width() / 2, web_list[i][1] - circle.get_height() / 2))
                                 screen.blit(player1_gex, (web_list[i][0] - player1_gex.get_width() / 2, web_list[i][1] - player1_gex.get_height() / 2))
+
+                                memory = [web_list[i][0], web_list[i][1]]
+
                                 turn += 1
                                 player1[i] = 1
                                 clicked = False
-                                break
 
                             elif turn % 2 == 1 and player1[i] == 0 and player2[i] == 0:
-                                screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
+                                screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
+                                screen.blit(player1_gex, (memory[0] - player1_gex.get_width() / 2, memory[1] - player1_gex.get_height() / 2))
+
+                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                screen.blit(circle, (web_list[i][0] - circle.get_width() / 2, web_list[i][1] - circle.get_height() / 2))
                                 screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
+
+                                memory = [web_list[i][0], web_list[i][1]]
+
                                 turn += 1
                                 player2[i] = 1
                                 clicked = False
-                                break
+
+                            if turn == 50:
+                                screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
+                                screen.blit(player1_gex, (memory[0] - player1_gex.get_width() / 2, memory[1] - player1_gex.get_height() / 2))
 
                             if i == 49:
                                 clicked = False
@@ -86,12 +98,17 @@ def main():
 
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
-                            circleX = web_list[i][0]
-                            circleY = web_list[i][1]
-
                             soldiers[i] += 1
                             turn += 1
                             clicked = False
+
+                            if player1[i] == 1:
+                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                screen.blit(player1_gex, (web_list[i][0] - player1_gex.get_width() / 2, web_list[i][1] - player1_gex.get_height() / 2))
+
+                            elif player2[i] == 1:
+                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
 
             for i in range(50):
 
