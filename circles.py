@@ -15,4 +15,4 @@ for i in range(0, 11):
         for j in range(0, 4):
             web_list.append((112 + 168 * i, 216 + 216 * j))
 
-R = 105
+R = 99

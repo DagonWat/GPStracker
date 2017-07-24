@@ -42,6 +42,7 @@ def main():
 
 
     turn = 0
+    
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
@@ -115,11 +116,37 @@ def main():
                 if soldiers[i] != 0 and soldiers[i] < 10:
                     screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
 
+                    if soldiers[i] == 2:
+                        screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2 - 10 , web_list[i][1] - soldier.get_height() / 2))
+                    if soldiers[i] >= 3:
+                        screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2 - 10 , web_list[i][1] - soldier.get_height() / 2))
+                        screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2 - 20 , web_list[i][1] - soldier.get_height() / 2))
+
                     text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
                     screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
 
-                elif soldiers[i] >= 10:
+                elif soldiers[i] >= 10 and soldiers[i] < 30:
                     screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2, web_list[i][1] - hourse.get_height() / 2))
+
+                    if soldiers[i] >= 15 and soldiers[i] <= 20 :
+                        screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2 - 10 , web_list[i][1] - hourse.get_height() / 2))
+
+                    if soldiers[i] > 20 and soldiers[i] < 30 :
+                        screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2 - 10 , web_list[i][1] - hourse.get_height() / 2))
+                        screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2 - 20 , web_list[i][1] - hourse.get_height() / 2))
+
+                    text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
+                    screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
+
+                elif soldiers[i] >= 30:
+                    screen.blit(tevton, (web_list[i][0] - tevton.get_width() / 2, web_list[i][1] - tevton.get_height() / 2))
+
+                    if soldiers[i] >= 40 and soldiers[i] <= 50 :
+                        screen.blit(tevton, (web_list[i][0] - tevton.get_width() / 2 - 10 , web_list[i][1] - tevton.get_height() / 2))
+
+                    if soldiers[i] > 50:
+                        screen.blit(tevton, (web_list[i][0] - tevton.get_width() / 2 - 10 , web_list[i][1] - tevton.get_height() / 2))
+                        screen.blit(tevton, (web_list[i][0] - tevton.get_width() / 2 - 20 , web_list[i][1] - tevton.get_height() / 2))
 
                     text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
                     screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
