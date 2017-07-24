@@ -25,8 +25,6 @@ def main():
     sleeping = False
     clicked = False
 
-    text = fontCavier.render("Seriy Petyh.", True, (255, 255, 255, 255))
-
     click_x = 0
     click_y = 0
 
@@ -43,7 +41,7 @@ def main():
         player2.append(0)
 
 
-    turn = 40
+    turn = 48
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
@@ -104,6 +102,9 @@ def main():
             for i in range(50):
                 if soldiers[i] != 0:
                     screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
+                    text = fontCavier.render(str(soldiers[i]), True, (255, 255, 255, 255))
+                    screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
+
 
 
 
