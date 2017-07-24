@@ -1,5 +1,5 @@
-import pygame_sdl2
-pygame_sdl2.import_as_pygame()
+#import pygame_sdl2
+#pygame_sdl2.import_as_pygame()
 
 import pygame, os
 from sheets import *
@@ -101,10 +101,18 @@ def main():
                     screen.blit(enemy_gex, (web_list[i][0] - your_gex.get_width() / 2, web_list[i][1] - your_gex.get_height() / 2))
 
             for i in range(50):
-                if soldiers[i] != 0:
-                    screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
-                    text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
-                    screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
+                    if soldiers[i] != 0 and soldiers[i] < 10:
+                        screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
+
+                        text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
+                        screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
+
+                    elif soldiers[i] >= 10:
+                        screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2, web_list[i][1] - hourse.get_height() / 2))
+
+                        text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
+                        screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
+
 
 
             screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
