@@ -43,7 +43,7 @@ def main():
         player2.append(0)
 
 
-    turn = 0
+    turn = 40
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
@@ -54,37 +54,42 @@ def main():
 
             while clicked:
 
-                for i in range(0, 50):
+                if turn < 50:
 
-                    if ((web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2) and (turn <= 50):
+                    for i in range(0, 50):
 
-                        circleX = web_list[i][0]
-                        circleY = web_list[i][1]
+                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
-                        if turn % 2 == 0 and player2[i] == 0 and player1[i] == 0:
+                            circleX = web_list[i][0]
+                            circleY = web_list[i][1]
+
+                            if turn % 2 == 0 and player2[i] == 0 and player1[i] == 0:
+                                turn += 1
+                                player1[i] = 1
+                                clicked = False
+                                break
+
+                            elif turn % 2 == 1 and player1[i] == 0 and player2[i] == 0:
+                                turn += 1
+                                player2[i] = 1
+                                clicked = False
+                                break
+
+                            if i == 49:
+                                clicked = False
+
+                else:
+
+                    for i in range(50):
+
+                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
+
+                            circleX = web_list[i][0]
+                            circleY = web_list[i][1]
+
+                            soldiers[i] += 1
                             turn += 1
-                            player1[i] = 1
                             clicked = False
-                            break
-
-                        elif turn % 2 == 1 and player1[i] == 0 and player2[i] == 0:
-                            turn += 1
-                            player2[i] = 1
-                            clicked = False
-                            break
-                        elif i == 49:
-                            clicked = False
-
-                        elif i == 50:
-                            turn += 2
-
-                if turn > 50:
-                    soldiers[i] += 1
-                    turn += 1
-
-
-
-
 
             for i in range(50):
 
