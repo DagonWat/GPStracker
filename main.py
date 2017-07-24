@@ -42,7 +42,7 @@ def main():
         player2.append(0)
 
 
-    turn = 0
+    turn = 47
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
@@ -51,7 +51,7 @@ def main():
 
         if not sleeping:
 
-            while clicked:
+            if clicked:
 
                 if turn < 50:
 
@@ -63,12 +63,16 @@ def main():
                             circleY = web_list[i][1]
 
                             if turn % 2 == 0 and player2[i] == 0 and player1[i] == 0:
+                                screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
+                                screen.blit(player1_gex, (web_list[i][0] - player1_gex.get_width() / 2, web_list[i][1] - player1_gex.get_height() / 2))
                                 turn += 1
                                 player1[i] = 1
                                 clicked = False
                                 break
 
                             elif turn % 2 == 1 and player1[i] == 0 and player2[i] == 0:
+                                screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
+                                screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
                                 turn += 1
                                 player2[i] = 1
                                 clicked = False
@@ -78,7 +82,6 @@ def main():
                                 clicked = False
 
                 else:
-
                     for i in range(50):
 
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
@@ -92,30 +95,17 @@ def main():
 
             for i in range(50):
 
-                if player1[i] == 1:
-                    screen.blit(your_gex, (web_list[i][0] - your_gex.get_width() / 2, web_list[i][1] - your_gex.get_height() / 2))
+                if soldiers[i] != 0 and soldiers[i] < 10:
+                    screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
 
-            for i in range(50):
+                    text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
+                    screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
 
-                if player2[i] == 1:
-                    screen.blit(enemy_gex, (web_list[i][0] - your_gex.get_width() / 2, web_list[i][1] - your_gex.get_height() / 2))
+                elif soldiers[i] >= 10:
+                    screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2, web_list[i][1] - hourse.get_height() / 2))
 
-            for i in range(50):
-                    if soldiers[i] != 0 and soldiers[i] < 10:
-                        screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
-
-                        text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
-                        screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
-
-                    elif soldiers[i] >= 10:
-                        screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2, web_list[i][1] - hourse.get_height() / 2))
-
-                        text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
-                        screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
-
-
-
-            screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
+                    text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
+                    screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
 
             pygame.display.flip()
 
