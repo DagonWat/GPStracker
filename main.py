@@ -35,13 +35,15 @@ def main():
 
     player1 = []
     player2 = []
-
     soldiers = []
+
     for i in range(50):
         soldiers.append(0)
+        player1.append(0)
+        player2.append(0)
 
 
-    turn = 0
+    turn = 1
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
@@ -54,41 +56,42 @@ def main():
 
                 for i in range(0, 50):
 
-                    if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
-
-                        turn += 1
+                    if ((web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2) and (turn <= 50):
 
                         circleX = web_list[i][0]
                         circleY = web_list[i][1]
 
-                        if turn % 2 == 0 :
-                            player1.append((circleX - your_gex.get_width() / 2, circleY - your_gex.get_height() / 2))
+                        if turn % 2 == 0 and player2[i] == 0 and player1[i] == 0:
+                            turn += 1
+                            player1[i] = 1
                             clicked = False
                             break
 
-                        else :
-                            player2.append((circleX - enemy_gex.get_width() / 2, circleY - enemy_gex.get_height() / 2))
+                        elif turn % 2 == 1 and player1[i] == 0 and player2[i] == 0:
+                            turn += 1
+                            player2[i] = 1
                             clicked = False
                             break
-
-                        if turn >= 50:
-                            soldiers[i] += 1
-
 
                     elif (i == 49):
                         clicked = False
 
+                    if turn >= 50:
+                        soldiers[i] += 1
+
             for i in range(50):
                 if soldiers[i] != 0:
-                    screen.blit(soldier, web_list[i])
+                    screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
 
-            for i in range(len(player1)):
+            for i in range(50):
 
-                screen.blit(your_gex, player1[i])
+                if player1[i] == 1:
+                    screen.blit(your_gex, (web_list[i][0] - your_gex.get_width() / 2, web_list[i][1] - your_gex.get_height() / 2))
 
-            for i in range(len(player2)):
+            for i in range(50):
 
-                screen.blit(enemy_gex, player2[i])
+                if player2[i] == 1:
+                    screen.blit(enemy_gex, (web_list[i][0] - your_gex.get_width() / 2, web_list[i][1] - your_gex.get_height() / 2))
 
             screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
 
