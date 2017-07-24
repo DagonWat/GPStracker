@@ -1,5 +1,5 @@
-#import pygame_sdl2
-#pygame_sdl2.import_as_pygame()
+import pygame_sdl2
+pygame_sdl2.import_as_pygame()
 
 import pygame, os
 from sheets import *
@@ -18,6 +18,7 @@ GREY  = ( 71,  58,  53)
 
 fontCavier = pygame.font.Font(os.path.join("fonts", "CaviarDreams.ttf"), 24)
 fontDeja = pygame.font.Font(os.path.join("fonts", "DejaVuSans.ttf"), 24)
+fontCapture = pygame.font.Font(os.path.join("fonts", "Capture_it.ttf"), 28)
 
 def main():
     screen = pygame.display.set_mode((screenX, screenY))
@@ -41,7 +42,7 @@ def main():
         player2.append(0)
 
 
-    turn = 48
+    turn = 0
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
@@ -102,10 +103,8 @@ def main():
             for i in range(50):
                 if soldiers[i] != 0:
                     screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
-                    text = fontCavier.render(str(soldiers[i]), True, (255, 255, 255, 255))
+                    text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
                     screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
-
-
 
 
             screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
