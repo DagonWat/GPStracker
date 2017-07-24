@@ -1,5 +1,5 @@
-import pygame_sdl2
-pygame_sdl2.import_as_pygame()
+#import pygame_sdl2
+#pygame_sdl2.import_as_pygame()
 
 import pygame, os
 from sheets import *
@@ -36,6 +36,11 @@ def main():
     player1 = []
     player2 = []
 
+    soldiers = []
+    for i in range(50):
+        soldiers.append(0)
+
+
     turn = 0
 
     screen.fill((GREEN))
@@ -66,8 +71,16 @@ def main():
                             clicked = False
                             break
 
+                        if turn >= 50:
+                            soldiers[i] += 1
+
+
                     elif (i == 49):
                         clicked = False
+
+            for i in range(50):
+                if soldiers[i] != 0:
+                    screen.blit(soldier, web_list[i])
 
             for i in range(len(player1)):
 
