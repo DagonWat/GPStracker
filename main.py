@@ -43,7 +43,7 @@ def main():
         player2.append(0)
 
 
-    turn = 1
+    turn = 0
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
@@ -72,16 +72,19 @@ def main():
                             player2[i] = 1
                             clicked = False
                             break
+                        elif i == 49:
+                            clicked = False
 
-                    elif (i == 49):
-                        clicked = False
+                        elif i == 50:
+                            turn += 2
 
-                    if turn >= 50:
-                        soldiers[i] += 1
+                if turn > 50:
+                    soldiers[i] += 1
+                    turn += 1
 
-            for i in range(50):
-                if soldiers[i] != 0:
-                    screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
+
+
+
 
             for i in range(50):
 
@@ -92,6 +95,12 @@ def main():
 
                 if player2[i] == 1:
                     screen.blit(enemy_gex, (web_list[i][0] - your_gex.get_width() / 2, web_list[i][1] - your_gex.get_height() / 2))
+
+            for i in range(50):
+                if soldiers[i] != 0:
+                    screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
+
+
 
             screen.blit(circle, (circleX - circle.get_width() / 2, circleY - circle.get_height() / 2))
 
