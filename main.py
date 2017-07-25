@@ -104,7 +104,7 @@ def main():
                     for i in range(50):
 
 
-                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] > 0 :
+                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] >= 0 :
 
                             pulls[turn % 2] -= 1
                             screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
@@ -114,15 +114,27 @@ def main():
 
                             clicked = False
 
+                            if turn % 2 == 0:
+                                text = fontCapture.render("blue units : " + str(pulls[turn % 2] + 1), True, GREEN)
+                                screen.blit(text, (screenX  / 8 - text.get_width() / 2 + 45, 0))
+                                text = fontCapture.render("blue units : " + str(pulls[turn % 2]), True, WHITE)
+                                screen.blit(text, (screenX  / 8  - text.get_width() / 2 + 45, 0))
+
+                            else:
+                                text = fontCapture.render("red units : " + str(pulls[turn % 2] + 1), True, GREEN)
+                                screen.blit(text, (screenX  / 8 * 7 - text.get_width() / 2 - 50, 0))
+                                text = fontCapture.render("red units : " + str(pulls[turn % 2]), True, WHITE)
+                                screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 0))
+
                             if pulls[turn % 2] == 0:
 
                                 turn += 1
 
-                    if pulls[turn % 2] == 0 and  pulls[(turn + 1) % 2] == 0 :
+                            if pulls[turn % 2] == 0 and  pulls[(turn + 1) % 2] == 0 :
 
-                        pull1 =  2 + round(0.1*player1.count(1)) + turn - 50
-                        pull2 =  2 + round(0.1*player2.count(1)) + turn - 50
-                        print("hello? egor - pidr")
+                                pull1 =  2 + round(0.1*player1.count(1)) + turn - 50
+                                pull2 =  2 + round(0.1*player2.count(1)) + turn - 50
+                                pulls = [pull1, pull2]
 
 
             for i in range(50):
