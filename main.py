@@ -29,11 +29,15 @@ def main():
     click_x = 0
     click_y = 0
 
-    memory = [10000, 10000]
-
     player1 = []
     player2 = []
     soldiers = []
+
+    heroes = [soldier, horse, tevton]
+    players = [player1, player2]
+    players_gex = [player1_gex, player2_gex]
+
+    memory = [10000, 10000]
 
     for i in range(50):
         soldiers.append(0)
@@ -41,7 +45,7 @@ def main():
         player2.append(0)
 
 
-    turn = 0
+    turn = 47
 
 
     screen.fill((GREEN))
@@ -59,35 +63,19 @@ def main():
 
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
-                            if turn % 2 == 0 and player2[i] == 0 and player1[i] == 0:
+                            if turn < 50 and player1[i] == 0 and player2[i] == 0:
 
                                 screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
                                 screen.blit(player2_gex, (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
 
                                 screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
                                 screen.blit(circle, (web_list[i][0] - circle.get_width() / 2, web_list[i][1] - circle.get_height() / 2))
-                                screen.blit(player1_gex, (web_list[i][0] - player1_gex.get_width() / 2, web_list[i][1] - player1_gex.get_height() / 2))
+                                screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
 
                                 memory = [web_list[i][0], web_list[i][1]]
 
                                 turn += 1
-                                player1[i] = 1
-                                clicked = False
-
-                            elif turn % 2 == 1 and player1[i] == 0 and player2[i] == 0:
-
-
-                                screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
-                                screen.blit(player1_gex, (memory[0] - player1_gex.get_width() / 2, memory[1] - player1_gex.get_height() / 2))
-
-                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
-                                screen.blit(circle, (web_list[i][0] - circle.get_width() / 2, web_list[i][1] - circle.get_height() / 2))
-                                screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
-
-                                memory = [web_list[i][0], web_list[i][1]]
-
-                                turn += 1
-                                player2[i] = 1
+                                players[turn % 2][i] = 1
                                 clicked = False
 
                             if turn == 50:
@@ -116,40 +104,12 @@ def main():
 
             for i in range(50):
 
-                if soldiers[i] != 0 and soldiers[i] < 10:
-                    screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2, web_list[i][1] - soldier.get_height() / 2))
+                if (soldiers[i] > 0 and soldiers[i] < 45):
 
-                    if soldiers[i] == 2:
-                        screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2 - 10 , web_list[i][1] - soldier.get_height() / 2))
-                    if soldiers[i] >= 3:
-                        screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2 - 10 , web_list[i][1] - soldier.get_height() / 2))
-                        screen.blit(soldier, (web_list[i][0] - soldier.get_width() / 2 - 20 , web_list[i][1] - soldier.get_height() / 2))
+                    for j in range(((soldiers[i] - soldiers[i] // 15 * 15) // 5) + 1):
 
-                    text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
-                    screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
-
-                elif soldiers[i] >= 10 and soldiers[i] < 30:
-                    screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2, web_list[i][1] - hourse.get_height() / 2))
-
-                    if soldiers[i] >= 15 and soldiers[i] <= 20 :
-                        screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2 - 10 , web_list[i][1] - hourse.get_height() / 2))
-
-                    if soldiers[i] > 20 and soldiers[i] < 30 :
-                        screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2 - 10 , web_list[i][1] - hourse.get_height() / 2))
-                        screen.blit(hourse, (web_list[i][0] - hourse.get_width() / 2 - 20 , web_list[i][1] - hourse.get_height() / 2))
-
-                    text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
-                    screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
-
-                elif soldiers[i] >= 30:
-                    screen.blit(tevton, (web_list[i][0] - tevton.get_width() / 2, web_list[i][1] - tevton.get_height() / 2))
-
-                    if soldiers[i] >= 40 and soldiers[i] <= 50 :
-                        screen.blit(tevton, (web_list[i][0] - tevton.get_width() / 2 - 10 , web_list[i][1] - tevton.get_height() / 2))
-
-                    if soldiers[i] > 50:
-                        screen.blit(tevton, (web_list[i][0] - tevton.get_width() / 2 - 10 , web_list[i][1] - tevton.get_height() / 2))
-                        screen.blit(tevton, (web_list[i][0] - tevton.get_width() / 2 - 20 , web_list[i][1] - tevton.get_height() / 2))
+                        screen.blit(heroes[soldiers[i] // 15], \
+                        (web_list[i][0] - heroes[soldiers[i] // 15].get_width() / 2 - j * 10, web_list[i][1] - heroes[soldiers[i] // 15].get_height() / 2 + j * 5))
 
                     text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
                     screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
