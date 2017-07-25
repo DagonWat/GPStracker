@@ -137,29 +137,29 @@ def main():
                                 pulls = [pull1, pull2]
 
 
-            for i in range(50):
+                for i in range(50):
 
-                if (soldiers[i] > 0 and soldiers[i] < 45):
+                    if (soldiers[i] > 0 and soldiers[i] < 45):
 
-                    for j in range(((soldiers[i] - soldiers[i] // 15 * 15) // 5) + 1):
+                        for j in range(((soldiers[i] - soldiers[i] // 15 * 15) // 5) + 1):
 
-                        screen.blit(heroes[soldiers[i] // 15], \
-                        (web_list[i][0] - heroes[soldiers[i] // 15].get_width() / 2 - j * 10, web_list[i][1] - heroes[soldiers[i] // 15].get_height() / 2 + j * 5))
+                            screen.blit(heroes[soldiers[i] // 15], \
+                            (web_list[i][0] - heroes[soldiers[i] // 15].get_width() / 2 - j * 10, web_list[i][1] - heroes[soldiers[i] // 15].get_height() / 2 + j * 5))
 
-                    text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
-                    screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
+                        text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
+                        screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
 
-            if turn % 2 == 0:
-                text = fontCapture.render("player 2", True, GREEN)
-                screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
-                text = fontCapture.render("player 1", True, WHITE)
-                screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
+                if turn % 2 == 0:
+                    text = fontCapture.render("player 2", True, GREEN)
+                    screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
+                    text = fontCapture.render("player 1", True, WHITE)
+                    screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
 
-            else:
-                text = fontCapture.render("player 1", True, GREEN)
-                screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
-                text = fontCapture.render("player 2", True, WHITE)
-                screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
+                else:
+                    text = fontCapture.render("player 1", True, GREEN)
+                    screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
+                    text = fontCapture.render("player 2", True, WHITE)
+                    screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
 
             pygame.display.flip()
 
