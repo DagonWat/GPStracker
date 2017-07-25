@@ -114,6 +114,18 @@ def main():
                     text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
                     screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
 
+            if turn % 2 == 0:
+                text = fontCapture.render("player 1", True, GREEN)
+                screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
+                text = fontCapture.render("player 2", True, WHITE)
+                screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
+
+            else:
+                text = fontCapture.render("player 2", True, GREEN)
+                screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
+                text = fontCapture.render("player 1", True, WHITE)
+                screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
+
             pygame.display.flip()
 
         for ev in pygame.event.get():
