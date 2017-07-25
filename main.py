@@ -42,7 +42,7 @@ def main():
 
 
     turn = 0
-    
+
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
@@ -60,6 +60,7 @@ def main():
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
                             if turn % 2 == 0 and player2[i] == 0 and player1[i] == 0:
+
                                 screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
                                 screen.blit(player2_gex, (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
 
@@ -74,6 +75,8 @@ def main():
                                 clicked = False
 
                             elif turn % 2 == 1 and player1[i] == 0 and player2[i] == 0:
+
+
                                 screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
                                 screen.blit(player1_gex, (memory[0] - player1_gex.get_width() / 2, memory[1] - player1_gex.get_height() / 2))
 
