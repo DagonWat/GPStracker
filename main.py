@@ -39,13 +39,18 @@ def main():
 
     memory = [10000, 10000]
 
+    turn = 0
+
+
+    pull1 =  5
+    pull2 =  5
+    pulls = [pull1, pull2]
+
     for i in range(50):
         soldiers.append(0)
         player1.append(0)
         player2.append(0)
 
-
-    turn = 0
 
 
     screen.fill((GREEN))
@@ -95,21 +100,30 @@ def main():
                             clicked = False
 
                 else:
+
                     for i in range(50):
 
-                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1:
+
+                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] > 0 :
+
+                            pulls[turn % 2] -= 1
+                            screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                            screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
 
                             soldiers[i] += 1
-                            turn += 1
+
                             clicked = False
 
-                            if player1[i] == 1:
-                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
-                                screen.blit(player1_gex, (web_list[i][0] - player1_gex.get_width() / 2, web_list[i][1] - player1_gex.get_height() / 2))
+                            if pulls[turn % 2] == 0:
 
-                            elif player2[i] == 1:
-                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
-                                screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
+                                turn += 1
+
+                    if pulls[turn % 2] == 0 and  pulls[(turn + 1) % 2] == 0 :
+
+                        pull1 =  2 + round(0.1*player1.count(1)) + turn - 50
+                        pull2 =  2 + round(0.1*player2.count(1)) + turn - 50
+                        print("hello? egor - pidr")
+
 
             for i in range(50):
 
@@ -124,15 +138,15 @@ def main():
                     screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
 
             if turn % 2 == 0:
-                text = fontCapture.render("player 1", True, GREEN)
-                screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
-                text = fontCapture.render("player 2", True, WHITE)
-                screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
-
-            else:
                 text = fontCapture.render("player 2", True, GREEN)
                 screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
                 text = fontCapture.render("player 1", True, WHITE)
+                screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
+
+            else:
+                text = fontCapture.render("player 1", True, GREEN)
+                screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
+                text = fontCapture.render("player 2", True, WHITE)
                 screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
 
             pygame.display.flip()
