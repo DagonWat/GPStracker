@@ -45,7 +45,7 @@ def main():
         player2.append(0)
 
 
-    turn = 47
+    turn = 0
 
 
     screen.fill((GREEN))
@@ -63,10 +63,10 @@ def main():
 
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
-                            if turn < 50 and player1[i] == 0 and player2[i] == 0:
+                            if turn < 49 and player1[i] == 0 and player2[i] == 0:
 
                                 screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
-                                screen.blit(player2_gex, (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
+                                screen.blit(players_gex[(turn + 1) % 2], (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
 
                                 screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
                                 screen.blit(circle, (web_list[i][0] - circle.get_width() / 2, web_list[i][1] - circle.get_height() / 2))
@@ -74,21 +74,30 @@ def main():
 
                                 memory = [web_list[i][0], web_list[i][1]]
 
-                                turn += 1
                                 players[turn % 2][i] = 1
+                                turn += 1
                                 clicked = False
 
-                            if turn == 50:
+                            elif turn == 49:
                                 screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
-                                screen.blit(player1_gex, (memory[0] - player1_gex.get_width() / 2, memory[1] - player1_gex.get_height() / 2))
+                                screen.blit(players_gex[(turn + 1) % 2], (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
 
-                            if i == 49:
+                                players[turn % 2][i] = 1
+                                turn += 1
+
+                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
+
                                 clicked = False
+
+
+                        elif i == 49:
+                            clicked = False
 
                 else:
                     for i in range(50):
 
-                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
+                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1:
 
                             soldiers[i] += 1
                             turn += 1
