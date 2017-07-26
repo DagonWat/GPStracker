@@ -4,6 +4,7 @@
 import pygame, os
 from sheets import *
 from circles import *
+from amount import *
 
 pygame.init()
 
@@ -40,6 +41,8 @@ def main():
     memory = [10000, 10000]
 
     turn = 47
+
+    am = 1
 
 
     pull1 =  5
@@ -84,7 +87,7 @@ def main():
                                 turn += 1
                                 clicked = False
 
-                            elif turn == 49:
+                            elif turn == 49 and player1[i] == 0 and player2[i] == 0:
                                 screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
                                 screen.blit(players_gex[(turn + 1) % 2], (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
 
@@ -100,6 +103,7 @@ def main():
                             clicked = False
 
                 else:
+                    am = int(amount(screen, click_x, click_y, button_x1, button_x5, button_x10))
 
                     if click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8 and click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8 \
                         and click_y >= 30 and click_y <= 30 + turn_bttn.get_height():
