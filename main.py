@@ -3,7 +3,7 @@
 
 import pygame, os
 from sheets import *
-from circles import*
+from circles import *
 
 pygame.init()
 
@@ -39,12 +39,12 @@ def main():
 
     memory = [10000, 10000]
 
-    turn = 0
+    turn = 47
 
 
     pull1 =  5
     pull2 =  5
-    pulls = [pull1, pull2]
+    pulls = [pull2, pull1]
 
     for i in range(50):
         soldiers.append(0)
@@ -55,6 +55,7 @@ def main():
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
+    screen.blit(turn_bttn, (screenX / 2 - turn_bttn.get_width() / 2 - 8, 30))
 
     while True:
 
@@ -64,7 +65,7 @@ def main():
 
                 if turn < 50:
 
-                    for i in range(0, 50):
+                    for i in range(50):
 
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
@@ -95,16 +96,25 @@ def main():
 
                                 clicked = False
 
-
                         elif i == 49:
                             clicked = False
 
                 else:
 
+                    if click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8 and click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8 \
+                        and click_y >= 30 and click_y <= 30 + turn_bttn.get_height():
+
+                        pulls[turn % 2] += int(2 + round(0.1*players[turn % 2].count(1)) + turn - 50)
+                        turn += 1
+                        clicked = False
+
+                    if pulls[(turn + 1) % 2] == 0:
+
+                        pulls[(turn + 1) % 2] = int(2 + round(0.1*players[(turn + 1) / 2].count(1)) + turn - 50)
+
                     for i in range(50):
 
-
-                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] >= 0 :
+                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] > 0 :
 
                             pulls[turn % 2] -= 1
                             screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
@@ -114,27 +124,15 @@ def main():
 
                             clicked = False
 
-                            if turn % 2 == 0:
-                                text = fontCapture.render("blue units : " + str(pulls[turn % 2] + 1), True, GREEN)
-                                screen.blit(text, (screenX  / 8 - text.get_width() / 2 + 45, 0))
-                                text = fontCapture.render("blue units : " + str(pulls[turn % 2]), True, WHITE)
-                                screen.blit(text, (screenX  / 8  - text.get_width() / 2 + 45, 0))
+                            break
 
-                            else:
-                                text = fontCapture.render("red units : " + str(pulls[turn % 2] + 1), True, GREEN)
-                                screen.blit(text, (screenX  / 8 * 7 - text.get_width() / 2 - 50, 0))
-                                text = fontCapture.render("red units : " + str(pulls[turn % 2]), True, WHITE)
-                                screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 0))
+                    screen.blit(green_gex, (280 - green_gex.get_width() / 2, -108))
+                    text = fontCapture.render("blue : " + str(pulls[0]), True, WHITE)
+                    screen.blit(text, (screenX  / 8  - text.get_width() / 2 + 45, 0))
 
-                            if pulls[turn % 2] == 0:
-
-                                turn += 1
-
-                            if pulls[turn % 2] == 0 and  pulls[(turn + 1) % 2] == 0 :
-
-                                pull1 =  2 + round(0.1*player1.count(1)) + turn - 50
-                                pull2 =  2 + round(0.1*player2.count(1)) + turn - 50
-                                pulls = [pull1, pull2]
+                    screen.blit(green_gex, (1624 - green_gex.get_width() / 2, -108))
+                    text = fontCapture.render("red : " + str(pulls[1]), True, WHITE)
+                    screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 0))
 
 
                 for i in range(50):
