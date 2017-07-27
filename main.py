@@ -103,7 +103,6 @@ def main():
                             clicked = False
 
                 else:
-                    am = int(amount(screen, click_x, click_y, button_x1, button_x5, button_x10))
 
                     if click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8 and click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8 \
                         and click_y >= 30 and click_y <= 30 + turn_bttn.get_height():
@@ -120,11 +119,16 @@ def main():
 
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] > 0 :
 
-                            pulls[turn % 2] -= 1
+                            pulls[turn % 2] -= am
+
+                            if pulls[turn % 2] < 0:
+                                am = am + pulls[turn % 2]
+                                pulls[turn % 2] = 0
+
                             screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
                             screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
 
-                            soldiers[i] += 1
+                            soldiers[i] += am
 
                             clicked = False
 
@@ -137,6 +141,9 @@ def main():
                     screen.blit(green_gex, (1624 - green_gex.get_width() / 2, -108))
                     text = fontCapture.render("red : " + str(pulls[1]), True, WHITE)
                     screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 0))
+
+                    am = int(amount(screen, click_x, click_y, button_x1, button_x5, button_x10))
+                    clicked = False
 
 
                 for i in range(50):
