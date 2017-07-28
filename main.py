@@ -1,11 +1,10 @@
 #import pygame_sdl2
 #pygame_sdl2.import_as_pygame()
 
-import pygame, os
+import pygame, os, time, math
 from sheets import *
 from circles import *
 from amount import *
-from setup import *
 
 pygame.init()
 
@@ -31,6 +30,8 @@ def main():
 
     click_x = 0
     click_y = 0
+
+    click_time = 0
 
     turn = 47
     am = 1
@@ -65,7 +66,7 @@ def main():
                 if turn < 50:
 
                     for i in range(50):
-                        #расстановка гексов
+
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
                             if turn < 49 and player1[i] + player2[i] == 0:
@@ -99,54 +100,83 @@ def main():
                             clicked = False
 
                 else:
-                    #следующий ход
-                    if click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8 and click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8 \
-                        and click_y >= 30 and click_y <= 30 + turn_bttn.get_height():
 
-                        if (players[turn % 2].count(1) - 24 > 0):
-                            pulls[turn % 2] += int(2 + abs(players[turn % 2].count(1) - 24) + turn - 50)
+                    for ev in pygame.event.get():
 
-                        else:
-                            pulls[turn % 2] += int(2 + round(0.1 * players[turn % 2].count(1)) + turn - 50)
+                        if ev.type == pygame.MOUSEBUTTONUP:
 
-                        turn += 1
-                        clicked = False
-                    #если пул солдат пустой
-                    if pulls[(turn + 1) % 2] == 0:
+                            if click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8 and click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8 \
+                                and click_y >= 30 and click_y <= 30 + turn_bttn.get_height():
 
-                        pulls[(turn + 1) % 2] = int(2 + round(0.1 * players[(turn + 1) / 2].count(1)) + turn - 50)
-                    #расстановка солдат
-                    for i in range(50):
+                                if (players[turn % 2].count(1) - 24 > 0):
+                                    pulls[turn % 2] += int(2 + abs(players[turn % 2].count(1) - 24) + turn - 50)
 
-                        if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] > 0 :
+                                else:
+                                    pulls[turn % 2] += int(2 + round(0.1 * players[turn % 2].count(1)) + turn - 50)
 
-                            pulls[turn % 2] -= am
+                                turn += 1
+                                clicked = False
 
-                            if pulls[turn % 2] < 0:
-                                am = am + pulls[turn % 2]
-                                pulls[turn % 2] = 0
+                            if pulls[(turn + 1) % 2] == 0:
 
-                            screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
-                            screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                                pulls[(turn + 1) % 2] = int(2 + round(0.1 * players[(turn + 1) / 2].count(1)) + turn - 50)
 
-                            soldiers[i] += am
+                            for i in range(50):
 
+                                if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] > 0 :
+
+                                    pulls[turn % 2] -= am
+
+                                    if pulls[turn % 2] < 0:
+                                        am = am + pulls[turn % 2]
+                                        pulls[turn % 2] = 0
+
+                                    screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                    screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+
+                                    soldiers[i] += am
+
+                                    clicked = False
+
+                                    break
+
+                            screen.blit(green_gex, (280 - green_gex.get_width() / 2, -108))
+                            text = fontCapture.render("blue : " + str(pulls[0]), True, WHITE)
+                            screen.blit(text, (screenX  / 8  - text.get_width() / 2 + 45, 0))
+
+                            screen.blit(green_gex, (1624 - green_gex.get_width() / 2, -108))
+                            text = fontCapture.render("red : " + str(pulls[1]), True, WHITE)
+                            screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 0))
+
+                            am = int(amount(screen, click_x, click_y, button_x1, button_x5, button_x10))
                             clicked = False
-
                             break
 
-                    screen.blit(green_gex, (280 - green_gex.get_width() / 2, -108))
-                    text = fontCapture.render("blue : " + str(pulls[0]), True, WHITE)
-                    screen.blit(text, (screenX  / 8  - text.get_width() / 2 + 45, 0))
+                        elif (time.time() - click_time > 1):
+                            print("WINNERWINNERCHICKENDINNER")
+                            for i in range(50):
 
-                    screen.blit(green_gex, (1624 - green_gex.get_width() / 2, -108))
-                    text = fontCapture.render("red : " + str(pulls[1]), True, WHITE)
-                    screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 0))
+                                if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
+                                    clicked = False
 
-                    am = int(amount(screen, click_x, click_y, button_x1, button_x5, button_x10))
-                    clicked = False
+                                    while (clicked == False):
 
-                #сочные рисуночки солдат от сережи
+                                        for ev in pygame.event.get():
+
+                                            if ev.type == pygame.MOUSEBUTTONDOWN:
+                                                clicked = True
+                                                click_x, click_y = ev.pos
+
+                                    for j in range(50):
+
+                                        if (web_list[j][0] - click_x) ** 2 + (web_list[j][1] - click_y) ** 2 < R ** 2:
+
+                                            a = math.sqrt(abs(web_list[i][0] - web_list[j][0]) + abs(web_list[i][1] - web_list[j][1]))
+
+                                            if (a <= 230):
+
+                                                print("attack")
+
                 for i in range(50):
 
                     if (soldiers[i] > 0 and soldiers[i] < 45):
@@ -180,6 +210,7 @@ def main():
                 break
 
             elif ev.type == pygame.MOUSEBUTTONDOWN:
+                click_time = time.time()
                 clicked = True
                 click_x, click_y = ev.pos
 
