@@ -5,6 +5,7 @@ import pygame, os
 from sheets import *
 from circles import *
 from amount import *
+from setup import *
 
 pygame.init()
 
@@ -21,8 +22,9 @@ fontCavier = pygame.font.Font(os.path.join("fonts", "CaviarDreams.ttf"), 24)
 fontDeja = pygame.font.Font(os.path.join("fonts", "DejaVuSans.ttf"), 24)
 fontCapture = pygame.font.Font(os.path.join("fonts", "Capture_it.ttf"), 28)
 
+screen = pygame.display.set_mode((screenX, screenY))
+
 def main():
-    screen = pygame.display.set_mode((screenX, screenY))
 
     sleeping = False
     clicked = False
@@ -30,31 +32,25 @@ def main():
     click_x = 0
     click_y = 0
 
+    turn = 47
+    am = 1
+
     player1 = []
     player2 = []
     soldiers = []
+    pull1 =  5
+    pull2 =  5
 
     heroes = [soldier, horse, tevton]
     players = [player1, player2]
     players_gex = [player1_gex, player2_gex]
-
-    memory = [10000, 10000]
-
-    turn = 47
-
-    am = 1
-
-
-    pull1 =  5
-    pull2 =  5
     pulls = [pull2, pull1]
+    memory = [10000, 10000]
 
     for i in range(50):
         soldiers.append(0)
         player1.append(0)
         player2.append(0)
-
-
 
     screen.fill((GREEN))
     screen.blit(web, (0, 0))
@@ -69,13 +65,13 @@ def main():
                 if turn < 50:
 
                     for i in range(50):
-
+                        #расстановка гексов
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
-                            if turn < 49 and player1[i] == 0 and player2[i] == 0:
+                            if turn < 49 and player1[i] + player2[i] == 0:
 
                                 screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
-                                screen.blit(players_gex[(turn + 1) % 2], (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
+                                screen.blit(players_gex[(turn + 1) % 2], (memory[0] - players_gex[(turn + 1) % 2].get_width() / 2, memory[1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
                                 screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
                                 screen.blit(circle, (web_list[i][0] - circle.get_width() / 2, web_list[i][1] - circle.get_height() / 2))
@@ -87,7 +83,7 @@ def main():
                                 turn += 1
                                 clicked = False
 
-                            elif turn == 49 and player1[i] == 0 and player2[i] == 0:
+                            elif turn == 49 and player1[i] + player2[i] == 0:
                                 screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
                                 screen.blit(players_gex[(turn + 1) % 2], (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
 
@@ -103,18 +99,23 @@ def main():
                             clicked = False
 
                 else:
-
+                    #следующий ход
                     if click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8 and click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8 \
                         and click_y >= 30 and click_y <= 30 + turn_bttn.get_height():
 
-                        pulls[turn % 2] += int(2 + round(0.1*players[turn % 2].count(1)) + turn - 50)
+                        if (players[turn % 2].count(1) - 24 > 0):
+                            pulls[turn % 2] += int(2 + abs(players[turn % 2].count(1) - 24) + turn - 50)
+
+                        else:
+                            pulls[turn % 2] += int(2 + round(0.1 * players[turn % 2].count(1)) + turn - 50)
+
                         turn += 1
                         clicked = False
-
+                    #если пул солдат пустой
                     if pulls[(turn + 1) % 2] == 0:
 
-                        pulls[(turn + 1) % 2] = int(2 + round(0.1*players[(turn + 1) / 2].count(1)) + turn - 50)
-
+                        pulls[(turn + 1) % 2] = int(2 + round(0.1 * players[(turn + 1) / 2].count(1)) + turn - 50)
+                    #расстановка солдат
                     for i in range(50):
 
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] > 0 :
@@ -145,7 +146,7 @@ def main():
                     am = int(amount(screen, click_x, click_y, button_x1, button_x5, button_x10))
                     clicked = False
 
-
+                #сочные рисуночки солдат от сережи
                 for i in range(50):
 
                     if (soldiers[i] > 0 and soldiers[i] < 45):
@@ -181,7 +182,6 @@ def main():
             elif ev.type == pygame.MOUSEBUTTONDOWN:
                 clicked = True
                 click_x, click_y = ev.pos
-
 
 if __name__ == "__main__":
     main()
