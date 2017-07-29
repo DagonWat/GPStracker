@@ -27,6 +27,7 @@ def main():
 
     sleeping = False
     clicked = False
+    holding = False
 
     click_x = 0
     click_y = 0
@@ -59,11 +60,11 @@ def main():
 
     while True:
 
-        if not sleeping:
+        if (not sleeping):
 
-            if clicked:
+            if (clicked):
 
-                if turn < 50:
+                if (turn < 50):
 
                     for i in range(50):
 
@@ -101,81 +102,78 @@ def main():
 
                 else:
 
-                    for ev in pygame.event.get():
+                    if (not holding):
 
-                        if ev.type == pygame.MOUSEBUTTONUP:
+                        if click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8 and click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8 \
+                            and click_y >= 30 and click_y <= 30 + turn_bttn.get_height():
 
-                            if click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8 and click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8 \
-                                and click_y >= 30 and click_y <= 30 + turn_bttn.get_height():
+                            if (players[turn % 2].count(1) - 24 > 0):
+                                pulls[turn % 2] += int(2 + abs(players[turn % 2].count(1) - 24) + turn - 50)
 
-                                if (players[turn % 2].count(1) - 24 > 0):
-                                    pulls[turn % 2] += int(2 + abs(players[turn % 2].count(1) - 24) + turn - 50)
+                            else:
+                                pulls[turn % 2] += int(2 + round(0.1 * players[turn % 2].count(1)) + turn - 50)
 
-                                else:
-                                    pulls[turn % 2] += int(2 + round(0.1 * players[turn % 2].count(1)) + turn - 50)
+                            turn += 1
+                            clicked = False
 
-                                turn += 1
+                        if pulls[(turn + 1) % 2] == 0:
+
+                            pulls[(turn + 1) % 2] = int(2 + round(0.1 * players[(turn + 1) / 2].count(1)) + turn - 50)
+
+                        for i in range(50):
+
+                            if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] > 0 :
+
+                                pulls[turn % 2] -= am
+
+                                if pulls[turn % 2] < 0:
+                                    am = am + pulls[turn % 2]
+                                    pulls[turn % 2] = 0
+
+                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+
+                                soldiers[i] += am
+
                                 clicked = False
 
-                            if pulls[(turn + 1) % 2] == 0:
+                                break
 
-                                pulls[(turn + 1) % 2] = int(2 + round(0.1 * players[(turn + 1) / 2].count(1)) + turn - 50)
+                        screen.blit(green_gex, (280 - green_gex.get_width() / 2, -108))
+                        text = fontCapture.render("blue : " + str(pulls[0]), True, WHITE)
+                        screen.blit(text, (screenX  / 8  - text.get_width() / 2 + 45, 0))
 
-                            for i in range(50):
+                        screen.blit(green_gex, (1624 - green_gex.get_width() / 2, -108))
+                        text = fontCapture.render("red : " + str(pulls[1]), True, WHITE)
+                        screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 0))
 
-                                if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] > 0 :
+                        am = int(amount(screen, click_x, click_y, button_x1, button_x5, button_x10))
+                        clicked = False
 
-                                    pulls[turn % 2] -= am
+                    elif (time.time() - click_time > 1):
+                        print("WINNERWINNERCHICKENDINNER")
+                        for i in range(50):
 
-                                    if pulls[turn % 2] < 0:
-                                        am = am + pulls[turn % 2]
-                                        pulls[turn % 2] = 0
+                            if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
+                                clicked = False
 
-                                    screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
-                                    screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                                while (clicked == False):
 
-                                    soldiers[i] += am
+                                    for ev in pygame.event.get():
 
-                                    clicked = False
+                                        if ev.type == pygame.MOUSEBUTTONDOWN:
+                                            clicked = True
+                                            click_x, click_y = ev.pos
 
-                                    break
+                                for j in range(50):
 
-                            screen.blit(green_gex, (280 - green_gex.get_width() / 2, -108))
-                            text = fontCapture.render("blue : " + str(pulls[0]), True, WHITE)
-                            screen.blit(text, (screenX  / 8  - text.get_width() / 2 + 45, 0))
+                                    if (web_list[j][0] - click_x) ** 2 + (web_list[j][1] - click_y) ** 2 < R ** 2:
 
-                            screen.blit(green_gex, (1624 - green_gex.get_width() / 2, -108))
-                            text = fontCapture.render("red : " + str(pulls[1]), True, WHITE)
-                            screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 0))
+                                        a = math.sqrt(abs(web_list[i][0] - web_list[j][0]) + abs(web_list[i][1] - web_list[j][1]))
 
-                            am = int(amount(screen, click_x, click_y, button_x1, button_x5, button_x10))
-                            clicked = False
-                            break
-
-                        elif (time.time() - click_time > 1):
-                            print("WINNERWINNERCHICKENDINNER")
-                            for i in range(50):
-
-                                if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
-                                    clicked = False
-
-                                    while (clicked == False):
-
-                                        for ev in pygame.event.get():
-
-                                            if ev.type == pygame.MOUSEBUTTONDOWN:
-                                                clicked = True
-                                                click_x, click_y = ev.pos
-
-                                    for j in range(50):
-
-                                        if (web_list[j][0] - click_x) ** 2 + (web_list[j][1] - click_y) ** 2 < R ** 2:
-
-                                            a = math.sqrt(abs(web_list[i][0] - web_list[j][0]) + abs(web_list[i][1] - web_list[j][1]))
-
-                                            if (a <= 230):
-
-                                                print("attack")
+                                        if (a <= 230):
+                                            print("attack")
+                        clicked = False
 
                 for i in range(50):
 
@@ -209,10 +207,14 @@ def main():
                 pygame.quit()
                 break
 
-            elif ev.type == pygame.MOUSEBUTTONDOWN:
+            elif ev.type == pygame.MOUSEBUTTONDOWN and clicked == False:
                 click_time = time.time()
                 clicked = True
+                holding = True
                 click_x, click_y = ev.pos
+
+            elif (ev.type == pygame.MOUSEBUTTONUP):
+                holding = False
 
 if __name__ == "__main__":
     main()
