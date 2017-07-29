@@ -34,7 +34,7 @@ def main():
 
     click_time = 0
 
-    turn = 47
+    turn = 40
     am = 1
 
     player1 = []
@@ -154,7 +154,8 @@ def main():
                         print("WINNERWINNERCHICKENDINNER")
                         for i in range(50):
 
-                            if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
+                            if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and soldiers[i] != 0:
+
                                 clicked = False
 
                                 while (clicked == False):
@@ -169,10 +170,32 @@ def main():
 
                                     if (web_list[j][0] - click_x) ** 2 + (web_list[j][1] - click_y) ** 2 < R ** 2:
 
-                                        a = math.sqrt(abs(web_list[i][0] - web_list[j][0]) + abs(web_list[i][1] - web_list[j][1]))
+                                        a = math.sqrt((web_list[i][0] - web_list[j][0])**2 + (web_list[i][1] - web_list[j][1])**2)
 
-                                        if (a <= 230):
-                                            print("attack")
+                                        if a <= 230 and web_list[j] !=  web_list[i]:
+
+                                            if players[turn % 2][j] == 1:
+
+                                                soldiers[i] -= am
+
+                                                if soldiers[i] <= 0:
+                                                    am = am + soldiers[i]
+                                                    soldiers[i] = 0
+                                                    screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                                    screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+
+                                                soldiers[j] += am
+                                                am = 1
+
+                                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                                screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                                                screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
+                                                screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
+
+                                            if players[(turn + 1) % 2][j] == 1:
+
+                                                print("attack")
+
                         clicked = False
 
                 for i in range(50):
