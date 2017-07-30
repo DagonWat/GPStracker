@@ -34,7 +34,7 @@ def main():
 
     click_time = 0
 
-    turn = 40
+    turn = 30
     am = 1
 
     pointers = []
@@ -49,9 +49,9 @@ def main():
     players = [player1, player2]
     players_gex = [player1_gex, player2_gex]
     pulls = [pull2, pull1]
-    arrows = [[0, [green_up, red_up, -40, -40], [green_down, red_down, 0, 40]], \
-                [[green_up_left, red_up_left, -70, -50], [green_down_left, red_down_left, -55, 20]], \
-                [[green_up_right, red_up_right, 50, -30], [green_down_right, red_down_right, 40, 30]]]
+    arrows = [[[green_up, red_up, -20, -100], [green_down, red_down, -20, 50]], \
+                [[green_up_left, red_up_left, -75, -50], [green_down_left, red_down_left, -77, 20]], \
+                [[green_up_right, red_up_right, 40, -50], [green_down_right, red_down_right, 35, 20]]]
     memory = [10000, 10000]
 
     for i in range(50):
@@ -159,7 +159,7 @@ def main():
 
                         for i in range(50):
 
-                            if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1:
+                            if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and soldiers[i] != 0:
                                 clicked = False
                                 pointers = []
 
@@ -170,10 +170,36 @@ def main():
                                 for j in range(len(pointers)):
                                     if players[turn % 2][pointers[j]] == 1 and pointers[j] != i:
 
-                                        a = (web_list[i][0] - web_list[pointers[j]][0]) / 168
-                                        b = (web_list[i][1] - web_list[pointers[j]][1]) / 216
+                                        a = int((web_list[i][0] - web_list[pointers[j]][0]) / 168)
+                                        b = ((web_list[i][1] - web_list[pointers[j]][1]) / 216)
+                                        if b == 0.0:
+                                            b = int(0)
+                                        if b == 1.0:
+                                            b = int(0)
+                                        if b == -1.0:
+                                            b = int(1)
+                                        if b == 0.5:
+                                            b = int(0)
+                                        if b == - 0.5:
+                                            b = int(1)
 
                                         screen.blit(arrows[a][b][0], (web_list[i][0] + arrows[a][b][2], web_list[i][1] + arrows[a][b][3]))
+                                    if players[(turn+1) % 2][pointers[j]] == 1 and pointers[j] != i:
+                                        a = int((web_list[i][0] - web_list[pointers[j]][0]) / 168)
+                                        b = ((web_list[i][1] - web_list[pointers[j]][1]) / 216)
+                                        if b == 0.0:
+                                            b = int(0)
+                                        if b == 1.0:
+                                            b = int(0)
+                                        if b == -1.0:
+                                            b = int(1)
+                                        if b == 0.5:
+                                            b = int(0)
+                                        if b == - 0.5:
+                                            b = int(1)
+
+                                        screen.blit(arrows[a][b][1], (web_list[i][0] + arrows[a][b][2], web_list[i][1] + arrows[a][b][3]))
+
 
                                 pygame.display.flip()
 
