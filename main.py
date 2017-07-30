@@ -49,6 +49,9 @@ def main():
     players = [player1, player2]
     players_gex = [player1_gex, player2_gex]
     pulls = [pull2, pull1]
+    arrows = [[0, [green_up, red_up, -40, -40], [green_down, red_down, 0, 40]], \
+                [[green_up_left, red_up_left, -70, -50], [green_down_left, red_down_left, -55, 20]], \
+                [[green_up_right, red_up_right, 50, -30], [green_down_right, red_down_right, 40, 30]]]
     memory = [10000, 10000]
 
     for i in range(50):
@@ -153,56 +156,28 @@ def main():
                         clicked = False
 
                     elif (time.time() - click_time > 1):
-                        print("WINNERWINNERCHICKENDINNER")
 
                         for i in range(50):
 
                             if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1:
                                 clicked = False
-                                for k in range (50):
-                                    if (web_list[i][0] - web_list[k][0]) ** 2 + (web_list[i][1] - web_list[k][1]) ** 2 < 230 ** 2:
-                                        pointers.append(web_list[k])
-                                for o in range(len(pointers)):
-                                    if pointers[o][0] == web_list[i][0] and pointers[o][1] > web_list[i][1] :
-                                        for z in range(50):
-                                            if pointers[o] == web_list[z] and players[turn % 2][z] == 1 :
-                                                screen.blit(green_down,(web_list[i][0] - 20, web_list[i][1] + green_down.get_height() - 20))
-                                            elif pointers[o] == web_list[z] and players[(turn + 1) % 2][z] == 1 :
-                                                screen.blit(red_down,(web_list[i][0] - 20, web_list[i][1] + red_down.get_height() - 20))
-                                    if pointers[o][0] == web_list[i][0] and pointers[o][1] < web_list[i][1] :
-                                        for z in range(50):
-                                            if pointers[o] == web_list[z] and players[turn % 2][z] == 1 :
-                                                screen.blit(green_up,(web_list[i][0] - 20, web_list[i][1] - green_up.get_height() - 20))
-                                            elif pointers[o] == web_list[z] and players[(turn + 1) % 2][z] == 1 :
-                                                screen.blit(red_up,(web_list[i][0] - 20, web_list[i][1] - red_up.get_height() - 20))
-                                    if pointers[o][0] > web_list[i][0] and pointers[o][1] < web_list[i][1] :
-                                        for z in range(50):
-                                            if pointers[o] == web_list[z] and players[turn % 2][z] == 1 :
-                                                screen.blit(green_up_right,(web_list[i][0] - 20 + green_up_right.get_width(), web_list[i][1] - 20 - green_up_right.get_height()))
-                                            elif pointers[o] == web_list[z] and players[(turn + 1) % 2][z] == 1 :
-                                                screen.blit(red_up_right,(web_list[i][0] - 20 + red_up_right.get_width(), web_list[i][1] - 20 - red_up_right.get_height()))
-                                    if pointers[o][0] > web_list[i][0] and pointers[o][1] > web_list[i][1] :
-                                        for z in range(50):
-                                            if pointers[o] == web_list[z] and players[turn % 2][z] == 1 :
-                                                screen.blit(green_down_right,(web_list[i][0] - 20 + green_down_right.get_width(), web_list[i][1] - 20 + green_down_right.get_height()))
-                                            elif pointers[o] == web_list[z] and players[(turn + 1) % 2][z] == 1 :
-                                                screen.blit(red_down_right,(web_list[i][0] - 20 + red_down_right.get_width(), web_list[i][1] - 20 + red_down_right.get_height()))
-                                    if pointers[o][0] < web_list[i][0] and pointers[o][1] > web_list[i][1] :
-                                        for z in range(50):
-                                            if pointers[o] == web_list[z] and players[turn % 2][z] == 1 :
-                                                screen.blit(green_down_left,(web_list[i][0] - 20 - green_down_left.get_width(), web_list[i][1] - 20 + green_down_left.get_height()))
-                                            elif pointers[o] == web_list[z] and players[(turn + 1) % 2][z] == 1 :
-                                                screen.blit(red_down_left,(web_list[i][0] - 20 - red_down_left.get_width(), web_list[i][1] - 20 + red_down_left.get_height()))
-                                    if pointers[o][0] < web_list[i][0] and pointers[o][1] < web_list[i][1] :
-                                        for z in range(50):
-                                            if pointers[o] == web_list[z] and players[turn % 2][z] == 1 :
-                                                screen.blit(green_up_left,(web_list[i][0] - 20 - green_up_left.get_width(), web_list[i][1] - 20 - green_up_left.get_height()))
-                                            elif pointers[o] == web_list[z] and players[(turn + 1) % 2][z] == 1 :
-                                                screen.blit(red_up_left,(web_list[i][0] - 20 - red_up_left.get_width(), web_list[i][1] - 20 - red_up_left.get_height()))
+                                pointers = []
+
+                                for j in range (50):
+                                    if (web_list[i][0] - web_list[j][0]) ** 2 + (web_list[i][1] - web_list[j][1]) ** 2 < 230 ** 2:
+                                        pointers.append(j)
+
+                                for j in range(len(pointers)):
+                                    if players[turn % 2][pointers[j]] == 1 and pointers[j] != i:
+
+                                        a = (web_list[i][0] - web_list[pointers[j]][0]) / 168
+                                        b = (web_list[i][1] - web_list[pointers[j]][1]) / 216
+
+                                        screen.blit(arrows[a][b][0], (web_list[i][0] + arrows[a][b][2], web_list[i][1] + arrows[a][b][3]))
+
                                 pygame.display.flip()
 
                                 while (clicked == False):
-
 
                                     for ev in pygame.event.get():
 
@@ -213,7 +188,6 @@ def main():
                                 for j in range(50):
 
                                     if (web_list[j][0] - click_x) ** 2 + (web_list[j][1] - click_y) ** 2 < R ** 2:
-                                        pointers = []
 
                                         a = math.sqrt((web_list[i][0] - web_list[j][0])**2 + (web_list[i][1] - web_list[j][1])**2)
 
