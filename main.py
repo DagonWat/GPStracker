@@ -1,5 +1,5 @@
-#import pygame_sdl2
-#pygame_sdl2.import_as_pygame()
+import pygame_sdl2
+pygame_sdl2.import_as_pygame()
 
 import pygame, os, time, math
 from sheets import *
@@ -21,9 +21,13 @@ fontCavier = pygame.font.Font(os.path.join("fonts", "CaviarDreams.ttf"), 24)
 fontDeja = pygame.font.Font(os.path.join("fonts", "DejaVuSans.ttf"), 24)
 fontCapture = pygame.font.Font(os.path.join("fonts", "Capture_it.ttf"), 28)
 
+cloud1 = [0, cloud1_2, cloud1_1, cloud1_2, cloud1_1]
+cloud2 = [0, cloud2_1, cloud2_2, cloud2_3, cloud2_2]
+cloud3 = [0, cloud3_1, cloud3_2, cloud3_3, cloud3_2]
+
 screen = pygame.display.set_mode((screenX, screenY))
 
-def main():
+def game():
 
     sleeping = False
     clicked = False
@@ -34,7 +38,7 @@ def main():
 
     click_time = 0
 
-    turn = 30
+    turn = 0
     am = 1
 
     pointers = []
@@ -49,9 +53,9 @@ def main():
     players = [player1, player2]
     players_gex = [player1_gex, player2_gex]
     pulls = [pull2, pull1]
-    arrows = [[[green_up, red_up, -20, -100], [green_down, red_down, -20, 50]], \
-                [[green_up_left, red_up_left, -75, -50], [green_down_left, red_down_left, -77, 20]], \
-                [[green_up_right, red_up_right, 40, -50], [green_down_right, red_down_right, 35, 20]]]
+    arrows = [[0, [green_down, red_down, -20, 50], [green_up, red_up, -20, -100]], \
+                [0, [green_up_left, red_up_left, -75, -50], [green_down_left, red_down_left, -77, 20]], \
+                [0, [green_up_right, red_up_right, 40, -50], [green_down_right, red_down_right, 35, 20]]]
     memory = [10000, 10000]
 
     for i in range(50):
@@ -169,37 +173,15 @@ def main():
 
                                 for j in range(len(pointers)):
                                     if players[turn % 2][pointers[j]] == 1 and pointers[j] != i:
-
                                         a = int((web_list[i][0] - web_list[pointers[j]][0]) / 168)
-                                        b = ((web_list[i][1] - web_list[pointers[j]][1]) / 216)
-                                        if b == 0.0:
-                                            b = int(0)
-                                        if b == 1.0:
-                                            b = int(0)
-                                        if b == -1.0:
-                                            b = int(1)
-                                        if b == 0.5:
-                                            b = int(0)
-                                        if b == - 0.5:
-                                            b = int(1)
+                                        b = int((web_list[i][1] - web_list[pointers[j]][1]) / 108)
 
                                         screen.blit(arrows[a][b][0], (web_list[i][0] + arrows[a][b][2], web_list[i][1] + arrows[a][b][3]))
                                     if players[(turn+1) % 2][pointers[j]] == 1 and pointers[j] != i:
                                         a = int((web_list[i][0] - web_list[pointers[j]][0]) / 168)
-                                        b = ((web_list[i][1] - web_list[pointers[j]][1]) / 216)
-                                        if b == 0.0:
-                                            b = int(0)
-                                        if b == 1.0:
-                                            b = int(0)
-                                        if b == -1.0:
-                                            b = int(1)
-                                        if b == 0.5:
-                                            b = int(0)
-                                        if b == - 0.5:
-                                            b = int(1)
+                                        b = int((web_list[i][1] - web_list[pointers[j]][1]) / 108)
 
                                         screen.blit(arrows[a][b][1], (web_list[i][0] + arrows[a][b][2], web_list[i][1] + arrows[a][b][3]))
-
 
                                 pygame.display.flip()
 
@@ -239,7 +221,47 @@ def main():
 
                                             if players[(turn + 1) % 2][j] == 1:
 
-                                                print("attack")
+                                                s1 = int(round(soldiers[i] * 0.5))
+                                                s2 = int(round(soldiers[j] * 0.7))
+
+                                                soldiers[i] -= s2
+                                                soldiers[j] -= s1
+
+                                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                                screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                                                screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
+                                                screen.blit(players_gex[(turn + 1) % 2], (web_list[j][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[j][1] - players_gex[(turn + 1) % 2].get_height() / 2))
+
+                                                if (soldiers[j] <= 0 and soldiers[i] <= 0):
+
+                                                    soldiers[i] = 0
+                                                    soldiers[j] = 0
+
+                                                elif (soldiers[j] <= 0):
+                                                    players[(turn + 1) % 2][j] = 0
+                                                    players[turn % 2][j] = 1
+
+                                                    screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                                    screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                                                    screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
+                                                    screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
+
+                                                    soldiers[j] = soldiers[i] - s2
+                                                    soldiers[i] = 0
+
+                                                elif (soldiers[i] <= 0):
+                                                    players[(turn + 1) % 2][j] = 1
+                                                    players[turn % 2][j] = 0
+
+                                                    screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                                    screen.blit(players_gex[(turn + 1) % 2], (web_list[i][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[i][1] - players_gex[(turn + 1) % 2].get_height() / 2))
+                                                    screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
+                                                    screen.blit(players_gex[(turn + 1) % 2], (web_list[j][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[j][1] - players_gex[(turn + 1) % 2].get_height() / 2))
+
+                                                    soldiers[i] =  soldiers[j] - s1
+                                                    soldiers[j] = 0
+
+                                break
 
                         clicked = False
 
@@ -284,7 +306,43 @@ def main():
             elif (ev.type == pygame.MOUSEBUTTONUP):
                 holding = False
 
-if __name__ == "__main__":
-    main()
+def menu():
+    screen.blit(zastavka, (0, 0))
+    prev_time = time.time()
+    counter = 0
+    clicked = False
+
+    while (True):
+
+        if (clicked and click_x >= 1600 and click_x <= 1800\
+                and click_y >= 100 and click_y <= 200):
+            clicked = False
+            game()
+
+
+        if (time.time() - prev_time >= 1):
+
+            counter += 1
+            screen.blit(cloud1[counter], (320, 465))
+            screen.blit(cloud2[counter], (800, 465))
+            screen.blit(cloud3[counter], (1200, 465))
+            screen.blit(button_play, (1600, 100))
+
+            pygame.display.flip()
+            prev_time = time.time()
+
+            if (counter % 4 == 0):
+                counter = 0
+
+        for ev in pygame.event.get():
+
+            if ev.type == pygame.QUIT:
+                pygame.quit()
+
+            elif ev.type == pygame.MOUSEBUTTONDOWN:
+                clicked = True
+                click_x, click_y = ev.pos
+
+menu()
 
 #python android.py --launch build /home/egor/ProjectA release install
