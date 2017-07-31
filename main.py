@@ -114,8 +114,8 @@ def game():
 
                     if (not holding):
 
-                        if click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8 and click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8 \
-                            and click_y >= 30 and click_y <= 30 + turn_bttn.get_height():
+                        if (click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8) and (click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8) \
+                            and (click_y >= 30) and (click_y <= 30 + turn_bttn.get_height()):
 
                             if (players[turn % 2].count(1) - 24 > 0):
                                 pulls[turn % 2] += int(2 + abs(players[turn % 2].count(1) - 24) + turn - 50)
@@ -126,17 +126,17 @@ def game():
                             turn += 1
                             clicked = False
 
-                        if pulls[(turn + 1) % 2] == 0:
+                        if (pulls[(turn + 1) % 2] == 0):
 
                             pulls[(turn + 1) % 2] = int(2 + round(0.1 * players[(turn + 1) / 2].count(1)) + turn - 50)
 
                         for i in range(50):
 
-                            if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and pulls[turn % 2] > 0 :
+                            if ((web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2) and (players[turn % 2][i] == 1) and (pulls[turn % 2] > 0) :
 
                                 pulls[turn % 2] -= am
 
-                                if pulls[turn % 2] < 0:
+                                if (pulls[turn % 2] < 0):
                                     am = am + pulls[turn % 2]
                                     pulls[turn % 2] = 0
 
@@ -164,16 +164,16 @@ def game():
 
                         for i in range(50):
 
-                            if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2 and players[turn % 2][i] == 1 and soldiers[i] != 0:
+                            if ((web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2) and (players[turn % 2][i] == 1) and (soldiers[i] != 0):
                                 clicked = False
                                 pointers = []
 
                                 for j in range (50):
-                                    if (web_list[i][0] - web_list[j][0]) ** 2 + (web_list[i][1] - web_list[j][1]) ** 2 < 230 ** 2:
+                                    if ((web_list[i][0] - web_list[j][0]) ** 2 + (web_list[i][1] - web_list[j][1]) ** 2 < 230 ** 2):
                                         pointers.append(j)
 
                                 for j in range(len(pointers)):
-                                    if pointers[j] != i:
+                                    if (pointers[j] != i):
                                         a = int((web_list[i][0] - web_list[pointers[j]][0]) / 168)
                                         b = int((web_list[i][1] - web_list[pointers[j]][1]) / 108)
 
@@ -185,7 +185,7 @@ def game():
 
                                     for ev in pygame.event.get():
 
-                                        if ev.type == pygame.MOUSEBUTTONDOWN:
+                                        if (ev.type == pygame.MOUSEBUTTONDOWN):
                                             clicked = True
                                             click_x, click_y = ev.pos
 
@@ -193,15 +193,15 @@ def game():
 
                                     if (web_list[j][0] - click_x) ** 2 + (web_list[j][1] - click_y) ** 2 < R ** 2:
 
-                                        a = math.sqrt((web_list[i][0] - web_list[j][0])**2 + (web_list[i][1] - web_list[j][1])**2)
+                                        a = math.sqrt((web_list[i][0] - web_list[j][0]) ** 2 + (web_list[i][1] - web_list[j][1]) ** 2)
 
                                         if (a <= 230) and (web_list[j] != web_list[i]):
 
-                                            if players[turn % 2][j] == 1:
+                                            if (players[turn % 2][j] == 1):
 
                                                 soldiers[i] -= am
 
-                                                if soldiers[i] <= 0:
+                                                if (soldiers[i] <= 0):
                                                     am = am + soldiers[i]
                                                     soldiers[i] = 0
                                                     screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
@@ -215,7 +215,7 @@ def game():
                                                 screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
                                                 screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
 
-                                            elif players[(turn + 1) % 2][j] == 1:
+                                            elif (players[(turn + 1) % 2][j] == 1):
 
                                                 s1 = int(round(soldiers[i] * 0.5))
                                                 s2 = int(round(soldiers[j] * 0.7))
@@ -228,7 +228,7 @@ def game():
                                                 screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
                                                 screen.blit(players_gex[(turn + 1) % 2], (web_list[j][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[j][1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
-                                                if (soldiers[j] <= 0 and soldiers[i] <= 0):
+                                                if (soldiers[j] <= 0) and (soldiers[i] <= 0):
 
                                                     soldiers[i] = 0
                                                     soldiers[j] = 0
@@ -246,8 +246,8 @@ def game():
                                                     soldiers[i] = 0
 
                                                 elif (soldiers[i] <= 0):
-                                                    players[(turn + 1) % 2][j] = 1
-                                                    players[turn % 2][j] = 0
+                                                    players[(turn + 1) % 2][i] = 1
+                                                    players[turn % 2][i] = 0
 
                                                     screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
                                                     screen.blit(players_gex[(turn + 1) % 2], (web_list[i][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[i][1] - players_gex[(turn + 1) % 2].get_height() / 2))
@@ -278,7 +278,7 @@ def game():
                         text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
                         screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
 
-                if turn % 2 == 0:
+                if (turn % 2 == 0):
                     text = fontCapture.render("player 2", True, GREEN)
                     screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
                     text = fontCapture.render("player 1", True, WHITE)
@@ -294,11 +294,11 @@ def game():
 
         for ev in pygame.event.get():
 
-            if ev.type == pygame.QUIT:
+            if (ev.type == pygame.QUIT):
                 pygame.quit()
                 break
 
-            elif ev.type == pygame.MOUSEBUTTONDOWN and clicked == False:
+            elif (ev.type == pygame.MOUSEBUTTONDOWN) and (clicked == False):
                 click_time = time.time()
                 clicked = True
                 holding = True
