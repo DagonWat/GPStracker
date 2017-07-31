@@ -172,16 +172,11 @@ def game():
                                         pointers.append(j)
 
                                 for j in range(len(pointers)):
-                                    if players[turn % 2][pointers[j]] == 1 and pointers[j] != i:
+                                    if pointers[j] != i:
                                         a = int((web_list[i][0] - web_list[pointers[j]][0]) / 168)
                                         b = int((web_list[i][1] - web_list[pointers[j]][1]) / 108)
 
-                                        screen.blit(arrows[a][b][0], (web_list[i][0] + arrows[a][b][2], web_list[i][1] + arrows[a][b][3]))
-                                    if players[(turn+1) % 2][pointers[j]] == 1 and pointers[j] != i:
-                                        a = int((web_list[i][0] - web_list[pointers[j]][0]) / 168)
-                                        b = int((web_list[i][1] - web_list[pointers[j]][1]) / 108)
-
-                                        screen.blit(arrows[a][b][1], (web_list[i][0] + arrows[a][b][2], web_list[i][1] + arrows[a][b][3]))
+                                        screen.blit(arrows[a][b][players[(turn+1) % 2][pointers[j]] == 1], (web_list[i][0] + arrows[a][b][2], web_list[i][1] + arrows[a][b][3]))
 
                                 pygame.display.flip()
 
