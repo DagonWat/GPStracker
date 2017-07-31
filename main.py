@@ -1,5 +1,5 @@
-import pygame_sdl2
-pygame_sdl2.import_as_pygame()
+#import pygame_sdl2
+#pygame_sdl2.import_as_pygame()
 
 import pygame, os, time, math
 from sheets import *
@@ -38,7 +38,7 @@ def game():
 
     click_time = 0
 
-    turn = 0
+    turn = 44
     am = 1
 
     pointers = []
@@ -199,7 +199,7 @@ def game():
 
                                         a = math.sqrt((web_list[i][0] - web_list[j][0])**2 + (web_list[i][1] - web_list[j][1])**2)
 
-                                        if a <= 230 and web_list[j] != web_list[i]:
+                                        if (a <= 230) and (web_list[j] != web_list[i]):
 
                                             if players[turn % 2][j] == 1:
 
@@ -246,7 +246,7 @@ def game():
                                                     screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
                                                     screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
 
-                                                    soldiers[j] = soldiers[i] - s2
+                                                    soldiers[j] = soldiers[i]
                                                     soldiers[i] = 0
 
                                                 elif (soldiers[i] <= 0):
@@ -258,8 +258,13 @@ def game():
                                                     screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
                                                     screen.blit(players_gex[(turn + 1) % 2], (web_list[j][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[j][1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
-                                                    soldiers[i] =  soldiers[j] - s1
+                                                    soldiers[i] =  soldiers[j]
                                                     soldiers[j] = 0
+
+                                        elif (web_list[j] == web_list[i]):
+                                            screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                            screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+
 
                                 break
 
@@ -343,6 +348,7 @@ def menu():
                 clicked = True
                 click_x, click_y = ev.pos
 
-menu()
+#menu()
+game()
 
 #python android.py --launch build /home/egor/ProjectA release install
