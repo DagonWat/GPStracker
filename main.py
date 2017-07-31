@@ -199,7 +199,7 @@ def game():
 
                                         a = math.sqrt((web_list[i][0] - web_list[j][0])**2 + (web_list[i][1] - web_list[j][1])**2)
 
-                                        if a <= 230 and web_list[j] !=  web_list[i]:
+                                        if a <= 230 and web_list[j] != web_list[i]:
 
                                             if players[turn % 2][j] == 1:
 
@@ -219,7 +219,7 @@ def game():
                                                 screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
                                                 screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
 
-                                            if players[(turn + 1) % 2][j] == 1:
+                                            elif players[(turn + 1) % 2][j] == 1:
 
                                                 s1 = int(round(soldiers[i] * 0.5))
                                                 s2 = int(round(soldiers[j] * 0.7))
