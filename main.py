@@ -21,9 +21,10 @@ fontCavier = pygame.font.Font(os.path.join("fonts", "CaviarDreams.ttf"), 24)
 fontDeja = pygame.font.Font(os.path.join("fonts", "DejaVuSans.ttf"), 24)
 fontCapture = pygame.font.Font(os.path.join("fonts", "Capture_it.ttf"), 28)
 
-cloud1 = [0, cloud1_2, cloud1_1, cloud1_2, cloud1_1]
-cloud2 = [0, cloud2_1, cloud2_2, cloud2_3, cloud2_2]
-cloud3 = [0, cloud3_1, cloud3_2, cloud3_3, cloud3_2]
+cloud1 = [0, cloud1_5, cloud1_4, cloud1_3, cloud1_2, cloud1_1, cloud1_6]
+cloud2 = [0, cloud2_1, cloud2_2, cloud2_3, cloud2_4, cloud2_5, cloud2_6]
+cloud3 = [0, cloud3_1, cloud3_2, cloud3_3, cloud3_4, cloud3_5, cloud3_6]
+grass = [0, grass2, grass3, grass4, grass4, grass3, grass2]
 
 screen = pygame.display.set_mode((screenX, screenY))
 
@@ -326,12 +327,14 @@ def menu():
             screen.blit(cloud1[counter], (320, 465))
             screen.blit(cloud2[counter], (800, 465))
             screen.blit(cloud3[counter], (1200, 465))
+            screen.blit(grass[counter], (0, 806))
+
             screen.blit(button_play, (1600, 100))
 
             pygame.display.flip()
             prev_time = time.time()
 
-            if (counter % 4 == 0):
+            if (counter % 6 == 0):
                 counter = 0
 
         for ev in pygame.event.get():
