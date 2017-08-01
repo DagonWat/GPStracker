@@ -1,7 +1,7 @@
 #import pygame_sdl2
 #pygame_sdl2.import_as_pygame()
 
-import pygame, os, time, math
+import pygame, os, time, math, random
 from sheets import *
 from circles import *
 from amount import *
@@ -226,8 +226,8 @@ def game():
 
                                             elif (players[(turn + 1) % 2][j] == 1) and (av_attack[i] == 0):
 
-                                                s1 = int(round(soldiers[i] * 0.5))
-                                                s2 = int(round(soldiers[j] * 0.7))
+                                                s1 = int(round(soldiers[i] * random.randrange(0.4, 0.7, 0.1)))
+                                                s2 = int(round(soldiers[j] * random.randrange(0.6, 0.9, 0.1)))
 
                                                 av_attack[i] = 1
 
