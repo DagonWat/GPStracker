@@ -41,7 +41,7 @@ def game():
 
     click_time = 0
 
-    turn = 44
+    turn = 40
     am = 1
 
     pointers = []
@@ -180,7 +180,10 @@ def game():
 
                                 for j in range (50):
                                     if ((web_list[i][0] - web_list[j][0]) ** 2 + (web_list[i][1] - web_list[j][1]) ** 2 < 230 ** 2):
-                                        pointers.append(j)
+                                        if (av_move[i] != 1) and (av_move[j] != 1):
+                                            pointers.append(j)
+                                        if (av_move[i] == 1) and (players[(turn+1) % 2][j] == 1) and (av_attack[i] != 1):
+                                            pointers.append(j)
 
                                 for j in range(len(pointers)):
                                     if (pointers[j] != i):
@@ -209,7 +212,8 @@ def game():
 
                                             if (players[turn % 2][j] == 1) and (av_move[i] == 0):
 
-                                                soldiers[j], soldiers[i] = soldiers[i], 0
+                                                soldiers[j] += soldiers[i]
+                                                soldiers[i] = 0
 
                                                 av_move[j] = 1
 
@@ -247,25 +251,17 @@ def game():
                                                     screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
                                                     screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
 
-                                                    av_attack[i] = 0
-                                                    av_attack[j] = 1
+                                                    av_attack[i] = 1
+                                                    av_attack[j] = 0
 
                                                     soldiers[j] = soldiers[i]
                                                     soldiers[i] = 0
 
                                                 elif (soldiers[i] <= 0):
-                                                    players[(turn + 1) % 2][i] = 1
-                                                    players[turn % 2][i] = 0
-
-                                                    screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
-                                                    screen.blit(players_gex[(turn + 1) % 2], (web_list[i][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[i][1] - players_gex[(turn + 1) % 2].get_height() / 2))
-                                                    screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
-                                                    screen.blit(players_gex[(turn + 1) % 2], (web_list[j][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[j][1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
                                                     av_attack[i] = 0
+                                                    soldiers[i] = 0
 
-                                                    soldiers[i] =  soldiers[j]
-                                                    soldiers[j] = 0
 
                                         screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
                                         screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
