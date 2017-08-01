@@ -174,15 +174,17 @@ def game():
 
                         for i in range(50):
 
-                            if ((web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2) and (players[turn % 2][i] == 1) and (soldiers[i] != 0):
+                            if ((web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2) and (players[turn % 2][i] == 1) and (soldiers[i] != 0) and ((av_move[i] == 0) or (av_attack[i] == 0)):
                                 clicked = False
                                 pointers = []
 
                                 for j in range (50):
                                     if ((web_list[i][0] - web_list[j][0]) ** 2 + (web_list[i][1] - web_list[j][1]) ** 2 < 230 ** 2):
-                                        if (av_move[i] != 1) and (av_move[j] != 1):
+
+                                        if (players[(turn + 1) % 2][j] == 1) and (av_attack[i] != 1):
                                             pointers.append(j)
-                                        if (av_move[i] == 1) and (players[(turn+1) % 2][j] == 1) and (av_attack[i] != 1):
+
+                                        elif (av_move[i] != 1) and (players[turn % 2][j] == 1):
                                             pointers.append(j)
 
                                 for j in range(len(pointers)):
@@ -251,8 +253,10 @@ def game():
                                                     screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
                                                     screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
 
-                                                    av_attack[i] = 1
-                                                    av_attack[j] = 0
+                                                    av_attack[i] = 0
+                                                    av_attack[j] = 1
+                                                    av_move[i] = 0
+                                                    av_move[j] = 1
 
                                                     soldiers[j] = soldiers[i]
                                                     soldiers[i] = 0
