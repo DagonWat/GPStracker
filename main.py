@@ -226,8 +226,8 @@ def game():
 
                                             elif (players[(turn + 1) % 2][j] == 1) and (av_attack[i] == 0):
 
-                                                s1 = int(round(soldiers[i] * random.randrange(0.4, 0.7, 0.1)))
-                                                s2 = int(round(soldiers[j] * random.randrange(0.6, 0.9, 0.1)))
+                                                s1 = int(round(soldiers[i] * random.uniform(0.4, 0.7)))
+                                                s2 = int(round(soldiers[j] * random.uniform(0.6, 0.9)))
 
                                                 av_attack[i] = 1
 
