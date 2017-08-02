@@ -323,10 +323,15 @@ def menu():
 
     while (True):
 
-        if (clicked and click_x >= 1600 and click_x <= 1800\
-                and click_y >= 100 and click_y <= 200):
+        if (clicked and click_x >= 1530 and click_x <= 1730\
+                and click_y >= 70 and click_y <= 170):
             clicked = False
             game()
+
+        if (clicked and click_x >= 1530 and click_x <= 1730\
+                and click_y >= 750 and click_y <= 850):
+            clicked = False
+            pygame.quit()
 
 
         if (time.time() - prev_time >= 1):
@@ -335,12 +340,12 @@ def menu():
             screen.blit(grass[counter], (0, 806))
             screen.blit(jewslayer[counter], (0, 396))
             screen.blit(cloud1[counter], (420, 465))
-            screen.blit(cloud2[counter], (800, 465))
-            screen.blit(cloud3[counter], (1200, 465))
-            screen.blit(cloud4[counter], (1600, 465))
+            screen.blit(cloud2[counter], (720, 465))
+            screen.blit(cloud3[counter], (1090, 465))
+            screen.blit(cloud4[counter], (1870, 465))
 
-            screen.blit(button_play, (1600, 100))
-            screen.blit(button_exit, (1600, 700))
+            screen.blit(button_play, (1530, 70))
+            screen.blit(button_exit, (1530, 750))
 
             pygame.display.flip()
             prev_time = time.time()
