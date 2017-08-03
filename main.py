@@ -71,6 +71,7 @@ def game():
         av_attack.append(0)
 
     screen.fill((GREEN))
+    screen.blit(fon, (0, 0))
     screen.blit(web, (0, 0))
     screen.blit(turn_bttn, (screenX / 2 - turn_bttn.get_width() / 2 - 8, 30))
 
@@ -88,10 +89,10 @@ def game():
 
                             if turn < 49 and player1[i] + player2[i] == 0:
 
-                                screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
+                                screen.blit(mass[i], (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
                                 screen.blit(players_gex[(turn + 1) % 2], (memory[0] - players_gex[(turn + 1) % 2].get_width() / 2, memory[1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
-                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                screen.blit(mass[i], (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
                                 screen.blit(circle, (web_list[i][0] - circle.get_width() / 2, web_list[i][1] - circle.get_height() / 2))
                                 screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
 
@@ -102,13 +103,13 @@ def game():
                                 clicked = False
 
                             elif turn == 49 and player1[i] + player2[i] == 0:
-                                screen.blit(green_gex, (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
+                                screen.blit(mass[i], (memory[0] - mass[i].get_width() / 2, memory[1] - mass[i].get_height() / 2))
                                 screen.blit(players_gex[(turn + 1) % 2], (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
 
                                 players[turn % 2][i] = 1
                                 turn += 1
 
-                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] -mass[i].get_height() / 2))
                                 screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
 
                                 clicked = False
@@ -150,7 +151,7 @@ def game():
                                     am = am + pulls[turn % 2]
                                     pulls[turn % 2] = 0
 
-                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                                 screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
 
                                 soldiers[i] += am
@@ -219,9 +220,9 @@ def game():
 
                                                 av_move[j] = 1
 
-                                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                                screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                                                 screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
-                                                screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
+                                                screen.blit(mass[i], (web_list[j][0] - mass[i].get_width() / 2, web_list[j][1] - mass[i].get_height() / 2))
                                                 screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
 
                                             elif (players[(turn + 1) % 2][j] == 1) and (av_attack[i] == 0):
@@ -234,9 +235,9 @@ def game():
                                                 soldiers[i] -= s2
                                                 soldiers[j] -= s1
 
-                                                screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                                screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                                                 screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
-                                                screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
+                                                screen.blit(mass[i], (web_list[j][0] - mass[i].get_width() / 2, web_list[j][1] - mass[i].get_height() / 2))
                                                 screen.blit(players_gex[(turn + 1) % 2], (web_list[j][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[j][1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
                                                 if (soldiers[j] <= 0) and (soldiers[i] <= 0):
@@ -248,9 +249,9 @@ def game():
                                                     players[(turn + 1) % 2][j] = 0
                                                     players[turn % 2][j] = 1
 
-                                                    screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                                    screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                                                     screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
-                                                    screen.blit(green_gex, (web_list[j][0] - green_gex.get_width() / 2, web_list[j][1] - green_gex.get_height() / 2))
+                                                    screen.blit(mass[i], (web_list[j][0] - mass[i].get_width() / 2, web_list[j][1] - mass[i].get_height() / 2))
                                                     screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
 
                                                     av_attack[i] = 0
@@ -267,7 +268,7 @@ def game():
                                                     soldiers[i] = 0
 
 
-                                        screen.blit(green_gex, (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
+                                        screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                                         screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
 
                                 break
@@ -287,13 +288,13 @@ def game():
                         screen.blit(text, (web_list[i][0] -15, web_list[i][1]- 70))
 
                 if (turn % 2 == 0):
-                    text = fontCapture.render("player 2", True, GREEN)
+                    text = fontCapture.render("player 2", True, GREY)
                     screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
                     text = fontCapture.render("player 1", True, WHITE)
                     screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
 
                 else:
-                    text = fontCapture.render("player 1", True, GREEN)
+                    text = fontCapture.render("player 1", True, GREY)
                     screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
                     text = fontCapture.render("player 2", True, WHITE)
                     screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))

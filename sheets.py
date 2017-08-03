@@ -66,3 +66,11 @@ grass4 = pygame.image.load(os.path.join("pics/menu", "grass_right_max.png"))
 
 button_exit = pygame.image.load(os.path.join("pics/menu", "button_exit.png"))
 button_play = pygame.image.load(os.path.join("pics/menu", "button_play.png"))
+
+fon = pygame.image.load(os.path.join("pics", "fon.png"))
+mass = []
+for i in range(1,51):
+    mass.append(0)
+    k = str(i) + ".png"
+    background = pygame.image.load(os.path.join("pics/background", k))
+    mass[i-1] = background
