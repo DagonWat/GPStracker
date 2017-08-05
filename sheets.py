@@ -28,6 +28,8 @@ red_up = pygame.image.load(os.path.join("pics", "red_up.png"))
 red_up_left = pygame.image.load(os.path.join("pics", "red_up_left.png"))
 red_up_right = pygame.image.load(os.path.join("pics", "red_up_right.png"))
 zastavka = pygame.image.load(os.path.join("pics/menu", "zastavka2.png"))
+plus = pygame.image.load(os.path.join("pics", "plusik.png"))
+sword = pygame.image.load(os.path.join("pics", "sword.png"))
 
 cloud1_1 = pygame.image.load(os.path.join("pics/menu", "cloud1_1.png"))
 cloud1_2 = pygame.image.load(os.path.join("pics/menu", "cloud1_2.png"))

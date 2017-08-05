@@ -25,8 +25,9 @@ cloud1 = [0, cloud1_5, cloud1_4, cloud1_3, cloud1_2, cloud1_1, cloud1_6]
 cloud2 = [0, cloud2_1, cloud2_2, cloud2_3, cloud2_4, cloud2_5, cloud2_6]
 cloud3 = [0, cloud3_1, cloud3_2, cloud3_3, cloud3_4, cloud3_5, cloud3_6]
 cloud4 = [0, cloud4_1, cloud4_2, cloud4_3, cloud4_4, cloud4_5, cloud4_6]
-grass = [0, grass2, grass3, grass4, grass4, grass3, grass2]
-jewslayer = [0, jewslayer1, jewslayer2, jewslayer3, jewslayer3, jewslayer2, jewslayer1]
+grass = [0, grass2, grass3, grass4, grass3, grass4, grass3]
+jewslayer = [0, jewslayer1, jewslayer2, jewslayer3, jewslayer2, jewslayer3, jewslayer2]
+anim = [plus, sword]
 
 screen = pygame.display.set_mode((screenX, screenY))
 
@@ -45,7 +46,7 @@ def game():
 
     click_time = 0
 
-    turn = 40
+    turn = 0
     am = 1
 
     pointers = []
@@ -65,7 +66,7 @@ def game():
                 [0, [green_up_right, red_up_right, 40, -50], [green_down_right, red_down_right, 35, 20]]]
     av_move = []
     av_attack = []
-    memory = [10000, 10000]
+    memory = -1
 
     for i in range(50):
         soldiers.append(0)
@@ -92,28 +93,28 @@ def game():
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
                             if turn < 49 and player1[i] + player2[i] == 0:
-
-                                screen.blit(mass[i], (memory[0] - green_gex.get_width() / 2, memory[1] - green_gex.get_height() / 2))
-                                screen.blit(players_gex[(turn + 1) % 2], (memory[0] - players_gex[(turn + 1) % 2].get_width() / 2, memory[1] - players_gex[(turn + 1) % 2].get_height() / 2))
+                                if (memory >= 0):
+                                    screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2 - 3, web_list[memory][1] - mass[memory].get_height() / 2 - 2))
+                                    screen.blit(players_gex[(turn + 1) % 2], (web_list[memory][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[memory][1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
                                 screen.blit(mass[i], (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
                                 screen.blit(circle, (web_list[i][0] - circle.get_width() / 2, web_list[i][1] - circle.get_height() / 2))
                                 screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
 
-                                memory = [web_list[i][0], web_list[i][1]]
+                                memory = i
 
                                 players[turn % 2][i] = 1
                                 turn += 1
                                 clicked = False
 
                             elif turn == 49 and player1[i] + player2[i] == 0:
-                                screen.blit(mass[i], (memory[0] - mass[i].get_width() / 2, memory[1] - mass[i].get_height() / 2))
-                                screen.blit(players_gex[(turn + 1) % 2], (memory[0] - player2_gex.get_width() / 2, memory[1] - player2_gex.get_height() / 2))
+                                screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2, web_list[memory][1] - mass[memory].get_height() / 2))
+                                screen.blit(players_gex[(turn + 1) % 2], (web_list[memory][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[memory][1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
                                 players[turn % 2][i] = 1
                                 turn += 1
 
-                                screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] -mass[i].get_height() / 2))
+                                screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                                 screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
 
                                 clicked = False
@@ -197,7 +198,10 @@ def game():
                                         a = int((web_list[i][0] - web_list[pointers[j]][0]) / 168)
                                         b = int((web_list[i][1] - web_list[pointers[j]][1]) / 108)
 
+                                        znak = anim[players[(turn+1) % 2][pointers[j]] == 1]
+
                                         screen.blit(arrows[a][b][players[(turn+1) % 2][pointers[j]] == 1], (web_list[i][0] + arrows[a][b][2], web_list[i][1] + arrows[a][b][3]))
+                                        screen.blit(znak, (web_list[pointers[j]][0] - znak.get_width() / 2, web_list[pointers[j]][1] - znak.get_width() / 2))
 
                                 pygame.display.flip()
 
@@ -208,6 +212,10 @@ def game():
                                         if (ev.type == pygame.MOUSEBUTTONDOWN):
                                             clicked = True
                                             click_x, click_y = ev.pos
+
+                                for j in range(len(pointers)):
+                                    screen.blit(mass[pointers[j]], (web_list[pointers[j]][0] - mass[pointers[j]].get_width() / 2, web_list[pointers[j]][1] - mass[pointers[j]].get_height() / 2))
+                                    screen.blit(players_gex[players[(turn+1) % 2][pointers[j]] == 1], ((web_list[pointers[j]][0] - player1_gex.get_width() / 2, web_list[pointers[j]][1] - player1_gex.get_height() / 2)))
 
                                 for j in range(50):
 
@@ -232,7 +240,7 @@ def game():
                                             elif (players[(turn + 1) % 2][j] == 1) and (av_attack[i] == 0):
 
                                                 s1 = int(round(soldiers[i] * random.uniform(0.4, 0.7)))
-                                                s2 = int(round(soldiers[j] * random.uniform(0.6, 0.9)))
+                                                s2 = 1 + int(round(soldiers[j] * random.uniform(0.7, 0.9)))
 
                                                 av_attack[i] = 1
 
