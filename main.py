@@ -31,7 +31,7 @@ jewslayer = [0, jewslayer1, jewslayer2, jewslayer3, jewslayer3, jewslayer2, jews
 screen = pygame.display.set_mode((screenX, screenY))
 
 song = pygame.mixer.Sound(os.path.join("music", "main_song2.ogg"))
-song.set_volume(1)
+song.set_volume(0)
 song.play()
 
 def game():
