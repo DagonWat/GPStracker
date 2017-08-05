@@ -30,8 +30,8 @@ jewslayer = [0, jewslayer1, jewslayer2, jewslayer3, jewslayer3, jewslayer2, jews
 
 screen = pygame.display.set_mode((screenX, screenY))
 
-song = pygame.mixer.Sound(os.path.join("music", "main_song.ogg"))
-song.set_volume(0.1)
+song = pygame.mixer.Sound(os.path.join("music", "main_song2.ogg"))
+song.set_volume(1)
 song.play()
 
 def game():
@@ -60,7 +60,7 @@ def game():
     players = [player1, player2]
     players_gex = [player1_gex, player2_gex]
     pulls = [pull2, pull1]
-    arrows = [[0, [green_down, red_down, -30, 50], [green_up, red_up, -20, -100]], \
+    arrows = [[0, [green_down, red_down, -20, 50], [green_up, red_up, -20, -100]], \
                 [0, [green_up_left, red_up_left, -75, -50], [green_down_left, red_down_left, -77, 20]], \
                 [0, [green_up_right, red_up_right, 40, -50], [green_down_right, red_down_right, 35, 20]]]
     av_move = []
@@ -286,10 +286,10 @@ def game():
                         for j in range(((soldiers[i] - soldiers[i] // 15 * 15) // 5) + 1):
 
                             screen.blit(heroes[soldiers[i] // 15], \
-                            (web_list[i][0] - heroes[soldiers[i] // 15].get_width() / 2 - j * 10 + 5 , web_list[i][1] - heroes[soldiers[i] // 15].get_height() / 2 + j * 5 + 35))
+                            (web_list[i][0] - heroes[soldiers[i] // 15].get_width() / 2 - j * 10  , web_list[i][1] - heroes[soldiers[i] // 15].get_height() / 2 + j * 5))
 
                         text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
-                        screen.blit(text, (web_list[i][0] - 15, web_list[i][1] - 35))
+                        screen.blit(text, (web_list[i][0] - 15, web_list[i][1] - 70))
 
                 if (turn % 2 == 0):
                     text = fontCapture.render("player 2", True, GREY)
