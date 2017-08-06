@@ -215,7 +215,11 @@ def game():
 
                                 for j in range(len(pointers)):
                                     screen.blit(mass[pointers[j]], (web_list[pointers[j]][0] - mass[pointers[j]].get_width() / 2, web_list[pointers[j]][1] - mass[pointers[j]].get_height() / 2))
-                                    screen.blit(players_gex[players[(turn+1) % 2][pointers[j]] == 1], ((web_list[pointers[j]][0] - player1_gex.get_width() / 2, web_list[pointers[j]][1] - player1_gex.get_height() / 2)))
+
+                                    if turn % 2 == 0:
+                                        screen.blit(players_gex[players[(turn +1) % 2][pointers[j]] == 1], ((web_list[pointers[j]][0] - player1_gex.get_width() / 2, web_list[pointers[j]][1] - player1_gex.get_height() / 2)))
+                                    else:
+                                        screen.blit(players_gex[players[turn % 2][pointers[j]] == 1], ((web_list[pointers[j]][0] - player1_gex.get_width() / 2, web_list[pointers[j]][1] - player1_gex.get_height() / 2)))
 
                                 for j in range(50):
 
