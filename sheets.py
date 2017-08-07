@@ -56,6 +56,10 @@ cloud4_4 = pygame.image.load(os.path.join("pics/menu", "cloud4_4.png"))
 cloud4_5 = pygame.image.load(os.path.join("pics/menu", "cloud4_5.png"))
 cloud4_6 = pygame.image.load(os.path.join("pics/menu", "cloud4_6.png"))
 
+settings_list = pygame.image.load(os.path.join("pics/menu", "settings_list.png"))
+slider = pygame.image.load(os.path.join("pics/menu", "slider.png"))
+
+
 jewslayer1 = pygame.image.load(os.path.join("pics/menu", "jewslayer1.png"))
 jewslayer2 = pygame.image.load(os.path.join("pics/menu", "jewslayer2.png"))
 jewslayer3 = pygame.image.load(os.path.join("pics/menu", "jewslayer3.png"))
@@ -68,6 +72,8 @@ grass4 = pygame.image.load(os.path.join("pics/menu", "grass_right_max.png"))
 
 button_exit = pygame.image.load(os.path.join("pics/menu", "button_exit.png"))
 button_play = pygame.image.load(os.path.join("pics/menu", "button_play.png"))
+button_settings = pygame.image.load(os.path.join("pics/menu", "button_settings.png"))
+
 
 fon = pygame.image.load(os.path.join("pics", "fon.png"))
 mass = []
