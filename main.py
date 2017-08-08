@@ -363,6 +363,7 @@ def menu():
 
             screen.blit(button_play, (1530, 70))
             screen.blit(button_exit, (1530, 750))
+            screen.blit(button_settings, (1530, 260))
 
             pygame.display.flip()
             prev_time = time.time()
