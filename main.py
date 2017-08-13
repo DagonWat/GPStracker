@@ -47,7 +47,7 @@ def game():
 
     click_time = 0
 
-    turn = 44
+    turn = 0
     am = 1
 
     pointers = []
@@ -406,7 +406,7 @@ def settings():
                 menu()
 
             elif (clicked and click_x >= 620 and click_x <= 1240\
-                    and click_y >= 310 and click_y <= 370):
+                    and click_y >= 310 and click_y <= 536):
 
                 while (clicked == True):
 
