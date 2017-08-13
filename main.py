@@ -10,6 +10,7 @@ pygame.init()
 
 screenX = 1920
 screenY = 1080
+slider_x = 930
 WHITE = (255, 255, 255)
 BLACK = (  0,   0,   0)
 GREEN = (  0, 200,  20)
@@ -18,7 +19,7 @@ RED   = (255,   0,   0)
 GREY  = ( 71,  58,  53)
 
 fontCavier = pygame.font.Font(os.path.join("fonts", "CaviarDreams.ttf"), 24)
-fontDeja = pygame.font.Font(os.path.join("fonts", "DejaVuSans.ttf"), 24)
+fontDeja = pygame.font.Font(os.path.join("fonts", "DejaVuSans.ttf"), 64)
 fontCapture = pygame.font.Font(os.path.join("fonts", "Capture_it.ttf"), 28)
 
 cloud1 = [0, cloud1_5, cloud1_4, cloud1_3, cloud1_2, cloud1_1, cloud1_6]
@@ -32,7 +33,7 @@ anim = [plus, sword]
 screen = pygame.display.set_mode((screenX, screenY))
 
 song = pygame.mixer.Sound(os.path.join("music", "main_song2.ogg"))
-song.set_volume(0)
+song.set_volume(0.5)  #0.5
 song.play()
 
 def game():
@@ -46,7 +47,7 @@ def game():
 
     click_time = 0
 
-    turn = 0
+    turn = 44
     am = 1
 
     pointers = []
@@ -127,13 +128,15 @@ def game():
                     if (not holding):
 
                         if (click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8) and (click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8) \
-                            and (click_y >= 30) and (click_y <= 30 + turn_bttn.get_height()):
+                            and (click_y >= 30) and (click_y <= 30 + turn_bttn.get_height()) :
 
-                            if (players[turn % 2].count(1) - 24 > 0):
-                                pulls[turn % 2] += int(2 + abs(players[turn % 2].count(1) - 24) + turn - 50)
+                            if (turn % 2 == 1):
+                                for i in range(2):
+                                    if (players[turn % 2].count(1) - 24 > 0):
+                                        pulls[i] += int(2 + abs(players[turn % 2].count(1) - 24) + turn - 50)
 
-                            else:
-                                pulls[turn % 2] += int(2 + round(0.1 * players[turn % 2].count(1)) + turn - 50)
+                                    else:
+                                        pulls[i] += int(2 + round(0.1 * players[turn % 2].count(1)) + turn - 50)
 
                             for i in range(50):
                                 av_move[i] = 0
@@ -141,10 +144,6 @@ def game():
 
                             turn += 1
                             clicked = False
-
-                        if (pulls[(turn + 1) % 2] == 0):
-
-                            pulls[(turn + 1) % 2] = int(2 + round(0.1 * players[(turn + 1) / 2].count(1)) + turn - 50)
 
                         for i in range(50):
 
@@ -167,11 +166,11 @@ def game():
 
                         screen.blit(green_gex, (280 - green_gex.get_width() / 2, -108))
                         text = fontCapture.render("blue : " + str(pulls[0]), True, WHITE)
-                        screen.blit(text, (screenX  / 8  - text.get_width() / 2 + 45, 0))
+                        screen.blit(text, (screenX  / 8  - text.get_width() / 2 + 45, 10))
 
                         screen.blit(green_gex, (1624 - green_gex.get_width() / 2, -108))
                         text = fontCapture.render("red : " + str(pulls[1]), True, WHITE)
-                        screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 0))
+                        screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 10))
 
                         am = int(amount(screen, click_x, click_y, button_x1, button_x5, button_x10))
                         clicked = False
@@ -346,6 +345,12 @@ def menu():
             game()
 
         if (clicked and click_x >= 1530 and click_x <= 1730\
+                and click_y >= 260 and click_y <= 360):
+
+            clicked = False
+            settings()
+
+        if (clicked and click_x >= 1530 and click_x <= 1730\
                 and click_y >= 750 and click_y <= 850):
             clicked = False
             pygame.quit()
@@ -379,6 +384,71 @@ def menu():
             elif ev.type == pygame.MOUSEBUTTONDOWN:
                 clicked = True
                 click_x, click_y = ev.pos
+
+def settings():
+    global slider_x, song
+
+    textSound = fontDeja.render("Sound", True, BLACK)
+    textPro = fontDeja.render("(" + str((slider_x - 620) // 31 * 5) + "%)", True, BLACK)
+    clicked = False
+
+    while(True):
+        screen.blit(settings_list, (0,0))
+        screen.blit(textSound, (750, 250))
+        screen.blit(slider, (slider_x, 340))
+        screen.blit(textPro, (1050, 250))
+
+        pygame.display.flip()
+
+        if (clicked == True):
+
+            if (click_x <= 360 or click_x >= 1560) or (click_y <= 210 or click_y >= 870):
+                menu()
+
+            elif (clicked and click_x >= 620 and click_x <= 1240\
+                    and click_y >= 310 and click_y <= 370):
+
+                while (clicked == True):
+
+                    if (slider_x > 1240):
+                        slider_x = 1240
+
+                    elif (slider_x < 620):
+                        slider_x = 620
+
+                    slider_x = (slider_x - 620) // 31 * 31 + 620
+
+                    song.set_volume((slider_x - 620) // 31 / (20 * 1.0))
+
+                    textPro = fontDeja.render("(" + str((slider_x - 620) // 31 * 5) + "%)", True, BLACK)
+                    screen.blit(settings_list, (0,0))
+                    screen.blit(textSound, (750, 250))
+                    screen.blit(textPro, (1050, 250))
+                    screen.blit(slider, (slider_x, 340))
+                    pygame.display.flip()
+
+                    for ev in pygame.event.get():
+
+                        if ev.type == pygame.MOUSEBUTTONUP:
+                            clicked = False
+
+                        elif ev.type == pygame.MOUSEMOTION:
+                            slider_x = ev.pos[0]
+
+
+
+
+            clicked = False
+
+        for ev in pygame.event.get():
+
+            if ev.type == pygame.QUIT:
+                pygame.quit()
+
+            elif ev.type == pygame.MOUSEBUTTONDOWN:
+                clicked = True
+                click_x, click_y = ev.pos
+
 
 menu()
 
