@@ -74,6 +74,8 @@ button_exit = pygame.image.load(os.path.join("pics/menu", "button_exit.png"))
 button_play = pygame.image.load(os.path.join("pics/menu", "button_play.png"))
 button_settings = pygame.image.load(os.path.join("pics/menu", "button_settings.png"))
 
+settings_game_button = pygame.image.load(os.path.join("pics", "settings_game_button.png"))
+
 
 fon = pygame.image.load(os.path.join("pics", "fon.png"))
 mass = []

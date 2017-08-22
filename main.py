@@ -18,6 +18,8 @@ BLUE  = (  0,   0, 255)
 RED   = (255,   0,   0)
 GREY  = ( 71,  58,  53)
 
+game_start = False
+
 fontCavier = pygame.font.Font(os.path.join("fonts", "CaviarDreams.ttf"), 24)
 fontDeja = pygame.font.Font(os.path.join("fonts", "DejaVuSans.ttf"), 64)
 fontCapture = pygame.font.Font(os.path.join("fonts", "Capture_it.ttf"), 28)
@@ -37,6 +39,9 @@ song.set_volume(0)  #0.5
 song.play()
 
 def playervsplayer():
+
+    global game_start, web_list, player1, player2, mass, soldiers, turn, heroes, am, pulls
+    game_start = True
 
     sleeping = False
     clicked = False
@@ -80,12 +85,20 @@ def playervsplayer():
     screen.blit(fon, (0, 0))
     screen.blit(web, (0, 0))
     screen.blit(turn_bttn, (screenX / 2 - turn_bttn.get_width() / 2 - 8, 30))
+    screen.blit(settings_game_button,(1920 / 2  + 328 - settings_game_button.get_width() / 2, settings_game_button.get_height()/2 ))
+
 
     while True:
 
         if (not sleeping):
 
             if (clicked):
+
+                if click_x < (1920 / 2  + 328 + settings_game_button.get_width() / 2) and click_x > (1920 / 2  + 328 - settings_game_button.get_width() / 2) and click_y < 1.5*settings_game_button.get_height() and  click_y > 0.5*settings_game_button.get_height():
+
+                    settings()
+
+
 
                 if (turn < 50):
 
@@ -681,7 +694,7 @@ def menu():
                 click_x, click_y = ev.pos
 
 def settings():
-    global slider_x, song
+    global slider_x, song, game_start, web_list, player1, player2, mass, soldiers, turn, heroes, am, pulls
 
     textSound = fontDeja.render("Sound", True, BLACK)
     textPro = fontDeja.render("(" + str((slider_x - 620) // 31 * 5) + "%)", True, BLACK)
@@ -697,8 +710,66 @@ def settings():
 
         if (clicked == True):
 
-            if (click_x <= 360 or click_x >= 1560) or (click_y <= 210 or click_y >= 870):
+            if (click_x <= 1138 and click_x >= 796) and (click_y <= 763  and click_y >= 655):
+                game_start = False
                 menu()
+
+            if (click_x <= 360 or click_x >= 1560) or (click_y <= 210 or click_y >= 870):
+
+                if game_start == False:
+                    menu()
+                else:
+                    screen.fill((GREEN))
+                    screen.blit(fon, (0, 0))
+                    screen.blit(web, (0, 0))
+                    screen.blit(turn_bttn, (screenX / 2 - turn_bttn.get_width() / 2 - 8, 30))
+                    screen.blit(settings_game_button,(1920 / 2  + 328 - settings_game_button.get_width() / 2, settings_game_button.get_height()/2 ))
+
+                    for i in range(50):
+                        if player1[i]==1:
+                            screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
+                            screen.blit(player1_gex, (web_list[i][0] - player1_gex.get_width() / 2, web_list[i][1] - player1_gex.get_height() / 2))
+                        if player2[i]==1:
+                            screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
+                            screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
+
+                    for i in range(50):
+
+                        if (soldiers[i] > 0 and soldiers[i] < 45):
+
+                            for j in range(((soldiers[i] - soldiers[i] // 15 * 15) // 5) + 1):
+
+                                screen.blit(heroes[soldiers[i] // 15], \
+                                (web_list[i][0] - heroes[soldiers[i] // 15].get_width() / 2 - j * 10  , web_list[i][1] - heroes[soldiers[i] // 15].get_height() / 2 + j * 5))
+
+                            text = fontCapture.render(str(soldiers[i]), True, (255, 255, 255, 255))
+                            screen.blit(text, (web_list[i][0] - 15, web_list[i][1] - 70))
+
+                    if turn>=50:
+                        if (turn % 2 == 0):
+                            text = fontCapture.render("player 2", True, GREY)
+                            screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
+                            text = fontCapture.render("player 1", True, WHITE)
+                            screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
+
+                        else:
+                            text = fontCapture.render("player 1", True, GREY)
+                            screen.blit(text, (screenX  / 2 - text.get_width() / 2, 0))
+                            text = fontCapture.render("player 2", True, WHITE)
+                            screen.blit(text, (screenX  / 2  - text.get_width() / 2, 0))
+
+                        screen.blit(green_gex, (280 - green_gex.get_width() / 2, -108))
+                        text = fontCapture.render("blue : " + str(pulls[0]), True, WHITE)
+                        screen.blit(text, (screenX  / 8  - text.get_width() / 2 + 45, 10))
+
+                        screen.blit(green_gex, (1624 - green_gex.get_width() / 2, -108))
+                        text = fontCapture.render("red : " + str(pulls[1]), True, WHITE)
+                        screen.blit(text, (screenX  / 8 * 7  - text.get_width() / 2 - 50, 10))
+
+                        am = int(amount(screen, click_x, click_y, button_x1, button_x5, button_x10))
+                    break
+
+
 
             elif (clicked and click_x >= 620 and click_x <= 1240\
                     and click_y >= 310 and click_y <= 536):
