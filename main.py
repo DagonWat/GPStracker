@@ -338,16 +338,6 @@ def playervsplayer():
             elif (ev.type == pygame.MOUSEBUTTONUP):
                 holding = False
 
-def multiplayer():
-    import socket
-
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(("178.124.203.226", 9999))
-
-    sock.send(bytes(message, 'UTF-8'))
-
-
-
 def menu():
     global bot_turn_list
 
