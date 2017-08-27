@@ -18,6 +18,7 @@ BLUE  = (  0,   0, 255)
 RED   = (255,   0,   0)
 GREY  = ( 71,  58,  53)
 
+
 game_start = False
 
 fontCavier = pygame.font.Font(os.path.join("fonts", "CaviarDreams.ttf"), 24)
@@ -41,7 +42,7 @@ song.play()
 
 def game():
 
-    global game_start, web_list, player1, player2, mass, soldiers, turn, heroes, am, pulls
+    global game_start, web_list, player1, player2, mass, soldiers, turn, heroes, am, pulls, memory, green_gex, players_gex
     game_start = True
 
     sleeping = False
@@ -93,6 +94,7 @@ def game():
 
         if (not sleeping):
 
+
             if (clicked):
 
                 if click_x < (1920 / 2  + 328 + settings_game_button.get_width() / 2) and click_x > (1920 / 2  + 328 - settings_game_button.get_width() / 2) and click_y < 1.5*settings_game_button.get_height() and  click_y > 0.5*settings_game_button.get_height():
@@ -119,8 +121,9 @@ def game():
                                 memory = i
 
                                 players[turn % 2][i] = 1
-                                turn += 1
+                                turn+=1
                                 clicked = False
+                                bot_turn()
 
                             elif turn == 49 and player1[i] + player2[i] == 0:
                                 screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2, web_list[memory][1] - mass[memory].get_height() / 2))
@@ -145,18 +148,14 @@ def game():
                             and (click_y >= 30) and (click_y <= 30 + turn_bttn.get_height()) :
 
                             if (turn % 2 == 1):
-                                for i in range(2):
-                                    if (players[turn % 2].count(1) - 24 > 0):
-                                        pulls[i] += int(2 + abs(players[turn % 2].count(1) - 24) + turn - 50)
-
-                                    else:
-                                        pulls[i] += int(2 + round(0.1 * players[turn % 2].count(1)) + turn - 50)
+                                    pulls[turn % 2] += int(2 + round(0.16 * players[turn % 2].count(1)) + turn - 50)
+                                    pulls[turn % 2 - 1] += int(2 + round(0.16 * players[turn % 2 - 1].count(1)) + turn - 50)
 
                             for i in range(50):
                                 av_move[i] = 0
                                 av_attack[i] = 0
 
-                            turn += 1
+                            turn+=1
                             clicked = False
 
                         for i in range(50):
@@ -346,6 +345,12 @@ def game():
                 holding = False
 
 def menu():
+    global bot_turn_list
+
+    bot_turn_list = []
+    for i in range(50, 25 , -1):
+        bot_turn_list.append(i-1)
+
     screen.blit(zastavka, (0, 0))
     prev_time = time.time()
     counter = 0
@@ -398,6 +403,31 @@ def menu():
             elif ev.type == pygame.MOUSEBUTTONDOWN:
                 clicked = True
                 click_x, click_y = ev.pos
+
+def bot_turn():
+    global turn , player1, player2, bot_turn_list, memory, mass, web_list, green_gex, players_gex
+    if turn <= 50:
+        n = bot_turn_list[0]
+        while player1[n] == 1:
+            for i in range(len(bot_turn_list)):
+                bot_turn_list[i] -= 1
+                n = bot_turn_list[0]
+
+        if player1[n] != 1:
+            player2[n] = 1
+            bot_turn_list.remove(n)
+            screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2 - 3, web_list[memory][1] - mass[memory].get_height() / 2 - 2))
+            screen.blit(players_gex[(turn + 1) % 2], (web_list[memory][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[memory][1] - players_gex[(turn + 1) % 2].get_height() / 2))
+
+            screen.blit(mass[n], (web_list[n][0] - green_gex.get_width() / 2, web_list[n][1] - green_gex.get_height() / 2))
+            screen.blit(players_gex[turn % 2], (web_list[n][0] - players_gex[turn % 2].get_width() / 2, web_list[n][1] - players_gex[turn % 2].get_height() / 2))
+
+            memory = n
+
+        turn+=1
+        clicked = False
+
+
 
 def settings():
     global slider_x, song, game_start, web_list, player1, player2, mass, soldiers, turn, heroes, am, pulls
@@ -504,7 +534,7 @@ def settings():
                         if ev.type == pygame.MOUSEBUTTONUP:
                             clicked = False
 
-                        elif ev.type == pygame.MOUSEMOTION:
+                        elif ev.type == pygame.MOUSEMOTION and clicked == True:
                             slider_x = ev.pos[0]
 
 
