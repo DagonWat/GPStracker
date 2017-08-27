@@ -36,11 +36,10 @@ anim = [plus, sword]
 screen = pygame.display.set_mode((screenX, screenY))
 
 song = pygame.mixer.Sound(os.path.join("music", "main_song2.ogg"))
-song.set_volume(0.5)  #0.5
+song.set_volume(0)  #0.5
 song.play()
 
-
-def game():
+def playervsplayer():
 
     global game_start, web_list, player1, player2, mass, soldiers, turn, heroes, am, pulls, memory, green_gex, players_gex
     game_start = True
@@ -109,7 +108,7 @@ def game():
 
                         if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
 
-                            if turn < 49 and player1[i] + player2[i] == 0:
+                            if (turn < 49) and (player1[i] + player2[i] == 0):
                                 if (memory >= 0):
                                     screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2 - 3, web_list[memory][1] - mass[memory].get_height() / 2 - 2))
                                     screen.blit(players_gex[(turn + 1) % 2], (web_list[memory][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[memory][1] - players_gex[(turn + 1) % 2].get_height() / 2))
@@ -125,7 +124,7 @@ def game():
                                 clicked = False
                                 bot_turn()
 
-                            elif turn == 49 and player1[i] + player2[i] == 0:
+                            elif (turn == 49) and (player1[i] + player2[i] == 0):
                                 screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2, web_list[memory][1] - mass[memory].get_height() / 2))
                                 screen.blit(players_gex[(turn + 1) % 2], (web_list[memory][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[memory][1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
@@ -137,7 +136,7 @@ def game():
 
                                 clicked = False
 
-                        elif i == 49:
+                        if i == 49:
                             clicked = False
 
                 else:
@@ -344,6 +343,9 @@ def game():
             elif (ev.type == pygame.MOUSEBUTTONUP):
                 holding = False
 
+def multiplayer():
+    
+
 def menu():
     global bot_turn_list
 
@@ -361,7 +363,7 @@ def menu():
         if (clicked and click_x >= 1530 and click_x <= 1730\
                 and click_y >= 70 and click_y <= 170):
             clicked = False
-            game()
+            playervsplayer()
 
         if (clicked and click_x >= 1530 and click_x <= 1730\
                 and click_y >= 260 and click_y <= 360):
