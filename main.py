@@ -100,8 +100,6 @@ def playervsplayer():
 
                     settings()
 
-
-
                 if (turn < 50):
 
                     for i in range(50):
@@ -344,14 +342,21 @@ def playervsplayer():
                 holding = False
 
 def multiplayer():
-    
+    import socket
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect(("178.124.203.226", 9999))
+
+    sock.send(bytes(message, 'UTF-8'))
+
+
 
 def menu():
     global bot_turn_list
 
     bot_turn_list = []
-    for i in range(50, 25 , -1):
-        bot_turn_list.append(i-1)
+    for i in range(50, 25, -1):
+        bot_turn_list.append(i - 1)
 
     screen.blit(zastavka, (0, 0))
     prev_time = time.time()
@@ -405,31 +410,6 @@ def menu():
             elif ev.type == pygame.MOUSEBUTTONDOWN:
                 clicked = True
                 click_x, click_y = ev.pos
-
-def bot_turn():
-    global turn , player1, player2, bot_turn_list, memory, mass, web_list, green_gex, players_gex
-    if turn <= 50:
-        n = bot_turn_list[0]
-        while player1[n] == 1:
-            for i in range(len(bot_turn_list)):
-                bot_turn_list[i] -= 1
-                n = bot_turn_list[0]
-
-        if player1[n] != 1:
-            player2[n] = 1
-            bot_turn_list.remove(n)
-            screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2 - 3, web_list[memory][1] - mass[memory].get_height() / 2 - 2))
-            screen.blit(players_gex[(turn + 1) % 2], (web_list[memory][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[memory][1] - players_gex[(turn + 1) % 2].get_height() / 2))
-
-            screen.blit(mass[n], (web_list[n][0] - green_gex.get_width() / 2, web_list[n][1] - green_gex.get_height() / 2))
-            screen.blit(players_gex[turn % 2], (web_list[n][0] - players_gex[turn % 2].get_width() / 2, web_list[n][1] - players_gex[turn % 2].get_height() / 2))
-
-            memory = n
-
-        turn+=1
-        clicked = False
-
-
 
 def settings():
     global slider_x, song, game_start, web_list, player1, player2, mass, soldiers, turn, heroes, am, pulls
@@ -553,6 +533,30 @@ def settings():
                 clicked = True
                 click_x, click_y = ev.pos
 
+def bot_turn():
+    global turn , player1, player2, bot_turn_list, memory, mass, web_list, green_gex, players_gex
+
+    if turn <= 50:
+        n = bot_turn_list[0]
+
+        while player1[n] == 1:
+            for i in range(len(bot_turn_list)):
+                bot_turn_list[i] -= 1
+                n = bot_turn_list[0]
+
+        if player1[n] != 1:
+            player2[n] = 1
+            bot_turn_list.remove(n)
+            screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2 - 3, web_list[memory][1] - mass[memory].get_height() / 2 - 2))
+            screen.blit(players_gex[(turn + 1) % 2], (web_list[memory][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[memory][1] - players_gex[(turn + 1) % 2].get_height() / 2))
+
+            screen.blit(mass[n], (web_list[n][0] - green_gex.get_width() / 2, web_list[n][1] - green_gex.get_height() / 2))
+            screen.blit(players_gex[turn % 2], (web_list[n][0] - players_gex[turn % 2].get_width() / 2, web_list[n][1] - players_gex[turn % 2].get_height() / 2))
+
+            memory = n
+
+        turn+=1
+        clicked = False
 
 menu()
 
