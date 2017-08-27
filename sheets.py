@@ -76,6 +76,10 @@ button_settings = pygame.image.load(os.path.join("pics/menu", "button_settings.p
 
 settings_game_button = pygame.image.load(os.path.join("pics", "settings_game_button.png"))
 
+castle_red = pygame.image.load(os.path.join("pics", "castle_red.png"))
+castle_blue = pygame.image.load(os.path.join("pics", "castle_blue.png"))
+castle_neit = pygame.image.load(os.path.join("pics", "castle_neit.png"))
+
 
 fon = pygame.image.load(os.path.join("pics", "fon.png"))
 mass = []

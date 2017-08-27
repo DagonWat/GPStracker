@@ -24,6 +24,8 @@ game_start = False
 fontCavier = pygame.font.Font(os.path.join("fonts", "CaviarDreams.ttf"), 24)
 fontDeja = pygame.font.Font(os.path.join("fonts", "DejaVuSans.ttf"), 64)
 fontCapture = pygame.font.Font(os.path.join("fonts", "Capture_it.ttf"), 28)
+castles = [castle_blue, castle_red]
+castles_mass = [11,13,24,27,38,40]
 
 cloud1 = [0, cloud1_5, cloud1_4, cloud1_3, cloud1_2, cloud1_1, cloud1_6]
 cloud2 = [0, cloud2_1, cloud2_2, cloud2_3, cloud2_4, cloud2_5, cloud2_6]
@@ -64,6 +66,10 @@ def playervsplayer():
     pull1 =  5
     pull2 =  5
 
+    player1_castles = 0
+    player2_castles = 0
+
+    players_castles = [player1_castles, player2_castles]
     heroes = [soldier, horse, tevton]
     players = [player1, player2]
     players_gex = [player1_gex, player2_gex]
@@ -93,6 +99,8 @@ def playervsplayer():
 
         if (clicked):
 
+
+
             if click_x < (1920 / 2  + 328 + settings_game_button.get_width() / 2) and click_x > (1920 / 2  + 328 - settings_game_button.get_width() / 2) and click_y < 1.5*settings_game_button.get_height() and  click_y > 0.5*settings_game_button.get_height():
 
                 settings()
@@ -108,9 +116,14 @@ def playervsplayer():
                                 screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2 - 3, web_list[memory][1] - mass[memory].get_height() / 2 - 2))
                                 screen.blit(players_gex[(turn + 1) % 2], (web_list[memory][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[memory][1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
+                                if memory+1 in castles_mass:
+                                    screen.blit(castles[(turn+1) % 2], (web_list[memory][0] - castles[turn % 2].get_width() / 2, web_list[memory][1] - castles[turn % 2].get_height() / 2))
+
                             screen.blit(mass[i], (web_list[i][0] - green_gex.get_width() / 2, web_list[i][1] - green_gex.get_height() / 2))
                             screen.blit(circle, (web_list[i][0] - circle.get_width() / 2, web_list[i][1] - circle.get_height() / 2))
                             screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                            if i +1  in castles_mass:
+                                screen.blit(castles[turn % 2], (web_list[i][0] - castles[turn % 2].get_width() / 2, web_list[i][1] - castles[turn % 2].get_height() / 2))
 
                             memory = i
 
@@ -128,6 +141,8 @@ def playervsplayer():
 
                             screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                             screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
+                            if i in castles_mass:
+                                screen.blit(castles[turn % 2], (web_list[i][0] - castles[turn % 2].get_width() / 2, web_list[i][1] - castles[turn % 2].get_height() / 2))
 
                             clicked = False
 
@@ -141,9 +156,21 @@ def playervsplayer():
                     if (click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8) and (click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8) \
                         and (click_y >= 30) and (click_y <= 30 + turn_bttn.get_height()) :
 
+                        for k in range(50):
+                            if (player1[k] == 1) and (k + 1) in castles_mass:
+                                player1_castles += 1
+                            if (player2[k] == 1) and (k + 1) in castles_mass:
+                                player2_castles += 1
+
                         if (turn % 2 == 1):
-                                pulls[turn % 2] += int(2 + round(0.16 * players[turn % 2].count(1)) + turn - 50)
-                                pulls[turn % 2 - 1] += int(2 + round(0.16 * players[turn % 2 - 1].count(1)) + turn - 50)
+
+                            pulls[turn % 2] += int(2 + round(0.16 * players[turn % 2].count(1)) + math.floor(turn/2 - 25) + (player2_castles *(turn - 50)))
+                            print("2: ",player2_castles )
+
+                        if (turn % 2 == 0):
+
+                            pulls[turn % 2] += int(2 + round(0.16 * players[turn % 2].count(1)) + math.floor(turn/2 - 25) + (player1_castles *(turn - 50)))
+                            print("1: ",player1_castles )
 
                         for i in range(50):
                             av_move[i] = 0
@@ -151,6 +178,8 @@ def playervsplayer():
 
                         turn+=1
                         clicked = False
+                        player1_castles = 0
+                        player2_castles = 0
 
                     for i in range(50):
 
@@ -164,6 +193,8 @@ def playervsplayer():
 
                             screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                             screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                            if i +1  in castles_mass:
+                                screen.blit(castles[turn % 2], (web_list[i][0] - castles[turn % 2].get_width() / 2, web_list[i][1] - castles[turn % 2].get_height() / 2))
 
                             soldiers[i] += am
 
@@ -224,8 +255,14 @@ def playervsplayer():
 
                                 if turn % 2 == 0:
                                     screen.blit(players_gex[players[(turn + 1) % 2][pointers[j]] == 1], ((web_list[pointers[j]][0] - player1_gex.get_width() / 2, web_list[pointers[j]][1] - player1_gex.get_height() / 2)))
+
+                                    if pointers[j] +1  in castles_mass:
+                                        screen.blit(castles[turn % 2], (web_list[pointers[j]][0] - castles[turn% 2].get_width() / 2, web_list[pointers[j]][1] - castles[turn% 2].get_height() / 2))
                                 else:
                                     screen.blit(players_gex[players[turn % 2][pointers[j]] == 1], ((web_list[pointers[j]][0] - player1_gex.get_width() / 2, web_list[pointers[j]][1] - player1_gex.get_height() / 2)))
+
+                                    if pointers[j] +1  in castles_mass:
+                                        screen.blit(castles[turn  % 2], (web_list[pointers[j]][0] - castles[turn % 2].get_width() / 2, web_list[pointers[j]][1] - castles[turn % 2].get_height() / 2))
 
                             for j in range(50):
 
@@ -244,8 +281,12 @@ def playervsplayer():
 
                                             screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                                             screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                                            if i+1 in castles_mass:
+                                                screen.blit(castles[turn % 2], (web_list[i][0] - castles[turn % 2].get_width() / 2, web_list[i][1] - castles[turn % 2].get_height() / 2))
                                             screen.blit(mass[i], (web_list[j][0] - mass[i].get_width() / 2, web_list[j][1] - mass[i].get_height() / 2))
                                             screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
+                                            if j+1 in castles_mass:
+                                                screen.blit(castles[(turn+1) % 2], (web_list[j][0] - castles[turn % 2].get_width() / 2, web_list[j][1] - castles[turn % 2].get_height() / 2))
 
                                         elif (players[(turn + 1) % 2][j] == 1) and (av_attack[i] == 0):
 
@@ -259,8 +300,13 @@ def playervsplayer():
 
                                             screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                                             screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                                            if i+1 in castles_mass:
+                                                screen.blit(castles[turn % 2], (web_list[i][0] - castles[turn % 2].get_width() / 2, web_list[i][1] - castles[turn % 2].get_height() / 2))
+
                                             screen.blit(mass[i], (web_list[j][0] - mass[i].get_width() / 2, web_list[j][1] - mass[i].get_height() / 2))
                                             screen.blit(players_gex[(turn + 1) % 2], (web_list[j][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[j][1] - players_gex[(turn + 1) % 2].get_height() / 2))
+                                            if j+1 in castles_mass:
+                                                screen.blit(castles[(turn+1) % 2], (web_list[j][0] - castles[turn % 2].get_width() / 2, web_list[j][1] - castles[turn % 2].get_height() / 2))
 
                                             if (soldiers[j] <= 0) and (soldiers[i] <= 0):
 
@@ -273,8 +319,13 @@ def playervsplayer():
 
                                                 screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                                                 screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                                                if i+1 in castles_mass:
+                                                    screen.blit(castles[turn % 2], (web_list[i][0] - castles[turn % 2].get_width() / 2, web_list[i][1] - castles[turn % 2].get_height() / 2))
+
                                                 screen.blit(mass[i], (web_list[j][0] - mass[i].get_width() / 2, web_list[j][1] - mass[i].get_height() / 2))
                                                 screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
+                                                if j+1 in castles_mass:
+                                                    screen.blit(castles[turn % 2], (web_list[j][0] - castles[turn % 2].get_width() / 2, web_list[j][1] - castles[turn % 2].get_height() / 2))
 
                                                 av_attack[i] = 0
                                                 av_attack[j] = 1
@@ -292,6 +343,8 @@ def playervsplayer():
 
                                     screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                                     screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
+                                    if i+1 in castles_mass:
+                                        screen.blit(castles[turn % 2], (web_list[i][0] - castles[turn % 2].get_width() / 2, web_list[i][1] - castles[turn % 2].get_height() / 2))
 
                             break
 
@@ -547,8 +600,14 @@ def bot_turn():
             screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2 - 3, web_list[memory][1] - mass[memory].get_height() / 2 - 2))
             screen.blit(players_gex[(turn + 1) % 2], (web_list[memory][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[memory][1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
+            if memory+1 in castles_mass:
+                screen.blit(castles[(turn+1) % 2], (web_list[memory][0] - castles[turn % 2].get_width() / 2, web_list[memory][1] - castles[turn % 2].get_height() / 2))
+
             screen.blit(mass[n], (web_list[n][0] - green_gex.get_width() / 2, web_list[n][1] - green_gex.get_height() / 2))
             screen.blit(players_gex[turn % 2], (web_list[n][0] - players_gex[turn % 2].get_width() / 2, web_list[n][1] - players_gex[turn % 2].get_height() / 2))
+
+            if n+1 in castles_mass:
+                screen.blit(castles[turn % 2], (web_list[n][0] - castles[turn % 2].get_width() / 2, web_list[n][1] - castles[turn % 2].get_height() / 2))
 
             memory = n
 
