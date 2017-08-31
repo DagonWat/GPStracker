@@ -43,7 +43,7 @@ song.play()
 
 def playervsplayer():
 
-    global game_start, web_list, player1, player2, mass, soldiers, turn, heroes, am, pulls, memory, green_gex, players_gex
+    global game_start, web_list, player1, player2, mass, soldiers, turn, heroes, am, pulls, memory, green_gex, players_gex, player1_castles, player2_castles, player1_castles_list, player2_castles_list
     game_start = True
 
     sleeping = False
@@ -66,6 +66,8 @@ def playervsplayer():
     pull1 =  5
     pull2 =  5
 
+    player1_castles_list = []
+    player2_castles_list = []
     player1_castles = 0
     player2_castles = 0
 
@@ -107,6 +109,16 @@ def playervsplayer():
 
             if (turn < 50):
 
+                for m in range(50):
+                    if (player1[m] == 1) and (m + 1) in castles_mass:
+                        if m not in player1_castles_list:
+                            player1_castles += 1
+                            player1_castles_list.append(m)
+                    if (player2[m] == 1) and (m + 1) in castles_mass:
+                        if m not in player2_castles_list:
+                            player2_castles += 1
+                            player2_castles_list.append(m)
+
                 for i in range(50):
 
                     if (web_list[i][0] - click_x) ** 2 + (web_list[i][1] - click_y) ** 2 < R ** 2:
@@ -123,6 +135,8 @@ def playervsplayer():
                             screen.blit(circle, (web_list[i][0] - circle.get_width() / 2, web_list[i][1] - circle.get_height() / 2))
                             screen.blit(players_gex[turn % 2], (web_list[i][0] - players_gex[turn % 2].get_width() / 2, web_list[i][1] - players_gex[turn % 2].get_height() / 2))
                             if i +1  in castles_mass:
+                                if i in last_castles:
+                                    last_castles.remove(i)
                                 screen.blit(castles[turn % 2], (web_list[i][0] - castles[turn % 2].get_width() / 2, web_list[i][1] - castles[turn % 2].get_height() / 2))
 
                             memory = i
@@ -156,11 +170,6 @@ def playervsplayer():
                     if (click_x >= screenX / 2 - turn_bttn.get_width() / 2 - 8) and (click_x <= screenX / 2 + turn_bttn.get_width() / 2 + 8) \
                         and (click_y >= 30) and (click_y <= 30 + turn_bttn.get_height()) :
 
-                        for k in range(50):
-                            if (player1[k] == 1) and (k + 1) in castles_mass:
-                                player1_castles += 1
-                            if (player2[k] == 1) and (k + 1) in castles_mass:
-                                player2_castles += 1
 
                         if (turn % 2 == 1):
 
@@ -262,7 +271,7 @@ def playervsplayer():
                                     screen.blit(players_gex[players[turn % 2][pointers[j]] == 1], ((web_list[pointers[j]][0] - player1_gex.get_width() / 2, web_list[pointers[j]][1] - player1_gex.get_height() / 2)))
 
                                     if pointers[j] +1  in castles_mass:
-                                        screen.blit(castles[turn  % 2], (web_list[pointers[j]][0] - castles[turn % 2].get_width() / 2, web_list[pointers[j]][1] - castles[turn % 2].get_height() / 2))
+                                        screen.blit(castles[(turn+1)  % 2], (web_list[pointers[j]][0] - castles[turn % 2].get_width() / 2, web_list[pointers[j]][1] - castles[turn % 2].get_height() / 2))
 
                             for j in range(50):
 
@@ -286,7 +295,7 @@ def playervsplayer():
                                             screen.blit(mass[i], (web_list[j][0] - mass[i].get_width() / 2, web_list[j][1] - mass[i].get_height() / 2))
                                             screen.blit(players_gex[turn % 2], (web_list[j][0] - players_gex[turn % 2].get_width() / 2, web_list[j][1] - players_gex[turn % 2].get_height() / 2))
                                             if j+1 in castles_mass:
-                                                screen.blit(castles[(turn+1) % 2], (web_list[j][0] - castles[turn % 2].get_width() / 2, web_list[j][1] - castles[turn % 2].get_height() / 2))
+                                                screen.blit(castles[turn% 2], (web_list[j][0] - castles[turn % 2].get_width() / 2, web_list[j][1] - castles[turn % 2].get_height() / 2))
 
                                         elif (players[(turn + 1) % 2][j] == 1) and (av_attack[i] == 0):
 
@@ -392,7 +401,12 @@ def playervsplayer():
                 holding = False
 
 def menu():
-    global bot_turn_list
+    global bot_turn_list, bot_turn_list_castles , last_castles, castles_limit,g
+
+    g = 0
+    castles_limit = False
+    bot_turn_list_castles = [26,39,37,23,10,12]
+    last_castles = [26,39,37,23,10,12]
 
     bot_turn_list = []
     for i in range(50, 25, -1):
@@ -487,9 +501,13 @@ def settings():
                         if player1[i]==1:
                             screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                             screen.blit(player1_gex, (web_list[i][0] - player1_gex.get_width() / 2, web_list[i][1] - player1_gex.get_height() / 2))
+                        if i in player1_castles_list:
+                            screen.blit(castles[0], (web_list[i][0] - castles[0].get_width() / 2, web_list[i][1] - castles[0].get_height() / 2))
                         if player2[i]==1:
                             screen.blit(mass[i], (web_list[i][0] - mass[i].get_width() / 2, web_list[i][1] - mass[i].get_height() / 2))
                             screen.blit(player2_gex, (web_list[i][0] - player2_gex.get_width() / 2, web_list[i][1] - player2_gex.get_height() / 2))
+                        if i in player2_castles_list:
+                            screen.blit(castles[1], (web_list[i][0] - castles[1].get_width() / 2, web_list[i][1] - castles[1].get_height() / 2))
 
                     for i in range(50):
 
@@ -574,19 +592,85 @@ def settings():
                 click_x, click_y = ev.pos
 
 def bot_turn():
-    global turn , player1, player2, bot_turn_list, memory, mass, web_list, green_gex, players_gex
+    global turn , player1, player2, bot_turn_list, memory, mass, web_list, green_gex, players_gex, last_castles, castles_limit, player1_castles, player2_castles, g
 
     if turn <= 50:
-        n = bot_turn_list[0]
+        if player1_castles + player2_castles == 6:
+            castles_limit = True
+            print(True)
+        if turn <= 12 and castles_limit == False:
+            print (last_castles)
+            print (player1_castles_list)
+            print (player2_castles_list)
+            if turn  == 1:
+                st = 5
+                g = random.randrange(0,st)
+                g_minus = g - 1
+                if g_minus <= -1:
+                    g_minus = 5
+                while ((player1[bot_turn_list_castles[g]] == 0, player1[bot_turn_list_castles[(g+1)%6]] == 0, player1 [bot_turn_list_castles[g_minus]] == 0) != (True, True, True)):
+                    g_minus = g - 1
+                    if g_minus <= -1:
+                        g_minus = 5
+                    if player1[bot_turn_list_castles[g]] == 0:
+                        temp = last_castles[g]
+                        last_castles.remove(temp)
+                        g = (g+3) % 6
 
-        while player1[n] == 1:
-            for i in range(len(bot_turn_list)):
-                bot_turn_list[i] -= 1
-                n = bot_turn_list[0]
+                    else:
+                        g = (g+4) % 6
+                n = bot_turn_list_castles[g]
+                last_castles.remove(n)
+            if turn > 2 and castles_limit == False:
+                tik = 1
+
+                while player1[bot_turn_list_castles[g]] == 1 or player2[bot_turn_list_castles[g]] == 1:
+                    g_minus = g - 1
+                    if g_minus <= -1:
+                        g_minus = 5
+                    if (player1[bot_turn_list_castles[(g+1) % 6]] == 1  or player2[bot_turn_list_castles[(g+1) % 6]] == 1) and player1[bot_turn_list_castles[(g_minus) % 6]] != 1 and player2[bot_turn_list_castles[(g_minus) % 6]] != 1:
+
+                        temp_g = g-1
+                        if temp_g <= -1:
+                            temp_g = 5
+                        g = (temp_g % 6)
+
+                    elif (player1[bot_turn_list_castles[(g_minus) % 6]] == 1 or player2[bot_turn_list_castles[(g_minus) % 6]] == 1) and player1[bot_turn_list_castles[(g+1) % 6]] != 1 and player2[bot_turn_list_castles[(g+1) % 6]] != 1:
+
+                        g = ((g+1) % 6)
+
+                    else:
+                        if last_castles == []:
+                            break
+                        last_castles_num = (len(last_castles)-1)
+                        num_last = last_castles_num
+                        if num_last <=0:
+                            num_last = 1
+                        g = random.randrange(0,num_last)
+                        if last_castles_num <= 0:
+                            g = 0
+                        n = last_castles[g]
+                        if n in last_castles:
+                            last_castles.remove(n)
+                        tik = 0
+                        break
+                if tik == 1:
+                    n = bot_turn_list_castles[g]
+                    if n in last_castles:
+                        last_castles.remove(n)
+
+        if castles_limit == True:
+            n = bot_turn_list[0]
+            print("true")
+
+            while player1[n] == 1:
+                for i in range(len(bot_turn_list)):
+                    bot_turn_list[i] -= 1
+                    n = bot_turn_list[0]
 
         if player1[n] != 1:
             player2[n] = 1
-            bot_turn_list.remove(n)
+            #bot_turn_list.remove(n)
             screen.blit(mass[memory], (web_list[memory][0] - mass[memory].get_width() / 2 - 3, web_list[memory][1] - mass[memory].get_height() / 2 - 2))
             screen.blit(players_gex[(turn + 1) % 2], (web_list[memory][0] - players_gex[(turn + 1) % 2].get_width() / 2, web_list[memory][1] - players_gex[(turn + 1) % 2].get_height() / 2))
 
