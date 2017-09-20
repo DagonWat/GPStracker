@@ -45,45 +45,32 @@ public class MainActivity extends AppCompatActivity
 
     public static String POST(String url)
     {
-        InputStream inputStream = null;
         String result = "";
+
         try
         {
-
-            // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
-            // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
 
             String json = "";
 
-            // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("latitude", 41);
+            jsonObject.accumulate("latitude", 41.412);
+            jsonObject.accumulate("longitude", 81.542);
 
-            // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
             StringEntity se = new StringEntity(json);
 
-            // 6. set httpPost Entity
             httpPost.setEntity(se);
 
-            // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
 
-            // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
 
             result = "DID WORK";
-
         }
         catch (Exception e)
         {
