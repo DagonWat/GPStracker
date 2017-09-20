@@ -46,6 +46,9 @@ class ArticlesController < ApplicationController
     end
 
     def lol
+        @article = Article.new(article_params)
+
+        render 'new'
     end
 
     private
