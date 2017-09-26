@@ -2,19 +2,11 @@ package gpstracker.egor.by.tracker;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
+import gpstracker.egor.by.tracker.activity.SampleActivity;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -32,7 +24,10 @@ public class MainActivity extends AppCompatActivity
         longitude = 21.345212f;
 
         context = getApplicationContext();
+
+        startActivity(new Intent(this, SampleActivity.class));
     }
+
     public void sendCoords(View view)
     {
         Intent intent = new Intent(this, SendService.class);
