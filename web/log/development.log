@@ -4309,3 +4309,34 @@ NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007f3c38
   
 app/controllers/tracker_controller.rb:8:in `create'
   [1m[36mTracker Load (3.7ms)[0m  [1m[34mSELECT  "trackers".* FROM "trackers" LIMIT ?[0m  [["LIMIT", 11]]
+Started POST "/api/sometest.json" for 192.168.1.5 at 2017-09-27 22:20:08 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-09-27 19:20:08.627062"], ["updated_at", "2017-09-27 19:20:08.627062"]]
+  [1m[35m (87.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 308ms (ActiveRecord: 90.3ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007f8dac8b53a8>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest.json" for 192.168.1.5 at 2017-09-27 22:20:09 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-09-27 19:20:09.378326"], ["updated_at", "2017-09-27 19:20:09.378326"]]
+  [1m[35m (103.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 297ms (ActiveRecord: 105.1ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007f8dbc036780>):
+  
+app/controllers/tracker_controller.rb:8:in `create'

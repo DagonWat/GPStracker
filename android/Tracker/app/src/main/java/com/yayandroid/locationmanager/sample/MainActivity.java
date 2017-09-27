@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity implements SampleView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvLatitude = (TextView) findViewById(R.id.latitude);
-        tvLongitude = (TextView) findViewById(R.id.longitude);
+        tvLatitude = (TextView) findViewById(R.id.tvLatitude);
+        tvLongitude = (TextView) findViewById(R.id.tvLongitude);
         samplePresenter = new SamplePresenter(this);
 
         displayProgress();
@@ -66,16 +66,19 @@ public class MainActivity extends AppCompatActivity implements SampleView {
     {
         String[] s = text.split(",");
 
-        tvLatitude.setText(s[0].substring(0, 10));
-        tvLongitude.setText(s[1]);
+        String a = "Lat:  " + s[0].substring(6, 16);
+        String b = "Lon:  " + s[1];
 
-        latitude = Float.valueOf(s[0].substring(0, 10));
+        tvLatitude.setText(a);
+        tvLongitude.setText(b);
+
+        latitude = Float.valueOf(s[0].substring(6, 16));
         longitude = Float.valueOf(s[1]);
 
-        Intent intent = new Intent(this, SendService.class);
-        intent.putExtra("latitude", latitude);
-        intent.putExtra("longitude", longitude);
-        startService(intent);
+        Intent sendIntent = new Intent(this, SendService.class);
+        sendIntent.putExtra("latitude", latitude);
+        sendIntent.putExtra("longitude", longitude);
+        startService(sendIntent);
     }
 
     @Override
