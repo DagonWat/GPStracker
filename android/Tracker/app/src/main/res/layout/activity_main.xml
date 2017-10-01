@@ -57,7 +57,7 @@
         app:layout_constraintVertical_bias="0.131" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/etUrl"
         android:layout_width="360dp"
         android:layout_height="53dp"
         android:ems="10"
@@ -82,7 +82,7 @@
         app:layout_constraintVertical_bias="0.334" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/etTime"
         android:layout_width="104dp"
         android:layout_height="53dp"
         android:ems="10"
@@ -108,10 +108,11 @@
         app:layout_constraintVertical_bias="0.334" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
+        android:onClick="startSending"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -120,10 +121,11 @@
         app:layout_constraintVertical_bias="0.46" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btStop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Stop"
+        android:onClick="stopSending"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.847"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -145,10 +147,11 @@
         app:layout_constraintVertical_bias="0.795"></LinearLayout>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop"
+        android:text="Exit"
+        android:onClick="exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

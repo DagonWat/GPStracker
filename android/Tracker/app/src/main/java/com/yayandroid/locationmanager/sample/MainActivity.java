@@ -9,8 +9,11 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yayandroid.locationmanager.constants.FailType;
 import com.yayandroid.locationmanager.constants.ProcessType;
@@ -19,6 +22,9 @@ import com.yayandroid.locationmanager.sample.SamplePresenter;
 import com.yayandroid.locationmanager.sample.SamplePresenter.SampleView;
 import com.yayandroid.locationmanager.sample.service.SampleService;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity implements SampleView {
 
     private IntentFilter intentFilter;
@@ -26,9 +32,15 @@ public class MainActivity extends AppCompatActivity implements SampleView {
     private ProgressDialog progressDialog;
     private TextView tvLatitude;
     private TextView tvLongitude;
+    private EditText etUrl;
+    private EditText etTime;
     private float latitude;
     private float longitude;
+    public static final String URL = "url";
+    public static final String LON = "longitude";
+    public static final String LAT = "latitude";
     Intent intent;
+    Timer tim1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,11 +49,8 @@ public class MainActivity extends AppCompatActivity implements SampleView {
 
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
-        samplePresenter = new SamplePresenter(this);
-
-        displayProgress();
-        intent = new Intent(this, SampleService.class);
-        startService(intent);
+        etUrl = (EditText) findViewById(R.id.etUrl);
+        etTime = (EditText) findViewById(R.id.etTime);
     }
 
     @Override
@@ -74,11 +83,68 @@ public class MainActivity extends AppCompatActivity implements SampleView {
 
         latitude = Float.valueOf(s[0].substring(6, 16));
         longitude = Float.valueOf(s[1]);
+    }
 
+    public void stopSending(View view)
+    {
+        tim1.cancel();
+    }
+
+    private void sendCoords()
+    {
         Intent sendIntent = new Intent(this, SendService.class);
-        sendIntent.putExtra("latitude", latitude);
-        sendIntent.putExtra("longitude", longitude);
+
+        stopService(sendIntent);
+
+        sendIntent.putExtra(LAT, latitude);
+        sendIntent.putExtra(LON, longitude);
+        sendIntent.putExtra(URL, etUrl.getText().toString());
+
         startService(sendIntent);
+
+        //http://192.168.1.8:11000/api/sometest
+    }
+
+    public void startSending(View view)
+    {
+        tim1 = new Timer();
+        TimerTask bthh = new LocationTimer();
+
+        int period = Integer.parseInt(etTime.getText().toString());
+
+        if (period >= 10)
+        {
+            tim1.schedule(bthh, 200, period * 1000);
+        }
+        else
+        {
+            Toast.makeText(getBaseContext(), "The minimum time is 10 s.", Toast.LENGTH_LONG).show();
+            etTime.setText("10");
+            tim1.schedule(bthh, 200, 10000);
+        }
+
+    }
+
+    private void getLocation()
+    {
+        samplePresenter = new SamplePresenter(this);
+
+        displayProgress();
+        intent = new Intent(this, SampleService.class);
+        startService(intent);
+    }
+
+    private class LocationTimer extends TimerTask {
+        @Override
+        public void run() {
+            runOnUiThread( new Runnable(){
+                @Override
+                public void run() {
+                    getLocation();
+                    sendCoords();
+                }
+            });
+        }
     }
 
     @Override
@@ -133,4 +199,10 @@ public class MainActivity extends AppCompatActivity implements SampleView {
             }
         }
     };
+
+    public void exit(View view)
+    {
+        finish();
+        System.exit(0);
+    }
 }

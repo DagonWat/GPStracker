@@ -18,6 +18,7 @@ public class SendService extends Service {
 
     float latitude;
     float longitude;
+    String url;
 
     @Override
     public void onCreate()
@@ -27,9 +28,10 @@ public class SendService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        latitude = intent.getExtras().getFloat("latitude");
-        longitude = intent.getExtras().getFloat("longitude");
-        new HttpAsyncTask().execute("");
+        latitude = intent.getExtras().getFloat(MainActivity.LAT);
+        longitude = intent.getExtras().getFloat(MainActivity.LON);
+        url = intent.getExtras().getString(MainActivity.URL);
+        new HttpAsyncTask().execute(url);
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -79,13 +81,13 @@ public class SendService extends Service {
         @Override
         protected String doInBackground(String... urls)
         {
-            return POST("http://192.168.1.8:11000/api/sometest.json", latitude, longitude);
+            return POST(urls[0], latitude, longitude);
         }
 
         @Override
         protected void onPostExecute(String result)
         {
-            Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_SHORT).show();
         }
     }
 }
