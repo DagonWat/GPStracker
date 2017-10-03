@@ -1,4 +1,4 @@
-package egor.by.beaconclient;
+package by.dagonwat.beacon.library;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("egor.by.beaconclient", appContext.getPackageName());
+        assertEquals("by.dagonwat.beacon.library.test", appContext.getPackageName());
     }
 }

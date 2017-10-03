@@ -1,4 +1,4 @@
-package egor.by.beaconclient;
+package by.dagonwat.beacon.library;
 
 import org.junit.Test;
 

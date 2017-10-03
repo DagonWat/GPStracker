@@ -1,4 +1,4 @@
-package egor.by.beaconclient;
+package by.dagonwat.beacon;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,26 +18,39 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
     TextView txt;
-    String fserver = "";
     String size = "";
-    String serverIp = "ip";
-    int socketId = 10000;
+    ArrayList<String> beaconAddress;
+    ArrayList<String> beaconName;
+    ArrayList<String> beaconPicSize;
 
-    public final static String BROADCAST_ACTION = "by.egor.serviceback";
+    //ip address and socket from which we will get info
+    public static final String SERVER = "ip";
+    public static final int SOCKET = 10000;
+
+    public final static String BROADCAST_ACTION = "by.dagonwat.serviceback";
+    public final static String SIZE = "size";
+
     BroadcastReceiver br;
 
-    public void decode(String a)
+    //decode the only string server gives us into arrays
+    private void decode(String a)
     {
-        size = a;
-        txt.setText(a);
+        String[] parts = a.split("-");
+
+        for (int i = 0; i < parts.length; i += 3)
+        {
+            beaconAddress.add(parts[i]);
+            beaconName.add(parts[i + 1]);
+            beaconPicSize.add(parts[i + 2]);
+        }
     }
 
+    //blit the image of beacon
     public void decodeImage(byte[] a)
     {
         Bitmap bmp = BitmapFactory.decodeByteArray(a, 0, a.length);
@@ -45,15 +58,16 @@ public class MainActivity extends AppCompatActivity
         image.setImageBitmap(bmp);
     }
 
+    //start looking for beacons near
     public void startDiscovery(View view)
     {
         //Timer tim = new Timer();
         //TimerTask bthh = new MyTimerTask();
         //tim.schedule(bthh, 200, 500);
 
-        Intent intent = new Intent(this, NewService.class);
-        intent.putExtra("size", "18136");
-        startService(intent);
+        //Intent intent = new Intent(this, GetImageService.class);
+        //intent.putExtra(SIZE, "18136");
+        //startService(intent);
     }
 
     @Override
@@ -75,18 +89,18 @@ public class MainActivity extends AppCompatActivity
         IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
         registerReceiver(br, intFilt);
 
-        //new Task().execute("");
+        new GetInformation().execute("");
     }
 
-    public class Task extends AsyncTask<String, Void, String>
+    public class GetInformation extends AsyncTask<String, Void, String>
     {
         @Override
         protected String doInBackground(String... params)
         {
-            fserver = "";
+            String fserver = "";
             try
             {
-                Socket fromserver = new Socket(serverIp, socketId);
+                Socket fromserver = new Socket(SERVER, SOCKET);
                 PrintWriter out = new
                         PrintWriter(fromserver.getOutputStream(),true);
                 BufferedReader in  = new BufferedReader(new

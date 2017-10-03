@@ -1,4 +1,4 @@
-package egor.by.beaconclient;
+package by.dagonwat.beacon;
 
 
 import android.app.Service;
@@ -28,7 +28,7 @@ import java.net.Socket;
  * Created by egor on 23.8.17.
  */
 
-public class NewService extends Service
+public class GetImageService extends Service
 {
     String size = "";
 
@@ -40,7 +40,7 @@ public class NewService extends Service
 
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        size = intent.getExtras().getString("size");
+        size = intent.getExtras().getString(MainActivity.SIZE);
         new GetImage().execute(size);
 
         return super.onStartCommand(intent, flags, startId);
