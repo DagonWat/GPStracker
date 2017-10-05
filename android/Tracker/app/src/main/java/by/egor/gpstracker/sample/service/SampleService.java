@@ -1,4 +1,4 @@
-package com.yayandroid.locationmanager.sample.service;
+package by.egor.gpstracker.sample.service;
 
 import android.content.Intent;
 import android.location.Location;
@@ -53,8 +53,6 @@ public class SampleService extends LocationBaseService {
         Intent intent = new Intent(ACTION_LOCATION_CHANGED);
         intent.putExtra(EXTRA_LOCATION, location);
         sendBroadcast(intent);
-
-        stopSelf();
     }
 
     @Override

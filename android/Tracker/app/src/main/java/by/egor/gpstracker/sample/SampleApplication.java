@@ -1,4 +1,4 @@
-package com.yayandroid.locationmanager.sample;
+package by.egor.gpstracker.sample;
 
 import android.app.Application;
 

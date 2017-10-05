@@ -1,4 +1,4 @@
-package com.yayandroid.locationmanager.sample;
+package by.egor.gpstracker.sample;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -17,10 +17,10 @@ import android.widget.Toast;
 
 import com.yayandroid.locationmanager.constants.FailType;
 import com.yayandroid.locationmanager.constants.ProcessType;
-import com.yayandroid.locationmanager.sample.R;
-import com.yayandroid.locationmanager.sample.SamplePresenter;
-import com.yayandroid.locationmanager.sample.SamplePresenter.SampleView;
-import com.yayandroid.locationmanager.sample.service.SampleService;
+
+import by.egor.gpstracker.sample.SamplePresenter.SampleView;
+import by.egor.gpstracker.sample.activity.SampleActivity;
+import by.egor.gpstracker.sample.service.SampleService;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements SampleView {
     public static final String URL = "url";
     public static final String LON = "longitude";
     public static final String LAT = "latitude";
+    public static final String BROADCAST_ACTION = "by.egor.gpstracker";
     Intent intent;
     Timer tim1;
 
@@ -47,8 +48,7 @@ public class MainActivity extends AppCompatActivity implements SampleView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvLatitude = (TextView) findViewById(R.id.tvLatitude);
-        tvLongitude = (TextView) findViewById(R.id.tvLongitude);
+        tvLatitude = (TextView) findViewById(R.id.tvCoords);
         etUrl = (EditText) findViewById(R.id.etUrl);
         etTime = (EditText) findViewById(R.id.etTime);
     }
@@ -72,22 +72,33 @@ public class MainActivity extends AppCompatActivity implements SampleView {
 
     @Override
     public void setText(String text)
-    {
-        String[] s = text.split(",");
-
-        String a = "Lat:  " + s[0].substring(6, 16);
-        String b = "Lon:  " + s[1];
-
-        tvLatitude.setText(a);
-        tvLongitude.setText(b);
-
-        latitude = Float.valueOf(s[0].substring(6, 16));
-        longitude = Float.valueOf(s[1]);
-    }
+    {}
 
     public void stopSending(View view)
     {
         tim1.cancel();
+    }
+
+    public void startSending(View view)
+    {
+        getLocation();
+
+
+//        tim1 = new Timer();
+//        TimerTask bthh = new LocationTimer();
+//
+//        int period = Integer.parseInt(etTime.getText().toString());
+//
+//        if (period >= 10)
+//        {
+//            tim1.schedule(bthh, 200, period * 1000);
+//        }
+//        else
+//        {
+//            Toast.makeText(getBaseContext(), "The minimum time is 10 s.", Toast.LENGTH_LONG).show();
+//            etTime.setText("10");
+//            tim1.schedule(bthh, 200, 10000);
+//        }
     }
 
     private void sendCoords()
@@ -105,33 +116,9 @@ public class MainActivity extends AppCompatActivity implements SampleView {
         //http://192.168.1.8:11000/api/sometest
     }
 
-    public void startSending(View view)
-    {
-        tim1 = new Timer();
-        TimerTask bthh = new LocationTimer();
-
-        int period = Integer.parseInt(etTime.getText().toString());
-
-        if (period >= 10)
-        {
-            tim1.schedule(bthh, 200, period * 1000);
-        }
-        else
-        {
-            Toast.makeText(getBaseContext(), "The minimum time is 10 s.", Toast.LENGTH_LONG).show();
-            etTime.setText("10");
-            tim1.schedule(bthh, 200, 10000);
-        }
-
-    }
-
     private void getLocation()
     {
-        samplePresenter = new SamplePresenter(this);
-
-        displayProgress();
-        intent = new Intent(this, SampleService.class);
-        startService(intent);
+        startActivity(new Intent(this, SampleActivity.class));
     }
 
     private class LocationTimer extends TimerTask {
@@ -140,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements SampleView {
             runOnUiThread( new Runnable(){
                 @Override
                 public void run() {
-                    getLocation();
                     sendCoords();
                 }
             });
@@ -205,4 +191,5 @@ public class MainActivity extends AppCompatActivity implements SampleView {
         finish();
         System.exit(0);
     }
+
 }

@@ -1,4 +1,4 @@
-<manifest package="com.yayandroid.locationmanager.sample"
+<manifest package="by.egor.gpstracker.sample"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Required to check whether user has network connection or not -->
@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".SampleApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -28,6 +27,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.SampleActivity" />
         <service android:name=".service.SampleService" />
         <service
             android:name=".SendService"

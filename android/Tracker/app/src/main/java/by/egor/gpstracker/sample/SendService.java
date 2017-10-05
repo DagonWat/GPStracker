@@ -1,4 +1,4 @@
-package com.yayandroid.locationmanager.sample;
+package by.egor.gpstracker.sample;
 
 import android.app.Service;
 import android.content.Intent;
@@ -87,7 +87,7 @@ public class SendService extends Service {
         @Override
         protected void onPostExecute(String result)
         {
-            Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Data Sent!" + latitude + ":" + longitude, Toast.LENGTH_SHORT).show();
         }
     }
 }

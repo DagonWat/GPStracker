@@ -1,4 +1,4 @@
-package com.yayandroid.locationmanager.sample;
+package by.egor.gpstracker.sample;
 
 import android.location.Location;
 import android.text.TextUtils;
@@ -6,7 +6,12 @@ import android.text.TextUtils;
 import com.yayandroid.locationmanager.constants.FailType;
 import com.yayandroid.locationmanager.constants.ProcessType;
 
+import by.egor.gpstracker.sample.activity.SampleActivity;
+
 public class SamplePresenter {
+
+    public double latitude;
+    public double longitude;
 
     private SampleView sampleView;
 
@@ -94,16 +99,21 @@ public class SamplePresenter {
 
     private void setText(Location location) {
         String appendValue = location.getLatitude() + ", " + location.getLongitude() + "\n";
-        String newValue;
-        CharSequence current = sampleView.getText();
 
-        if (!TextUtils.isEmpty(current)) {
-            newValue = current + appendValue;
-        } else {
-            newValue = appendValue;
-        }
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
 
-        sampleView.setText(newValue);
+        sampleView.setText(appendValue);
+    }
+
+    public double[] getCoords()
+    {
+        double[] coords = new double[2];
+
+        coords[0] = latitude;
+        coords[1] = longitude;
+
+        return coords;
     }
 
     public interface SampleView {
