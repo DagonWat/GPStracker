@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -30,8 +29,8 @@ public class SendService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        latitude = intent.getExtras().getFloat(SampleActivity.LAT);
-        longitude = intent.getExtras().getFloat(SampleActivity.LON);
+        latitude = (float)intent.getExtras().getDouble(SampleActivity.LAT);
+        longitude = (float)intent.getExtras().getDouble(SampleActivity.LON);
         url = intent.getExtras().getString(SampleActivity.URL);
         new HttpAsyncTask().execute(url);
 

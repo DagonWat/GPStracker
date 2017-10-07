@@ -10,10 +10,10 @@ public final class Defaults {
     private static final int MINUTE = 60 * SECOND;
 
     static final int WAIT_PERIOD = 10 * SECOND;
-    static final int TIME_PERIOD = MINUTE;
+    static final int TIME_PERIOD = SECOND * 40;
 
     static final int LOCATION_DISTANCE_INTERVAL = 0;
-    static final int LOCATION_INTERVAL = MINUTE;
+    static final int LOCATION_INTERVAL = SECOND * 30;
 
     static final float MIN_ACCURACY = 5.0f;
 

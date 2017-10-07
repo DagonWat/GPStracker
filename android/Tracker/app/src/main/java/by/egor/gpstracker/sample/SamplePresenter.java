@@ -10,8 +10,8 @@ import by.egor.gpstracker.sample.activity.SampleActivity;
 
 public class SamplePresenter {
 
-    public double latitude;
-    public double longitude;
+    private double latitude;
+    private double longitude;
 
     private SampleView sampleView;
 

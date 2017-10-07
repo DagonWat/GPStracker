@@ -11,9 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yayandroid.locationmanager.constants.FailType;
 import com.yayandroid.locationmanager.constants.ProcessType;
@@ -21,9 +19,6 @@ import com.yayandroid.locationmanager.constants.ProcessType;
 import by.egor.gpstracker.sample.SamplePresenter.SampleView;
 import by.egor.gpstracker.sample.activity.SampleActivity;
 import by.egor.gpstracker.sample.service.SampleService;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements SampleView {
 

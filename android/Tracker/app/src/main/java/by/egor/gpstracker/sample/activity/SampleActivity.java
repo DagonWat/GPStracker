@@ -1,10 +1,15 @@
 package by.egor.gpstracker.sample.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -19,7 +24,6 @@ import com.yayandroid.locationmanager.configuration.LocationConfiguration;
 import com.yayandroid.locationmanager.constants.FailType;
 import com.yayandroid.locationmanager.constants.ProcessType;
 
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +33,6 @@ import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import by.egor.gpstracker.sample.MainActivity;
 import by.egor.gpstracker.sample.R;
 import by.egor.gpstracker.sample.SamplePresenter;
 import by.egor.gpstracker.sample.SamplePresenter.SampleView;
@@ -39,31 +42,47 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
 
     private ProgressDialog progressDialog;
     private TextView locationText;
-    ArrayList<TextView> tvLog = new ArrayList<>();
     private EditText etUrl;
     private EditText etTime;
     private LinearLayout llLog;
+    private double[] coords;
+    Button btnSend;
+    ArrayList<TextView> tvLog = new ArrayList<>();
 
     public static final String URL = "url";
     public static final String LON = "longitude";
     public static final String LAT = "latitude";
 
+    private Context context;
+
     private SamplePresenter samplePresenter;
 
     Timer tim1;
-
-    Button btnSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_activity);
+        context = this;
 
         locationText = (TextView) findViewById(R.id.tvCoords);
         btnSend = (Button) findViewById(R.id.btSend);
         etUrl = (EditText) findViewById(R.id.etUrl);
         etTime = (EditText) findViewById(R.id.etTime);
         llLog = (LinearLayout) findViewById(R.id.llLog);
+
+        TextView a = new TextView(this);
+        String newLog = "[" + getTime() + "]: Application started!";
+        a.setText(newLog);
+        tvLog.add(a);
+
+        llLog.addView(tvLog.get(tvLog.size() - 1));
+
+        askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, 1);
+        askForPermission(Manifest.permission.ACCESS_COARSE_LOCATION, 1);
+        askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 1);
+        askForPermission(Manifest.permission.INTERNET, 1);
+        askForPermission(Manifest.permission.ACCESS_WIFI_STATE, 1);
 
         samplePresenter = new SamplePresenter(this);
         getLocation();
@@ -73,6 +92,38 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
     protected void onDestroy() {
         super.onDestroy();
         samplePresenter.destroy();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            }
+        } else {
+            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -155,6 +206,13 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
                 @Override
                 public void run() {
                     sendCoords();
+
+                    TextView a = new TextView(context);
+                    String newLog = "[" + getTime() + "]: Send coordinates: " + coords[0] + "," + coords[1];
+                    a.setText(newLog);
+                    tvLog.add(a);
+
+                    llLog.addView(tvLog.get(tvLog.size() - 1));
                 }
             });
         }
@@ -180,7 +238,7 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
         }
 
         TextView a = new TextView(this);
-        String newLog = getTime() + ": start sending location with " + period + "s period.";
+        String newLog = "[" + getTime() + "]: Start sending location with " + period + "s period.";
         a.setText(newLog);
         tvLog.add(a);
 
@@ -192,7 +250,7 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
         tim1.cancel();
 
         TextView a = new TextView(this);
-        String newLog = getTime() + ": stop sending.";
+        String newLog = "[" + getTime() + "]: Stop sending.";
         a.setText(newLog);
         tvLog.add(a);
 
@@ -203,15 +261,16 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
     {
         Intent sendIntent = new Intent(this, SendService.class);
 
-        sendIntent.putExtra(LAT, Float.parseFloat(locationText.getText().toString().substring(0, 10)));
+        coords = samplePresenter.getCoords();
 
-        sendIntent.putExtra(LON, Float.parseFloat(locationText.getText().toString().substring(11, 22)));
+        sendIntent.putExtra(LAT, coords[0]);
+        sendIntent.putExtra(LON, coords[1]);
         sendIntent.putExtra(URL, etUrl.getText().toString());
 
         startService(sendIntent);
     }
 
-    private String getTime()
+    public String getTime()
     {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
         Date currentLocalTime = cal.getTime();
@@ -220,5 +279,11 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
         String localTime = date.format(currentLocalTime);
 
         return localTime;
+    }
+
+    public void exit(View view)
+    {
+        finish();
+        System.exit(0);
     }
 }
