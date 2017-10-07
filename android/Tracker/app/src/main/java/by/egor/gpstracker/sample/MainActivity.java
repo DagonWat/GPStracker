@@ -31,17 +31,6 @@ public class MainActivity extends AppCompatActivity implements SampleView {
     private SamplePresenter samplePresenter;
     private ProgressDialog progressDialog;
     private TextView tvLatitude;
-    private TextView tvLongitude;
-    private EditText etUrl;
-    private EditText etTime;
-    private float latitude;
-    private float longitude;
-    public static final String URL = "url";
-    public static final String LON = "longitude";
-    public static final String LAT = "latitude";
-    public static final String BROADCAST_ACTION = "by.egor.gpstracker";
-    Intent intent;
-    Timer tim1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements SampleView {
         setContentView(R.layout.activity_main);
 
         tvLatitude = (TextView) findViewById(R.id.tvCoords);
-        etUrl = (EditText) findViewById(R.id.etUrl);
-        etTime = (EditText) findViewById(R.id.etTime);
     }
 
     @Override
@@ -74,63 +61,9 @@ public class MainActivity extends AppCompatActivity implements SampleView {
     public void setText(String text)
     {}
 
-    public void stopSending(View view)
-    {
-        tim1.cancel();
-    }
-
-    public void startSending(View view)
-    {
-        getLocation();
-
-
-//        tim1 = new Timer();
-//        TimerTask bthh = new LocationTimer();
-//
-//        int period = Integer.parseInt(etTime.getText().toString());
-//
-//        if (period >= 10)
-//        {
-//            tim1.schedule(bthh, 200, period * 1000);
-//        }
-//        else
-//        {
-//            Toast.makeText(getBaseContext(), "The minimum time is 10 s.", Toast.LENGTH_LONG).show();
-//            etTime.setText("10");
-//            tim1.schedule(bthh, 200, 10000);
-//        }
-    }
-
-    private void sendCoords()
-    {
-        Intent sendIntent = new Intent(this, SendService.class);
-
-        stopService(sendIntent);
-
-        sendIntent.putExtra(LAT, latitude);
-        sendIntent.putExtra(LON, longitude);
-        sendIntent.putExtra(URL, etUrl.getText().toString());
-
-        startService(sendIntent);
-
-        //http://192.168.1.8:11000/api/sometest
-    }
-
-    private void getLocation()
+    public void getLocation(View view)
     {
         startActivity(new Intent(this, SampleActivity.class));
-    }
-
-    private class LocationTimer extends TimerTask {
-        @Override
-        public void run() {
-            runOnUiThread( new Runnable(){
-                @Override
-                public void run() {
-                    sendCoords();
-                }
-            });
-        }
     }
 
     @Override

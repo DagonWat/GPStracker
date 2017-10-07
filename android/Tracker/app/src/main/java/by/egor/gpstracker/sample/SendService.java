@@ -14,6 +14,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
+import by.egor.gpstracker.sample.activity.SampleActivity;
+
 public class SendService extends Service {
 
     float latitude;
@@ -28,9 +30,9 @@ public class SendService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        latitude = intent.getExtras().getFloat(MainActivity.LAT);
-        longitude = intent.getExtras().getFloat(MainActivity.LON);
-        url = intent.getExtras().getString(MainActivity.URL);
+        latitude = intent.getExtras().getFloat(SampleActivity.LAT);
+        longitude = intent.getExtras().getFloat(SampleActivity.LON);
+        url = intent.getExtras().getString(SampleActivity.URL);
         new HttpAsyncTask().execute(url);
 
         return super.onStartCommand(intent, flags, startId);
@@ -86,8 +88,6 @@ public class SendService extends Service {
 
         @Override
         protected void onPostExecute(String result)
-        {
-            Toast.makeText(getBaseContext(), "Data Sent!" + latitude + ":" + longitude, Toast.LENGTH_SHORT).show();
-        }
+        {}
     }
 }

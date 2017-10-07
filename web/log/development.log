@@ -4731,3 +4731,424 @@ Completed 500 Internal Server Error in 371ms (ActiveRecord: 166.8ms)
 NoMethodError (undefined method `tracker_url' for #<TrackerController:0x00000002ac37b0>):
   
 app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:04:17 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:04:17.948150"], ["updated_at", "2017-10-07 14:04:17.948150"]]
+  [1m[35m (114.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 297ms (ActiveRecord: 116.6ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007f42f4739860>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:04:27 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:04:27.505596"], ["updated_at", "2017-10-07 14:04:27.505596"]]
+  [1m[35m (270.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 441ms (ActiveRecord: 271.3ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007f42f60b83b8>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:04:37 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:04:37.506951"], ["updated_at", "2017-10-07 14:04:37.506951"]]
+  [1m[35m (100.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 267ms (ActiveRecord: 102.7ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007f42f47ba410>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:04:47 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:04:47.506469"], ["updated_at", "2017-10-07 14:04:47.506469"]]
+  [1m[35m (112.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 281ms (ActiveRecord: 114.3ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x00000001906108>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:04:57 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:04:57.506660"], ["updated_at", "2017-10-07 14:04:57.506660"]]
+  [1m[35m (101.8ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 288ms (ActiveRecord: 103.8ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007f42f4846528>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:06:58 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:06:58.777171"], ["updated_at", "2017-10-07 14:06:58.777171"]]
+  [1m[35m (93.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 313ms (ActiveRecord: 95.9ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb0848ca7a8>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:07:08 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-10-07 14:07:08.061232"], ["updated_at", "2017-10-07 14:07:08.061232"]]
+  [1m[35m (96.2ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 301ms (ActiveRecord: 98.1ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb08525f7c8>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:23:45 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-10-07 14:23:45.115673"], ["updated_at", "2017-10-07 14:23:45.115673"]]
+  [1m[35m (104.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 333ms (ActiveRecord: 106.3ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb0846aa1f8>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:37:06 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-10-07 14:37:06.899553"], ["updated_at", "2017-10-07 14:37:06.899553"]]
+  [1m[35m (88.9ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 293ms (ActiveRecord: 90.7ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb085367288>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:41:12 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-10-07 14:41:12.817179"], ["updated_at", "2017-10-07 14:41:12.817179"]]
+  [1m[35m (141.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 338ms (ActiveRecord: 143.3ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x000000031a4700>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:43:50 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:43:50.906726"], ["updated_at", "2017-10-07 14:43:50.906726"]]
+  [1m[35m (107.9ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 294ms (ActiveRecord: 109.9ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb0854d3798>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:44:10 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:44:10.911003"], ["updated_at", "2017-10-07 14:44:10.911003"]]
+  [1m[35m (92.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 285ms (ActiveRecord: 94.3ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x000000032e4b60>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:44:32 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-10-07 14:44:32.967789"], ["updated_at", "2017-10-07 14:44:32.967789"]]
+  [1m[35m (92.9ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 263ms (ActiveRecord: 94.6ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb0855a5090>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:44:53 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-10-07 14:44:53.034960"], ["updated_at", "2017-10-07 14:44:53.034960"]]
+  [1m[35m (118.8ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 307ms (ActiveRecord: 119.7ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb0845be938>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:45:15 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-10-07 14:45:15.226274"], ["updated_at", "2017-10-07 14:45:15.226274"]]
+  [1m[35m (126.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 312ms (ActiveRecord: 128.6ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb0856e0bd0>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:45:39 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:45:39.849808"], ["updated_at", "2017-10-07 14:45:39.849808"]]
+  [1m[35m (172.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 346ms (ActiveRecord: 173.1ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb08460c368>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:46:08 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:46:08.231321"], ["updated_at", "2017-10-07 14:46:08.231321"]]
+  [1m[35m (113.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 290ms (ActiveRecord: 115.7ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb085ea5a28>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:46:28 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:46:28.138363"], ["updated_at", "2017-10-07 14:46:28.138363"]]
+  [1m[35m (120.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 292ms (ActiveRecord: 121.5ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb08460eac8>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:46:48 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:46:48.194437"], ["updated_at", "2017-10-07 14:46:48.194437"]]
+  [1m[35m (110.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 265ms (ActiveRecord: 110.7ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb0856e1af8>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:47:08 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:47:08.235158"], ["updated_at", "2017-10-07 14:47:08.235158"]]
+  [1m[35m (114.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 263ms (ActiveRecord: 115.0ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb0845ce248>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:47:28 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:47:28.275889"], ["updated_at", "2017-10-07 14:47:28.275889"]]
+  [1m[35m (151.2ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 331ms (ActiveRecord: 151.7ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb0855a45a0>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:47:48 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:47:48.318541"], ["updated_at", "2017-10-07 14:47:48.318541"]]
+  [1m[35m (112.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 279ms (ActiveRecord: 113.3ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x000000032e8850>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:48:08 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:48:08.359497"], ["updated_at", "2017-10-07 14:48:08.359497"]]
+  [1m[35m (131.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 323ms (ActiveRecord: 132.4ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb085863a48>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:48:28 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:48:28.398936"], ["updated_at", "2017-10-07 14:48:28.398936"]]
+  [1m[35m (111.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 277ms (ActiveRecord: 113.1ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x00000002df46a0>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:48:48 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:48:48.437934"], ["updated_at", "2017-10-07 14:48:48.437934"]]
+  [1m[35m (128.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 315ms (ActiveRecord: 129.9ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb0a003c8b8>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:49:08 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65481, "longitude"=>23.80141, "tracker"=>{}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.65481], ["lon", 23.80141], ["created_at", "2017-10-07 14:49:08.221633"], ["updated_at", "2017-10-07 14:49:08.221633"]]
+  [1m[35m (124.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 364ms (ActiveRecord: 126.0ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x00000002c2a5b8>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:52:47 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-10-07 14:52:47.429883"], ["updated_at", "2017-10-07 14:52:47.429883"]]
+  [1m[35m (128.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 309ms (ActiveRecord: 129.9ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb084801df8>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-07 17:52:51 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654808, "longitude"=>23.801388, "tracker"=>{}}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["lat", 53.654808], ["lon", 23.801388], ["created_at", "2017-10-07 14:52:51.553535"], ["updated_at", "2017-10-07 14:52:51.553535"]]
+  [1m[35m (127.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to 
+Completed 500 Internal Server Error in 306ms (ActiveRecord: 128.1ms)
+
+
+  
+NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007fb086309240>):
+  
+app/controllers/tracker_controller.rb:8:in `create'
