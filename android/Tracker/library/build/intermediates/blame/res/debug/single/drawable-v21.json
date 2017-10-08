@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/egor/GPStracker/android/Tracker/library/build/intermediates/res/merged/debug/drawable-v21/abc_btn_colored_material.xml",
+        "source": "/home/egor/.android/build-cache/92f60169100ebb46c0eb03e09ce99163b88b1b2d/output/res/drawable-v21/abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "/home/egor/GPStracker/android/Tracker/library/build/intermediates/res/merged/debug/drawable-v21/abc_edit_text_material.xml",
+        "source": "/home/egor/.android/build-cache/92f60169100ebb46c0eb03e09ce99163b88b1b2d/output/res/drawable-v21/abc_edit_text_material.xml"
+    },
+    {
+        "merged": "/home/egor/GPStracker/android/Tracker/library/build/intermediates/res/merged/debug/drawable-v21/abc_action_bar_item_background_material.xml",
+        "source": "/home/egor/.android/build-cache/92f60169100ebb46c0eb03e09ce99163b88b1b2d/output/res/drawable-v21/abc_action_bar_item_background_material.xml"
+    }
+]
