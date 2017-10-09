@@ -2,12 +2,14 @@ class TrackerController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def create
-        @tracker = Tracker.new(lat: params[:latitude], lon: params[:longitude])
 
-        @tracker.save
-        redirect_to @tracker
+        if params[:latitude] > 0 and params[:longitude] > 0
+            @tracker = Tracker.new(lat: params[:latitude], lon: params[:longitude])
 
-        p params[:latitude]
-        render json: {status: "success"}
+            @tracker.save
+
+            p params[:latitude]
+            render json: {status: "success"}
+        end
     end
 end

@@ -5769,3 +5769,101 @@ NoMethodError (undefined method `tracker_url' for #<TrackerController:0x007f3068
   
 app/controllers/tracker_controller.rb:8:in `create'
   [1m[36mTracker Load (29.4ms)[0m  [1m[34mSELECT  "trackers".* FROM "trackers" LIMIT $1[0m  [["LIMIT", 11]]
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-09 20:04:31 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65278, "longitude"=>23.799623, "tracker"=>{}}
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["lat", 53.65278], ["lon", 23.799623], ["created_at", "2017-10-09 17:04:32.100778"], ["updated_at", "2017-10-09 17:04:32.100778"]]
+  [1m[35m (15.9ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://192.168.1.8:11000/api/sometest/9
+Completed 500 Internal Server Error in 39ms (ActiveRecord: 22.0ms)
+
+
+  
+AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
+  
+app/controllers/tracker_controller.rb:11:in `create'
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-09 20:04:58 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65278, "longitude"=>23.799623, "tracker"=>{}}
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["lat", 53.65278], ["lon", 23.799623], ["created_at", "2017-10-09 17:04:59.052100"], ["updated_at", "2017-10-09 17:04:59.052100"]]
+  [1m[35m (21.8ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 45ms (Views: 0.4ms | ActiveRecord: 28.0ms)
+
+
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-09 20:05:41 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65278, "longitude"=>23.799623, "tracker"=>{}}
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["lat", 53.65278], ["lon", 23.799623], ["created_at", "2017-10-09 17:05:51.689790"], ["updated_at", "2017-10-09 17:05:51.689790"]]
+  [1m[35m (8.7ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 26ms (Views: 0.4ms | ActiveRecord: 10.2ms)
+
+
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-09 20:05:51 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65278, "longitude"=>23.799623, "tracker"=>{}}
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["lat", 53.65278], ["lon", 23.799623], ["created_at", "2017-10-09 17:05:51.745082"], ["updated_at", "2017-10-09 17:05:51.745082"]]
+  [1m[35m (7.8ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 16ms (Views: 0.4ms | ActiveRecord: 9.8ms)
+
+
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-09 20:05:58 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65278, "longitude"=>23.799623, "tracker"=>{}}
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["lat", 53.65278], ["lon", 23.799623], ["created_at", "2017-10-09 17:05:58.770461"], ["updated_at", "2017-10-09 17:05:58.770461"]]
+  [1m[35m (18.3ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 41ms (Views: 0.3ms | ActiveRecord: 25.1ms)
+
+
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-09 20:09:19 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65278, "longitude"=>23.799623, "tracker"=>{}}
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["lat", 53.65278], ["lon", 23.799623], ["created_at", "2017-10-09 17:09:29.691537"], ["updated_at", "2017-10-09 17:09:29.691537"]]
+  [1m[35m (20.3ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 38ms (Views: 0.4ms | ActiveRecord: 21.8ms)
+
+
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-09 20:09:29 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.65278, "longitude"=>23.799623, "tracker"=>{}}
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["lat", 53.65278], ["lon", 23.799623], ["created_at", "2017-10-09 17:09:29.937291"], ["updated_at", "2017-10-09 17:09:29.937291"]]
+  [1m[35m (6.9ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 16ms (Views: 0.4ms | ActiveRecord: 9.1ms)
+
+
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-09 20:12:27 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654762, "longitude"=>23.801329, "tracker"=>{}}
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["lat", 53.654762], ["lon", 23.801329], ["created_at", "2017-10-09 17:12:27.102581"], ["updated_at", "2017-10-09 17:12:27.102581"]]
+  [1m[35m (20.9ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 40ms (Views: 0.4ms | ActiveRecord: 29.5ms)
+
+
+Started POST "/api/sometest" for 192.168.1.5 at 2017-10-09 20:13:11 +0300
+Cannot render console from 192.168.1.5! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by TrackerController#create as JSON
+  Parameters: {"latitude"=>53.654762, "longitude"=>23.801329, "tracker"=>{}}
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "trackers" ("lat", "lon", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["lat", 53.654762], ["lon", 23.801329], ["created_at", "2017-10-09 17:13:11.927407"], ["updated_at", "2017-10-09 17:13:11.927407"]]
+  [1m[35m (20.3ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 28ms (Views: 0.4ms | ActiveRecord: 22.0ms)
+
+
