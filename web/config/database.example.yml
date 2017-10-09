@@ -3,27 +3,27 @@ development:
   encoding: utf8
   database: tracker_development
   pool: 5
-  username: postgres
-  password: 1234
-  host: localhost
+  username:
+  password:
+  host:
 
 test: &TEST
   adapter: postgresql
   encoding: utf8
   database: tracker_test
   pool: 5
-  username: postgres
-  password: 1234
-  host: localhost
+  username:
+  password:
+  host:
 
 production:
   adapter: postgresql
   encoding: utf8
   database: tracker_production
   pool: 5
-  username: postgres
-  password: 1234
-  host: localhost
+  username:
+  password:
+  host:
 
 cucumber:
   <<: *TEST
