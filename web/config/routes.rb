@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-    resources :tracker, path: '/api/sometest'
-
-    root "welcome#index"
+  namespace :api do
+    resources :tracker, path: 'sometest'
+  end
+  
 end
