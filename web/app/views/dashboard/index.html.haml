@@ -1,0 +1,17 @@
+#main-container.container-fluid
+  .row
+    .content.col-md-3.col-xs-3
+      %h1 Listing locations
+    .content.col-md-9.col-xs-9
+      %table.table
+        %tr
+          %th Latitude
+          %th Longitude
+        - @trackers.each do |tracker|
+          %tr.active
+            .content.col-md-6.col-xs-6
+              %td{style: "color:blue;"}
+                = tracker.lat
+            .content.col-md-6.col-xs-6
+              %td{style: "color:green;"}
+                = tracker.lon
