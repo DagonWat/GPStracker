@@ -3,7 +3,6 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "bootstrap": "3.3.7",
     "bootstrap-sass": "3.3.7"
   }
 }
