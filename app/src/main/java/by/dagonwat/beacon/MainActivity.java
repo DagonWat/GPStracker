@@ -19,6 +19,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import by.dagonwat.beacon.*;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -29,11 +33,13 @@ public class MainActivity extends AppCompatActivity
     ArrayList<String> beaconPicSize;
 
     //ip address and socket from which we will get info
-    public static final String SERVER = "ip";
-    public static final int SOCKET = 10000;
+    public static final String SERVER_NUM = "178.124.203.226";
+    public static final int SOCKET_NUM = 10000;
 
     public final static String BROADCAST_ACTION = "by.dagonwat.serviceback";
     public final static String SIZE = "size";
+    public final static String SERVER = "server";
+    public final static String SOCKET = "socket";
 
     BroadcastReceiver br;
 
@@ -64,10 +70,15 @@ public class MainActivity extends AppCompatActivity
         //Timer tim = new Timer();
         //TimerTask bthh = new MyTimerTask();
         //tim.schedule(bthh, 200, 500);
+    }
 
-        //Intent intent = new Intent(this, GetImageService.class);
-        //intent.putExtra(SIZE, "18136");
-        //startService(intent);
+    public void askPicture(int num)
+    {
+        Intent intent = new Intent(this, GetImageService.class);
+        intent.putExtra(SIZE, beaconPicSize.get(num));
+        intent.putExtra(SERVER, SERVER_NUM);
+        intent.putExtra(SOCKET, SOCKET_NUM);
+        startService(intent);
     }
 
     @Override
@@ -89,7 +100,7 @@ public class MainActivity extends AppCompatActivity
         IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
         registerReceiver(br, intFilt);
 
-        new GetInformation().execute("");
+        //new GetInformation().execute("");
     }
 
     public class GetInformation extends AsyncTask<String, Void, String>
@@ -100,7 +111,7 @@ public class MainActivity extends AppCompatActivity
             String fserver = "";
             try
             {
-                Socket fromserver = new Socket(SERVER, SOCKET);
+                Socket fromserver = new Socket(SERVER_NUM, SOCKET_NUM);
                 PrintWriter out = new
                         PrintWriter(fromserver.getOutputStream(),true);
                 BufferedReader in  = new BufferedReader(new

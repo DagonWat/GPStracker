@@ -30,7 +30,7 @@
         </activity>
 
         <service
-            android:name=".GetImageService"
+            android:name=".library.GetImageService"
             android:enabled="true"
             android:exported="true"></service>
     </application>

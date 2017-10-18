@@ -30,7 +30,9 @@ import java.net.Socket;
 
 public class GetImageService extends Service
 {
-    String size = "";
+    String size;
+    String serverIp;
+    int socketId;
 
     @Override
     public void onCreate()
@@ -41,6 +43,8 @@ public class GetImageService extends Service
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         size = intent.getExtras().getString(MainActivity.SIZE);
+        serverIp = intent.getExtras().getString(MainActivity.SERVER);
+        socketId = intent.getExtras().getInt(MainActivity.SOCKET);
         new GetImage().execute(size);
 
         return super.onStartCommand(intent, flags, startId);
@@ -69,8 +73,6 @@ public class GetImageService extends Service
         @Override
         protected byte[] doInBackground(String... params)
         {
-            String serverIp = "ip";
-            int socketId = 10000;
             String sizeP = params[0];
             byte[] fserver = {(byte) 0x0};
 
