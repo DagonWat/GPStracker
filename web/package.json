@@ -1,7 +1,9 @@
 {
   "name": "blog",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^3.2.1"
+  },
   "devDependencies": {
     "bootstrap-sass": "3.3.7"
   }

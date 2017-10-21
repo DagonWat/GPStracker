@@ -10,12 +10,12 @@ public final class Defaults {
     private static final int MINUTE = 60 * SECOND;
 
     static final int WAIT_PERIOD = 10 * SECOND;
-    static final int TIME_PERIOD = SECOND * 40;
+    static final int TIME_PERIOD = SECOND * 20;
 
     static final int LOCATION_DISTANCE_INTERVAL = 0;
-    static final int LOCATION_INTERVAL = SECOND * 30;
+    static final int LOCATION_INTERVAL = SECOND * 20;
 
-    static final float MIN_ACCURACY = 5.0f;
+    static final float MIN_ACCURACY = 4.0f;
 
     static final boolean KEEP_TRACKING = true;
     static final boolean FALLBACK_TO_DEFAULT = true;

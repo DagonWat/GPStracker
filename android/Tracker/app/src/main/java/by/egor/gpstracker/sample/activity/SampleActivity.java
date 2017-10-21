@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -38,7 +39,8 @@ import by.egor.gpstracker.sample.SamplePresenter;
 import by.egor.gpstracker.sample.SamplePresenter.SampleView;
 import by.egor.gpstracker.sample.SendService;
 
-public class SampleActivity extends LocationBaseActivity implements SampleView {
+public class SampleActivity extends LocationBaseActivity implements SampleView
+{
 
     private ProgressDialog progressDialog;
     private TextView locationText;
@@ -48,6 +50,10 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
     private double[] coords;
     Button btnSend;
     ArrayList<TextView> tvLog = new ArrayList<>();
+
+    PowerManager pm;
+    PowerManager.WakeLock wl;
+    int FLAG_KEEP_SCREEN_ON = 128;
 
     public static final String URL = "url";
     public static final String LON = "longitude";
@@ -60,7 +66,8 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
     Timer tim1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_activity);
         context = this;
@@ -70,6 +77,10 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
         etUrl = (EditText) findViewById(R.id.etUrl);
         etTime = (EditText) findViewById(R.id.etTime);
         llLog = (LinearLayout) findViewById(R.id.llLog);
+
+        pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+        wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakelockTag");
+        wl.acquire();
 
         TextView a = new TextView(this);
         String newLog = "[" + getTime() + "]: Application started!";
@@ -89,8 +100,10 @@ public class SampleActivity extends LocationBaseActivity implements SampleView {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         super.onDestroy();
+        wl.release();
         samplePresenter.destroy();
     }
 
