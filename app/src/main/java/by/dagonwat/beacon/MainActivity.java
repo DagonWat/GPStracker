@@ -1,5 +1,10 @@
 package by.dagonwat.beacon;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -22,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import by.dagonwat.beacon.*;
-
 public class MainActivity extends AppCompatActivity
 {
     TextView txt;
@@ -31,9 +35,15 @@ public class MainActivity extends AppCompatActivity
     ArrayList<String> beaconAddress;
     ArrayList<String> beaconName;
     ArrayList<String> beaconPicSize;
+    BluetoothAdapter mBluetoothAdapter;
+    BluetoothLeScanner mBleutoothScanner;
+    BluetoothManager mBluetoothManager;
+    boolean discoveryStarted = false;
+    public ArrayList<Beacon> mBTDevices = new ArrayList<>();
+    private LinearLayout llLog;
 
     //ip address and socket from which we will get info
-    public static final String SERVER_NUM = "178.124.203.226";
+    public static final String SERVER_NUM = "111.222.111.101";
     public static final int SOCKET_NUM = 10000;
 
     public final static String BROADCAST_ACTION = "by.dagonwat.serviceback";
@@ -42,6 +52,35 @@ public class MainActivity extends AppCompatActivity
     public final static String SOCKET = "socket";
 
     BroadcastReceiver br;
+    Context context;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        context = this;
+
+        txt = (TextView) findViewById(R.id.text);
+        llLog = (LinearLayout) findViewById(R.id.llLog);
+
+        br = new BroadcastReceiver()
+        {
+            public void onReceive(Context context, Intent intent)
+            {
+                decodeImage(intent.getByteArrayExtra("result"));
+            }
+        };
+
+        IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
+        registerReceiver(br, intFilt);
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBleutoothScanner = mBluetoothAdapter.getBluetoothLeScanner();
+
+        //new GetInformation().execute("");
+    }
 
     //decode the only string server gives us into arrays
     private void decode(String a)
@@ -67,9 +106,18 @@ public class MainActivity extends AppCompatActivity
     //start looking for beacons near
     public void startDiscovery(View view)
     {
-        //Timer tim = new Timer();
-        //TimerTask bthh = new MyTimerTask();
-        //tim.schedule(bthh, 200, 500);
+        if (!discoveryStarted)
+        {
+            discoveryStarted = true;
+            Timer tim = new Timer();
+            TimerTask bthh = new MyTimerTask();
+            tim.schedule(bthh, 200, 500);
+        }
+    }
+
+    public void stopDiscovery(View view)
+    {
+
     }
 
     public void askPicture(int num)
@@ -79,28 +127,6 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(SERVER, SERVER_NUM);
         intent.putExtra(SOCKET, SOCKET_NUM);
         startService(intent);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        txt = (TextView) findViewById(R.id.text);
-
-        br = new BroadcastReceiver()
-        {
-            public void onReceive(Context context, Intent intent)
-            {
-                decodeImage(intent.getByteArrayExtra("result"));
-            }
-        };
-
-        IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
-        registerReceiver(br, intFilt);
-
-        //new GetInformation().execute("");
     }
 
     public class GetInformation extends AsyncTask<String, Void, String>
@@ -138,6 +164,47 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onProgressUpdate(Void... values) {}
     }
+
+    class MyTimerTask extends TimerTask
+    {
+        @Override
+        public void run()
+        {
+            AsyncTask.execute(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    mBleutoothScanner.startScan(leScanCallback);
+                }
+            });
+        }
+    }
+
+    private ScanCallback leScanCallback = new ScanCallback()
+    {
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            boolean alreadyFound = false;
+
+            for (int i = 0; i < mBTDevices.size(); i++) {
+                if (result.getDevice().getName().equals(mBTDevices.get(i).getName())) {
+                    alreadyFound = true;
+                }
+            }
+
+            if (!alreadyFound)
+            {
+                Beacon newBeacon = new Beacon(result.getDevice().getName(), result.getRssi());
+                mBTDevices.add(newBeacon);
+
+                TextView a = new TextView(context);
+                String newLog = result.getDevice().getName();
+                a.setText(newLog);
+                llLog.addView(a);
+            }
+        }
+    };
 }
 
 
