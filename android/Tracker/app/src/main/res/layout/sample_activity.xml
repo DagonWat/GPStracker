@@ -50,12 +50,13 @@
         android:layout_height="53dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="http://192.168.1.8:11000/api/sometest"
+        android:text = "@string/web_address"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.179" />
+        app:layout_constraintVertical_bias="0.179"
+        android:hint="@string/user_name" />
 
     <TextView
         android:id="@+id/textView4"

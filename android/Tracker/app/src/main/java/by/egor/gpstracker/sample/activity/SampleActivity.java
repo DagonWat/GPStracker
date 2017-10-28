@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -48,12 +49,11 @@ public class SampleActivity extends LocationBaseActivity implements SampleView
     private EditText etTime;
     private LinearLayout llLog;
     private double[] coords;
+    private boolean currentlySending;
     Button btnSend;
-    ArrayList<TextView> tvLog = new ArrayList<>();
 
     PowerManager pm;
     PowerManager.WakeLock wl;
-    int FLAG_KEEP_SCREEN_ON = 128;
 
     public static final String URL = "url";
     public static final String LON = "longitude";
@@ -72,28 +72,31 @@ public class SampleActivity extends LocationBaseActivity implements SampleView
         setContentView(R.layout.sample_activity);
         context = this;
 
+        currentlySending = false;
+
         locationText = (TextView) findViewById(R.id.tvCoords);
         btnSend = (Button) findViewById(R.id.btSend);
         etUrl = (EditText) findViewById(R.id.etUrl);
         etTime = (EditText) findViewById(R.id.etTime);
         llLog = (LinearLayout) findViewById(R.id.llLog);
 
-        pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
-        wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakelockTag");
-        wl.acquire();
-
         TextView a = new TextView(this);
         String newLog = "[" + getTime() + "]: Application started!";
         a.setText(newLog);
-        tvLog.add(a);
-
-        llLog.addView(tvLog.get(tvLog.size() - 1));
+        llLog.addView(a);
 
         askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, 1);
         askForPermission(Manifest.permission.ACCESS_COARSE_LOCATION, 1);
         askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 1);
         askForPermission(Manifest.permission.INTERNET, 1);
         askForPermission(Manifest.permission.ACCESS_WIFI_STATE, 1);
+        askForPermission(Manifest.permission.WAKE_LOCK, 1);
+
+        pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+        wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakelockTag");
+        wl.acquire();
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         samplePresenter = new SamplePresenter(this);
         getLocation();
@@ -124,18 +127,20 @@ public class SampleActivity extends LocationBaseActivity implements SampleView
     }
 
     private void askForPermission(String permission, Integer requestCode) {
-        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
+        {
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission))
+            {
 
                 ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
 
-            } else {
+            }
+            else
+            {
 
                 ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
             }
-        } else {
-            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -176,8 +181,10 @@ public class SampleActivity extends LocationBaseActivity implements SampleView
         dismissProgress();
     }
 
-    private void displayProgress() {
-        if (progressDialog == null) {
+    private void displayProgress()
+    {
+        if (progressDialog == null)
+        {
             progressDialog = new ProgressDialog(this);
             progressDialog.getWindow().addFlags(Window.FEATURE_NO_TITLE);
             progressDialog.setMessage("Getting location...");
@@ -199,33 +206,38 @@ public class SampleActivity extends LocationBaseActivity implements SampleView
     }
 
     @Override
-    public void updateProgress(String text) {
-        if (progressDialog != null && progressDialog.isShowing()) {
+    public void updateProgress(String text)
+    {
+        if (progressDialog != null && progressDialog.isShowing())
+        {
             progressDialog.setMessage(text);
         }
     }
 
     @Override
-    public void dismissProgress() {
-        if (progressDialog != null && progressDialog.isShowing()) {
+    public void dismissProgress()
+    {
+        if (progressDialog != null && progressDialog.isShowing())
+        {
             progressDialog.dismiss();
         }
     }
 
     private class LocationTimer extends TimerTask {
         @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
+        public void run()
+        {
+            runOnUiThread(new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     sendCoords();
 
                     TextView a = new TextView(context);
                     String newLog = "[" + getTime() + "]: Send coordinates: " + coords[0] + "," + coords[1];
                     a.setText(newLog);
-                    tvLog.add(a);
-
-                    llLog.addView(tvLog.get(tvLog.size() - 1));
+                    llLog.addView(a);
                 }
             });
         }
@@ -233,41 +245,50 @@ public class SampleActivity extends LocationBaseActivity implements SampleView
 
     public void startSending(View view)
     {
-        tim1 = new Timer();
-        TimerTask bthh = new LocationTimer();
-
-        int period = Integer.parseInt(etTime.getText().toString());
-
-        if (period >= 20)
+        if (currentlySending == false)
         {
-            tim1.schedule(bthh, 200, period * 1000);
+            currentlySending = true;
+            tim1 = new Timer();
+            TimerTask bthh = new LocationTimer();
+
+            int period = Integer.parseInt(etTime.getText().toString());
+
+            if (period >= 20)
+            {
+                tim1.schedule(bthh, 200, period * 1000);
+            }
+            else
+            {
+                Toast.makeText(getBaseContext(), "The minimum time is 20 s.", Toast.LENGTH_LONG).show();
+                period = 20;
+                etTime.setText("20");
+                tim1.schedule(bthh, 200, 20000);
+            }
+
+            TextView a = new TextView(this);
+            String newLog = "[" + getTime() + "]: Start sending location with " + period + "s period.";
+            a.setText(newLog);
+            llLog.addView(a);
         }
+
         else
         {
-            Toast.makeText(getBaseContext(), "The minimum time is 20 s.", Toast.LENGTH_LONG).show();
-            period = 20;
-            etTime.setText("20");
-            tim1.schedule(bthh, 200, 20000);
+            TextView a = new TextView(this);
+            String newLog = "[" + getTime() + "]: You are sending coordinates already!";
+            a.setText(newLog);
+            llLog.addView(a);
         }
-
-        TextView a = new TextView(this);
-        String newLog = "[" + getTime() + "]: Start sending location with " + period + "s period.";
-        a.setText(newLog);
-        tvLog.add(a);
-
-        llLog.addView(tvLog.get(tvLog.size() - 1));
     }
 
     public void stopSending(View view)
     {
+        currentlySending = false;
         tim1.cancel();
 
         TextView a = new TextView(this);
         String newLog = "[" + getTime() + "]: Stop sending.";
         a.setText(newLog);
-        tvLog.add(a);
-
-        llLog.addView(tvLog.get(tvLog.size() - 1));
+        llLog.addView(a);
     }
 
     public void sendCoords()
