@@ -5,10 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-myformat = "%d/%m/%Y %H:%M:%S"
 
 track = [
-  [Time.strptime("27/10/2017 11:00:00", myformat),
+  [Time.zone.now.change(hour: 16),
     [
       [53.654861, 23.801670],
       [53.655783, 23.800672],
@@ -25,7 +24,7 @@ track = [
       [53.659075, 23.775266]
     ]
   ],
-  [Time.strptime("27/10/2017 15:45:00", myformat),
+  [Time.zone.now.change(hour: 11),
     [
       [53.654970, 23.801537],
       [53.654665, 23.800335],
@@ -49,7 +48,7 @@ track = [
       [53.676074, 23.828531]
     ]
   ],
-  [Time.strptime("23/10/2017 10:35:00", myformat),
+  [Time.zone.now.change(hour: 15) - 7.days,
     [
       [53.660857, 23.787933],
       [53.660914, 23.787278],
@@ -69,7 +68,7 @@ track = [
       [53.654868, 23.801666]
     ]
   ],
-  [Time.strptime("21/10/2017 19:35:00", myformat),
+  [Time.zone.now.change(hour: 12) - 4.days,
     [
       [53.700847, 23.813702],
       [53.699171, 23.814367],
@@ -111,10 +110,9 @@ track = [
 ]
 
 track.each do |time, list|
-  a = 0
+  i = 0
   list.each do |coordinates|
-    new_time = time + a
-    Tracker.create( created_at: new_time, updated_at: new_time, lat: coordinates[0], lon: coordinates[1])
-    a += 120
+    Tracker.create( created_at: time + i.minutes, updated_at: time + i.minutes, lat: coordinates[0], lon: coordinates[1])
+    i += 1
   end
 end

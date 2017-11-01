@@ -3,7 +3,7 @@ module Api
     skip_before_action :verify_authenticity_token
 
     def create
-      if params[:latitude] > 0 and params[:longitude] > 0
+      if params[:latitude].abs < 90 && params[:longitude].abs < 90
         @tracker = Tracker.new(lat: params[:latitude], lon: params[:longitude])
 		    @tracker.save
 

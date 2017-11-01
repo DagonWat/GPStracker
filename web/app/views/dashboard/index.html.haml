@@ -1,19 +1,6 @@
 #main-container.container-fluid{data: {way: @today.to_json}}
-  .row
-    .content.col-md-3.col-xs-3
-      %h1 GPS Tracker
-    .content.col-md-9.col-xs-9
-      %table.table
-        %tr
-          - m = ""
-          - n = ""
-          - @trackers.each do |tracker|
-            - m = tracker.created_at.strftime("%b  %e")
-            - if n != m
-              - n = m
-              %th
-                = link_to tracker.created_at.strftime("%b  %e"),
-                    dashboard_path(tracker), method: :get
+  = render partial: "dashboard/dates"
+  
   .row
     %h1{:align => "center"}
       #number
