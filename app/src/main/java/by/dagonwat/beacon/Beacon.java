@@ -9,14 +9,14 @@ import java.util.ArrayList;
 public class Beacon
 {
     private double x, y;
-    private String name;
+    private String id;
     private int txPower;
     private double dist = 0;
     private ArrayList<Integer> mid = new ArrayList<>();
 
-    public Beacon(String name, int txPower)
+    public Beacon(String id, int txPower)
     {
-        this.name = name;
+        this.id = id;
         this.txPower = txPower;
     }
 
@@ -24,7 +24,7 @@ public class Beacon
     {
         this.x = a;
         this.y = b;
-        this.name = c;
+        this.id = c;
         this.txPower = d;
     }
 
@@ -60,9 +60,9 @@ public class Beacon
         return y;
     }
 
-    String getName()
+    String getId()
     {
-        return name;
+        return id;
     }
 
     int getTxPower()

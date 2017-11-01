@@ -22,25 +22,24 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity
 {
     TextView txt;
-    String size = "";
-    ArrayList<String> beaconAddress;
-    ArrayList<String> beaconName;
-    ArrayList<String> beaconPicSize;
+    Map<String, String> beaconPicSize;
     BluetoothAdapter mBluetoothAdapter;
-    BluetoothLeScanner mBleutoothScanner;
+    BluetoothLeScanner mBluetoothScanner;
     BluetoothManager mBluetoothManager;
     boolean discoveryStarted = false;
     public ArrayList<Beacon> mBTDevices = new ArrayList<>();
     private LinearLayout llLog;
+    Timer tim;
 
     //ip address and socket from which we will get info
     public static final String SERVER_NUM = "111.222.111.101";
@@ -63,6 +62,7 @@ public class MainActivity extends AppCompatActivity
 
         txt = (TextView) findViewById(R.id.text);
         llLog = (LinearLayout) findViewById(R.id.llLog);
+        beaconPicSize = new HashMap<>();
 
         br = new BroadcastReceiver()
         {
@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        mBleutoothScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        mBluetoothScanner = mBluetoothAdapter.getBluetoothLeScanner();
 
-        //new GetInformation().execute("");
+        new GetInformation().execute("");
     }
 
     //decode the only string server gives us into arrays
@@ -87,11 +87,10 @@ public class MainActivity extends AppCompatActivity
     {
         String[] parts = a.split("-");
 
-        for (int i = 0; i < parts.length; i += 3)
+        for (int i = 0; i < parts.length; i += 2)
         {
-            beaconAddress.add(parts[i]);
-            beaconName.add(parts[i + 1]);
-            beaconPicSize.add(parts[i + 2]);
+            //id : picSize
+            beaconPicSize.put(parts[i], parts[i + 1]);
         }
     }
 
@@ -109,7 +108,7 @@ public class MainActivity extends AppCompatActivity
         if (!discoveryStarted)
         {
             discoveryStarted = true;
-            Timer tim = new Timer();
+            tim = new Timer();
             TimerTask bthh = new MyTimerTask();
             tim.schedule(bthh, 200, 500);
         }
@@ -117,13 +116,17 @@ public class MainActivity extends AppCompatActivity
 
     public void stopDiscovery(View view)
     {
-
+        if (discoveryStarted)
+        {
+            discoveryStarted = false;
+            tim.cancel();
+        }
     }
 
-    public void askPicture(int num)
+    public void askPicture(String id)
     {
         Intent intent = new Intent(this, GetImageService.class);
-        intent.putExtra(SIZE, beaconPicSize.get(num));
+        intent.putExtra(SIZE, beaconPicSize.get(id));
         intent.putExtra(SERVER, SERVER_NUM);
         intent.putExtra(SOCKET, SOCKET_NUM);
         startService(intent);
@@ -138,8 +141,6 @@ public class MainActivity extends AppCompatActivity
             try
             {
                 Socket fromserver = new Socket(SERVER_NUM, SOCKET_NUM);
-                PrintWriter out = new
-                        PrintWriter(fromserver.getOutputStream(),true);
                 BufferedReader in  = new BufferedReader(new
                         InputStreamReader(fromserver.getInputStream()));
                 fserver = in.readLine();
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void run()
                 {
-                    mBleutoothScanner.startScan(leScanCallback);
+                    mBluetoothScanner.startScan(leScanCallback);
                 }
             });
         }
@@ -188,7 +189,7 @@ public class MainActivity extends AppCompatActivity
             boolean alreadyFound = false;
 
             for (int i = 0; i < mBTDevices.size(); i++) {
-                if (result.getDevice().getName().equals(mBTDevices.get(i).getName())) {
+                if (result.getDevice().getUuids().equals(mBTDevices.get(i).getId())) {
                     alreadyFound = true;
                 }
             }
