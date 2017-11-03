@@ -6,4 +6,24 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
+    #nav
+      - if current_user
+        %table.table.table-bordered
+          %tr
+            %th
+              = link_to "Edit Profile", edit_user_path(current_user.id)
+            %th
+              = link_to "Logout", :logout, method: :post
+            %th
+              = link_to "All users", users_path
+      - else
+        %table.table.table-bordered
+          %tr
+            %th
+              = link_to "Register", new_user_path
+            %th
+              = link_to "Login", :login
+    %div
+      %p#notice= flash[:notice]
+      %p#alert= flash[:alert]
     = yield
