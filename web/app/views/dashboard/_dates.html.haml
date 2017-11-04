@@ -12,6 +12,6 @@
           - m = tracker.created_at.strftime("%b  %e")
           - if n != m
             - n = m
-            %th
+            %td
               = link_to tracker.created_at.strftime("%b  %e"),
                   dashboard_path(tracker)
