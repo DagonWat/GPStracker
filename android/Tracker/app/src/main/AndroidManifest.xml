@@ -28,8 +28,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.SampleActivity" />
-        <service android:name=".service.SampleService" />
         <service
             android:name=".SendService"
             android:enabled="true"

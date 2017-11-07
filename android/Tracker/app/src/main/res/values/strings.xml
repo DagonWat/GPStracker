@@ -1,5 +1,5 @@
 <resources>
     <string name = "app_name">GPSTracker</string>
-    <string name = "web_address">http://172.124.203.226:11000/api/tracker</string>
+    <string name = "web_address">http://178.124.203.226:11000/api/tracker</string>
     <string name = "user_name">address</string>
 </resources>

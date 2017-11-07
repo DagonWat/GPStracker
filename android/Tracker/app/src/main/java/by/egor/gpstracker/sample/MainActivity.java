@@ -1,123 +1,279 @@
 package by.egor.gpstracker.sample;
-
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.location.Location;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.content.pm.PackageManager;
+import android.os.PowerManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.location.Location;
 import android.view.View;
-import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.yayandroid.locationmanager.LocationManager;
+import com.yayandroid.locationmanager.configuration.DefaultProviderConfiguration;
+import com.yayandroid.locationmanager.configuration.LocationConfiguration;
+import com.yayandroid.locationmanager.configuration.PermissionConfiguration;
 import com.yayandroid.locationmanager.constants.FailType;
 import com.yayandroid.locationmanager.constants.ProcessType;
+import com.yayandroid.locationmanager.constants.ProviderType;
+import com.yayandroid.locationmanager.listener.LocationListener;
 
-import by.egor.gpstracker.sample.SamplePresenter.SampleView;
-import by.egor.gpstracker.sample.activity.SampleActivity;
-import by.egor.gpstracker.sample.service.SampleService;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements SampleView {
+public class MainActivity extends AppCompatActivity implements LocationListener {
+    private LocationManager locationManager;
 
-    private IntentFilter intentFilter;
-    private SamplePresenter samplePresenter;
-    private ProgressDialog progressDialog;
-    private TextView tvLatitude;
+    private TextView textLat;
+    private TextView textLon;
+    private EditText etUrl;
+    private EditText etTime;
+    private LinearLayout llLog;
+    Button btnSend;
+    ArrayList<TextView> tvLog = new ArrayList<>();
+    private Context context;
+
+    public static final String URL = "url";
+    public static final String LON = "longitude";
+    public static final String LAT = "latitude";
+
+    PowerManager pm;
+    PowerManager.WakeLock wl;
+
+    double lat, lon;
+    boolean isSending;
+    Timer tim1;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
 
-        tvLatitude = (TextView) findViewById(R.id.tvCoords);
+        isSending = false;
+
+        textLat = findViewById(R.id.tvLat);
+        textLon = findViewById(R.id.tvLon);
+
+        btnSend = findViewById(R.id.btSend);
+        etUrl = findViewById(R.id.etUrl);
+        etTime = findViewById(R.id.etTime);
+        llLog = findViewById(R.id.llLog);
+
+        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Tag");
+
+        TextView a = new TextView(this);
+        String newLog = "[" + getTime() + "]: Application started!";
+        a.setText(newLog);
+        tvLog.add(a);
+
+        llLog.addView(tvLog.get(tvLog.size() - 1));
+
+
+        askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, 1);
+        askForPermission(Manifest.permission.ACCESS_COARSE_LOCATION, 1);
+        askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 1);
+        askForPermission(Manifest.permission.INTERNET, 1);
+        askForPermission(Manifest.permission.ACCESS_WIFI_STATE, 1);
+
+
+        locationManager = new LocationManager.Builder(getApplicationContext())
+                .configuration(getLocationConfiguration())
+                .activity(this)
+                .notify(this)
+                .build();
+        LocationManager.enableLog(true);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        registerReceiver(broadcastReceiver, getIntentFilter());
+    protected void onDestroy() {
+        locationManager.onDestroy();
+        super.onDestroy();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(broadcastReceiver);
+    public void start(View view) {
+        locationManager.get();
     }
 
-    @Override
-    public String getText() {
-        return tvLatitude.getText().toString();
-    }
-
-    @Override
-    public void setText(String text)
-    {}
-
-    public void getLocation(View view)
+    public void startSending()
     {
-        startActivity(new Intent(this, SampleActivity.class));
-    }
+        if (!isSending)
+        {
+            wl.acquire();
 
-    @Override
-    public void updateProgress(String text) {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.setMessage(text);
-        }
-    }
+            tim1 = new Timer();
+            TimerTask bthh = new LocationTimer();
 
-    @Override
-    public void dismissProgress() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-    }
+            int period = Integer.parseInt(etTime.getText().toString());
 
-    private void displayProgress() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.getWindow().addFlags(Window.FEATURE_NO_TITLE);
-            progressDialog.setMessage("Getting location...");
-        }
-
-        if (!progressDialog.isShowing()) {
-            progressDialog.show();
-        }
-    }
-
-    private IntentFilter getIntentFilter() {
-        if (intentFilter == null) {
-            intentFilter = new IntentFilter();
-            intentFilter.addAction(SampleService.ACTION_LOCATION_CHANGED);
-            intentFilter.addAction(SampleService.ACTION_LOCATION_FAILED);
-            intentFilter.addAction(SampleService.ACTION_PROCESS_CHANGED);
-        }
-        return intentFilter;
-    }
-
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(SampleService.ACTION_LOCATION_CHANGED)) {
-                samplePresenter.onLocationChanged((Location) intent.getParcelableExtra(SampleService.EXTRA_LOCATION));
-            } else if (action.equals(SampleService.ACTION_LOCATION_FAILED)) {
-                //noinspection WrongConstant
-                samplePresenter.onLocationFailed(intent.getIntExtra(SampleService.EXTRA_FAIL_TYPE, FailType.UNKNOWN));
-            } else if (action.equals(SampleService.ACTION_PROCESS_CHANGED)) {
-                //noinspection WrongConstant
-                samplePresenter.onProcessTypeChanged(intent.getIntExtra(SampleService.EXTRA_PROCESS_TYPE,
-                        ProcessType.GETTING_LOCATION_FROM_CUSTOM_PROVIDER));
+            if (period >= 20)
+            {
+                tim1.schedule(bthh, 200, period * 1000);
             }
+            else
+            {
+                Toast.makeText(getBaseContext(), "The minimum time is 20 s.", Toast.LENGTH_LONG).show();
+                period = 20;
+                etTime.setText("20");
+                tim1.schedule(bthh, 200, 20000);
+            }
+
+            TextView a = new TextView(this);
+            String newLog = "[" + getTime() + "]: Start sending location with " + period + "s period.";
+            a.setText(newLog);
+            tvLog.add(a);
+
+            llLog.addView(tvLog.get(tvLog.size() - 1));
         }
-    };
+    }
+
+    public void stopSending(View view)
+    {
+        if (isSending) {
+            tim1.cancel();
+
+            TextView a = new TextView(this);
+            String newLog = "[" + getTime() + "]: Stop sending.";
+            a.setText(newLog);
+            tvLog.add(a);
+
+            llLog.addView(tvLog.get(tvLog.size() - 1));
+
+            isSending = false;
+
+            wl.release();
+        }
+    }
+
+
+    public LocationConfiguration getLocationConfiguration() {
+        return new LocationConfiguration.Builder()
+                .keepTracking(true)
+                .askForPermission(new PermissionConfiguration.Builder()
+                        .build())
+                .useDefaultProviders(new DefaultProviderConfiguration.Builder()
+                        .requiredTimeInterval(1 * 1000) //1 second
+                        .requiredDistanceInterval(0)
+                        .acceptableAccuracy(5.0f)
+                        .acceptableTimePeriod(5 * 1000) //5 seconds
+                        .gpsMessage("Turn on GPS?")
+                        .setWaitPeriod(ProviderType.GPS, 20 * 1000) //200 seconds
+                        .setWaitPeriod(ProviderType.NETWORK, 20 * 1000) //20 seconds
+                        .build())
+                .build();
+    }
+
+    @Override
+    public void onLocationFailed(@FailType int failType) {
+        locationManager.get();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        textLat.setText("Lat:  " + String.valueOf(location.getLatitude()).substring(0, 7));
+        textLon.setText("Lon:  " + String.valueOf(location.getLongitude()).substring(0, 7));
+
+        startSending();
+        isSending = true;
+
+        lat = location.getLatitude();
+        lon = location.getLongitude();
+    }
+
+    private class LocationTimer extends TimerTask {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    sendCoords();
+
+                    TextView a = new TextView(context);
+                    String newLog = "[" + getTime() + "]: Send coordinates: " + lat + "," + lon;
+                    a.setText(newLog);
+                    tvLog.add(a);
+
+                    llLog.addView(tvLog.get(tvLog.size() - 1));
+                }
+            });
+        }
+    }
+
+    public void sendCoords()
+    {
+        Intent sendIntent = new Intent(this, SendService.class);
+
+        sendIntent.putExtra(LAT, lat);
+        sendIntent.putExtra(LON, lon);
+        sendIntent.putExtra(URL, etUrl.getText().toString());
+
+        startService(sendIntent);
+    }
+
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            }
+        } else {
+            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onProcessTypeChanged(@ProcessType int processType) {
+    }
+
+    @Override
+    public void onPermissionGranted(boolean alreadyHadPermission) {
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+    }
+
+    public String getTime()
+    {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
+        Date currentLocalTime = cal.getTime();
+        DateFormat date = new SimpleDateFormat("HH:mm:ss");
+        date.setTimeZone(TimeZone.getTimeZone("GMT+3:00"));
+        String localTime = date.format(currentLocalTime);
+
+        return localTime;
+    }
 
     public void exit(View view)
     {
         finish();
         System.exit(0);
     }
-
 }
