@@ -1,9 +1,5 @@
 .row{data: {way: @today.to_json}}
-  .content.col-md-3.col-xs-3
-    %h1
-      = link_to "GPS Tracker",
-        root_path(), method: :get
-  .content.col-md-9.col-xs-9
+  .content
     %table.table.table-bordered
       %tr
         - m = ""
