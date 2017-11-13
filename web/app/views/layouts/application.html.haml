@@ -7,27 +7,41 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   %body
-    %nav.navbar.navbar-default
-      %ul.nav.navbar-nav
-        %li
-          = link_to "GPS Tracker",
-            root_path(), method: :get
+    .row
+      .content.col-md-12
+        %nav.navbar.navbar-inverse
+          .container-fluid
+            - if current_user
+              %ul.nav.navbar-nav.col-md-10
+                %li
+                  = link_to "GPS Tracker",
+                    root_path(), method: :get
+                %li.dropdown
+                  %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                    Tracks
+                    %span.caret
+                  %ul.dropdown-menu
+                    = render partial: "dashboard/dates"
+                  %li
+                    = link_to "Edit Profile", edit_user_path(current_user.id)
 
-        - if current_user
-          %li
-            = link_to "Edit Profile", edit_user_path(current_user.id)
-          %li
-            = link_to "Logout", :logout, method: :post
-          %li
-            = link_to "All users", users_path
+              %ul.nav.navbar-nav.navbar-right.col-md-2
+                %li
+                  = link_to "Logout", :logout, method: :post
+                %li
+                  = link_to "All users", users_path
 
-        - else
-          %li
-            = link_to "Register", new_user_path
-          %li
-            = link_to "Login", :login
+            - else
+              %ul.nav.navbar-nav.col-md-10
+                %li
+                  = link_to "GPS Tracker",
+                    root_path(), method: :get
+              %ul.nav.navbar-nav.navbar-right.col-md-2
+                %li
+                  = link_to "Sign Up", new_user_path
+                %li
+                  = link_to "Login", login_path
 
     %div
-      %p#notice= flash[:notice]
       %p#alert= flash[:alert]
     = yield

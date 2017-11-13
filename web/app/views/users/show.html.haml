@@ -1,6 +1,18 @@
-%p#notice= notice
-%p
-  %strong Email:
-  = @user.email
-
-= link_to 'Edit', edit_user_path(@user)
+#main-container.container-fluid
+  .row
+    .content.col-md-4.col-md-offset-4
+      .panel.panel-primary{align: "center"}
+        .panel-heading{style: "background-color : rgba(0,255,0, 0.5)"}
+          %h1 Users info
+        .panel-body
+          .field
+            %p
+              %strong Email:
+              = @user.email
+          .field
+            %p
+              %strong Created at:
+              = @user.created_at
+          .field
+            .notice= flash[:notice]
+          = link_to "Edit", edit_user_path(@user), :class => "btn btn-primary"

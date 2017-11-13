@@ -6,20 +6,25 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    @trackers = Tracker.order(:created_at)
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    @trackers = Tracker.order(:created_at)
   end
 
   # GET /users/new
   def new
+    @act = "New User"
     @user = User.new
   end
 
   # GET /users/1/edit
   def edit
+    @act = "Edit User"
+    @trackers = Tracker.order(:created_at)
   end
 
   # POST /users
@@ -27,29 +32,22 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        UserMailer.activation_needed_email(@user).deliver_now
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      UserMailer.activation_needed_email(@user).deliver_now
+      redirect_to @user
+      flash[:notice] = 'User was succesfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+      redirect_to @user, notice: "User was successfully updated."
+    else
+      render :edit
     end
   end
 
@@ -57,16 +55,14 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @trackers = Tracker.order(:created_at)
+    redirect_to users_url, notice: "User was successfully destroyed."
   end
 
   def activate
     if (@user = User.load_from_activation_token(params[:id]))
       @user.activate!
-      redirect_to(login_path, :notice => 'User was successfully activated.')
+      redirect_to login_path, notice: "User was successfully activated."
     else
       not_authenticated
     end
@@ -82,4 +78,6 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation)
     end
+
+
 end

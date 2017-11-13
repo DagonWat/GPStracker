@@ -1,3 +1,4 @@
+{data: {way: @today.to_json}}
 - m = ""
 - n = ""
 - @trackers.each do |tracker|
@@ -6,4 +7,4 @@
     - n = m
     %li
       = link_to tracker.created_at.strftime("%b  %e"),
-                  dashboard_path(tracker)
+          dashboard_path(tracker)
