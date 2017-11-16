@@ -1,6 +1,7 @@
 package by.dagonwat.beacon;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -9,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -37,9 +39,10 @@ public class MainActivity extends AppCompatActivity
     BluetoothLeScanner mBluetoothScanner;
     BluetoothManager mBluetoothManager;
     boolean discoveryStarted = false;
-    public ArrayList<Beacon> mBTDevices = new ArrayList<>();
+    public ArrayList<Beacon> mBTDevices;
     private LinearLayout llLog;
     Timer tim;
+    private SharedPreferences sharedPref;
 
     //ip address and socket from which we will get info
     public static final String SERVER_NUM = "111.222.111.101";
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity
         txt = (TextView) findViewById(R.id.text);
         llLog = (LinearLayout) findViewById(R.id.llLog);
         beaconPicSize = new HashMap<>();
+        mBTDevices = new ArrayList<>();
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
 
         br = new BroadcastReceiver()
         {
@@ -79,7 +84,23 @@ public class MainActivity extends AppCompatActivity
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothScanner = mBluetoothAdapter.getBluetoothLeScanner();
 
-        new GetInformation().execute("");
+        //new GetInformation().execute("");
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        for (int i = 0; i < mBTDevices.size(); i++)
+        {
+            editor.putString(String.valueOf(i), mBTDevices.get(i).getName());
+            editor.putString(mBTDevices.get(i).getName(), String.valueOf(mBTDevices.get(i).getTxPower()));
+        }
+
+        editor.apply();
     }
 
     //decode the only string server gives us into arrays
@@ -185,24 +206,31 @@ public class MainActivity extends AppCompatActivity
     private ScanCallback leScanCallback = new ScanCallback()
     {
         @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            boolean alreadyFound = false;
-
-            for (int i = 0; i < mBTDevices.size(); i++) {
-                if (result.getDevice().getUuids().equals(mBTDevices.get(i).getId())) {
-                    alreadyFound = true;
-                }
-            }
-
-            if (!alreadyFound)
+        public void onScanResult(int callbackType, ScanResult result)
+        {
+            BluetoothDevice device = result.getDevice();
+            if (device.getName() != null)
             {
-                Beacon newBeacon = new Beacon(result.getDevice().getName(), result.getRssi());
-                mBTDevices.add(newBeacon);
+                boolean alreadyFound = false;
 
-                TextView a = new TextView(context);
-                String newLog = result.getDevice().getName();
-                a.setText(newLog);
-                llLog.addView(a);
+                for (int i = 0; i < mBTDevices.size(); i++) {
+                    if (result.getDevice().getName().equals(mBTDevices.get(i).getName())) {
+                        alreadyFound = true;
+                    }
+                }
+
+                if (!alreadyFound)
+                {
+                    Beacon newBeacon = new Beacon(result.getDevice().getName(), result.getRssi());
+                    mBTDevices.add(newBeacon);
+
+                    TextView a = new TextView(context);
+                    String newLog = result.getDevice().getName();
+                    a.setText(newLog);
+                    llLog.addView(a);
+                }
+
+                txt.setText("");
             }
         }
     };

@@ -15,7 +15,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.285" />
+        app:layout_constraintVertical_bias="0.244" />
 
     <Button
         android:id="@+id/conButton"
@@ -58,12 +58,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.476"
+        app:layout_constraintVertical_bias="0.592"
         app:srcCompat="@android:color/white" />
 
     <ScrollView
-        android:layout_width="302dp"
-        android:layout_height="177dp"
+        android:layout_width="339dp"
+        android:layout_height="160dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -73,8 +73,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.394"
-        tools:layout_editor_absoluteX="45dp">
+        app:layout_constraintHorizontal_bias="0.451"
+        tools:layout_editor_absoluteY="343dp"
+        tools:layout_editor_absoluteX="26dp">
 
         <LinearLayout
             android:id="@+id/llLog"
