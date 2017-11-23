@@ -67,7 +67,17 @@ public class MainActivity extends AppCompatActivity
         llLog = (LinearLayout) findViewById(R.id.llLog);
         beaconPicSize = new HashMap<>();
         mBTDevices = new ArrayList<>();
+
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        int listSize = sharedPref.getInt("size", 0);
+
+        for (int i = 0; i < listSize; i++)
+        {
+            String beaconName = sharedPref.getString(String.valueOf(i), "");
+            int beaconInt = sharedPref.getInt(beaconName, 0);
+            Beacon newBeacon = new Beacon(beaconName, beaconInt);
+            mBTDevices.add(newBeacon);
+        }
 
         br = new BroadcastReceiver()
         {
@@ -93,11 +103,12 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
 
         SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("size", mBTDevices.size());
 
         for (int i = 0; i < mBTDevices.size(); i++)
         {
             editor.putString(String.valueOf(i), mBTDevices.get(i).getName());
-            editor.putString(mBTDevices.get(i).getName(), String.valueOf(mBTDevices.get(i).getTxPower()));
+            editor.putInt(mBTDevices.get(i).getName(), mBTDevices.get(i).getTxPower());
         }
 
         editor.apply();
