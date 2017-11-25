@@ -1,4 +1,6 @@
 class UserSessionsController < ApplicationController
+  skip_before_action :require_login
+  
   def new
     @user = User.new
   end
@@ -7,7 +9,7 @@ class UserSessionsController < ApplicationController
     if @user = login(params[:email], params[:password])
       redirect_back_or_to(:root)
     else
-      flash.now[:alert] = 'Login failed'
+      flash.now[:alert] = 'Email or password is incorrect'
       render action: 'new'
     end
   end

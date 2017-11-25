@@ -1,5 +1,6 @@
 class DashboardController < ApplicationController
   skip_before_action :verify_authenticity_token
+  skip_before_action :require_login
 
   def index
     @trackers = Tracker.order(:created_at)
@@ -10,6 +11,13 @@ class DashboardController < ApplicationController
 
     @today = Tracker.where("created_at >= :start_date AND created_at <= :end_date",
       {start_date: @from, end_date: @until})
+
+    @anyuser = true
+
+    if :require_login
+      @anyuser = false
+    end
+
   end
 
   def show
