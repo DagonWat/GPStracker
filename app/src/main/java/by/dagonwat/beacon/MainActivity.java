@@ -13,34 +13,60 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity
 {
     TextView txt;
+    TextView txtSize;
     Map<String, String> beaconPicSize;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothLeScanner mBluetoothScanner;
     BluetoothManager mBluetoothManager;
     boolean discoveryStarted = false;
     public ArrayList<Beacon> mBTDevices;
-    private LinearLayout llLog;
+    private LinearLayout llVer;
+    private LinearLayout llHor;
+    GradientDrawable progressGradientDrawable = new GradientDrawable(
+            GradientDrawable.Orientation.LEFT_RIGHT, new int[]{
+            0xff1e90ff,0xff006ab6,0xff367ba8});
+    ClipDrawable progressClipDrawable = new ClipDrawable(
+            progressGradientDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+    Drawable[] progressDrawables = {
+            new ColorDrawable(0xffffffff),
+            progressClipDrawable, progressClipDrawable};
+    LayerDrawable progressLayerDrawable = new LayerDrawable(progressDrawables);
+    ProgressBar pb;
     Timer tim;
     private SharedPreferences sharedPref;
 
@@ -64,19 +90,46 @@ public class MainActivity extends AppCompatActivity
         context = this;
 
         txt = (TextView) findViewById(R.id.text);
-        llLog = (LinearLayout) findViewById(R.id.llLog);
+        llVer = (LinearLayout) findViewById(R.id.llVertical);
+        llHor = new LinearLayout(this);
         beaconPicSize = new HashMap<>();
         mBTDevices = new ArrayList<>();
 
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         int listSize = sharedPref.getInt("size", 0);
 
+        txtSize = (TextView) findViewById(R.id.size);
+        txtSize.setText(String.valueOf(listSize));
+
+        TextView a = new TextView(context);
+        a.setText("first");
+        llHor.addView(a);
+
+        pb = new ProgressBar(this);
+        pb.setProgress(89);
+
+        progressLayerDrawable.setId(0, android.R.id.background);
+        progressLayerDrawable.setId(1, android.R.id.secondaryProgress);
+        progressLayerDrawable.setId(2, android.R.id.progress);
+
+        pb.setProgressDrawable(progressLayerDrawable);
+
+        llHor.addView(pb);
+
+        llVer.addView(llHor);
+
         for (int i = 0; i < listSize; i++)
         {
-            String beaconName = sharedPref.getString(String.valueOf(i), "");
+            /*String beaconName = sharedPref.getString(String.valueOf(i), "");
             int beaconInt = sharedPref.getInt(beaconName, 0);
-            Beacon newBeacon = new Beacon(beaconName, beaconInt);
+            long beaconLastSeen = sharedPref.getLong(beaconName + "time", 0);
+            Beacon newBeacon = new Beacon(beaconName, beaconInt, beaconLastSeen);
             mBTDevices.add(newBeacon);
+
+            TextView a = new TextView(context);
+            String newLog = beaconName;
+            a.setText(newLog);
+            //llLog.addView(a);*/
         }
 
         br = new BroadcastReceiver()
@@ -109,6 +162,7 @@ public class MainActivity extends AppCompatActivity
         {
             editor.putString(String.valueOf(i), mBTDevices.get(i).getName());
             editor.putInt(mBTDevices.get(i).getName(), mBTDevices.get(i).getTxPower());
+            editor.putLong(mBTDevices.get(i).getName() + "time", mBTDevices.get(i).getLastSeen());
         }
 
         editor.apply();
@@ -151,7 +205,6 @@ public class MainActivity extends AppCompatActivity
         if (discoveryStarted)
         {
             discoveryStarted = false;
-            tim.cancel();
         }
     }
 
@@ -208,7 +261,11 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void run()
                 {
-                    mBluetoothScanner.startScan(leScanCallback);
+                    if (discoveryStarted)
+                    {
+                        mBluetoothScanner.startScan(leScanCallback);
+                    }
+                    killOldBeacons();
                 }
             });
         }
@@ -232,19 +289,37 @@ public class MainActivity extends AppCompatActivity
 
                 if (!alreadyFound)
                 {
-                    Beacon newBeacon = new Beacon(result.getDevice().getName(), result.getRssi());
+                    Beacon newBeacon = new Beacon(result.getDevice().getName(), result.getRssi(), getSeconds());
                     mBTDevices.add(newBeacon);
 
                     TextView a = new TextView(context);
                     String newLog = result.getDevice().getName();
                     a.setText(newLog);
-                    llLog.addView(a);
+                    //llLog.addView(a);
                 }
 
                 txt.setText("");
             }
         }
     };
+
+    public void killOldBeacons()
+    {
+        for (int i = 0; i < mBTDevices.size(); i++)
+        {
+            if (getSeconds() - mBTDevices.get(i).getLastSeen() > 30)
+            {
+                mBTDevices.remove(i);
+                txtSize.setText(String.valueOf(mBTDevices.size()));
+                i--;
+            }
+        }
+    }
+
+    public long getSeconds()
+    {
+        return System.currentTimeMillis();
+    }
 }
 
 

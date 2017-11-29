@@ -11,13 +11,15 @@ public class Beacon
     private double x, y;
     private String name;
     private int txPower;
+    private long lastSeen;
     private double dist = 0;
     private ArrayList<Integer> mid = new ArrayList<>();
 
-    public Beacon(String id, int txPower)
+    public Beacon(String id, int txPower, long lastSeen)
     {
         this.name = id;
         this.txPower = txPower;
+        this.lastSeen = lastSeen;
     }
 
     void setBeacon(double a, double b, String c, int d)
@@ -73,5 +75,10 @@ public class Beacon
     double getDist()
     {
         return dist;
+    }
+
+    public long getLastSeen()
+    {
+        return lastSeen;
     }
 }
