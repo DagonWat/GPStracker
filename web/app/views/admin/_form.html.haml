@@ -5,7 +5,7 @@
         .panel-heading
           .h1=@act
         .panel-body
-          - if user.errors.any?
+          - if current_user.errors.any?
             .alert.alert-danger{:role => "alert"}
               %ul
                 - user.errors.full_messages.each do |message|
@@ -14,7 +14,8 @@
           .field
             .form-group
               %label{:for => "exampleInputEmail1"} Email address
-              %input#exampleInputEmail1.form-control{"aria-describedby" => "emailHelp", :placeholder => "example@gmail.com", :type => "email", name: :'user[email]'}/
+              = form.text_field :email, class: 'form-control', value: @email_f, placeholder: 'example@gmail.com'
+              -#%input#exampleInputEmail1.form-control{"aria-describedby" => "emailHelp", :placeholder => "example@gmail.com", :type => "email", name: :'user[email]'}/
               %small#emailHelp.form-text.text-muted We'll never share your email with anyone else.
           .field
             .form-group
@@ -23,7 +24,7 @@
 
           .field
             .form-group
-              %label{:for => "exampleInputPassword1"} Check password
+              %label{:for => "exampleInputPassword2"} Check password
               %input#exampleInputPassword1.form-control{:placeholder => "Password", :type => "password", name: :'user[password_confirmation]'}/
 
           -if @act == "New User"

@@ -7,9 +7,13 @@ Rails.application.routes.draw do
   get 'password_resets/update'
 
   resources :user_sessions
-  resources :users
 
-  resources :users do
+  resources :users, except: [:show, :new]
+
+  resources :admin, except: [:show]
+  get 'admin/users'
+
+  resources :guest, only: [:index, :create, :new] do
     member do
       get :activate
     end
@@ -22,7 +26,7 @@ Rails.application.routes.draw do
     resources :tracker, only: [:create]
   end
 
-  root "dashboard#index"
+  root "admin#index"
 
   resources :dashboard, only: [:show]
 

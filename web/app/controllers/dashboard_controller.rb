@@ -47,4 +47,7 @@ class DashboardController < ApplicationController
     @paths << current_path if current_path.any?
   end
 
+  def card
+  end
+
 end

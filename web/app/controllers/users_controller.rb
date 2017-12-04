@@ -1,24 +1,15 @@
 class UsersController < ApplicationController
-  skip_before_action :require_login, only: [:create, :activate, :new]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  # GET /users
-  # GET /users.json
   def index
-    @users = User.all
     @trackers = Tracker.order(:created_at)
-  end
 
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    @trackers = Tracker.order(:created_at)
-  end
+    @from = Time.now.strftime("%Y-%m-%d 00:00:00")
 
-  # GET /users/new
-  def new
-    @act = "New User"
-    @user = User.new
+    @until = Time.now.strftime("%Y-%m-%d 23:59:59")
+
+    @today = Tracker.where("created_at >= :start_date AND created_at <= :end_date",
+      {start_date: @from, end_date: @until})
   end
 
   # GET /users/1/edit
@@ -27,6 +18,12 @@ class UsersController < ApplicationController
     @trackers = Tracker.order(:created_at)
   end
 
+  def new
+    @act = "New User"
+    @user = User.new
+  end
+
+
   # POST /users
   # POST /users.json
   def create
@@ -34,10 +31,14 @@ class UsersController < ApplicationController
 
     if @user.save
       UserMailer.activation_needed_email(@user).deliver_now
-      redirect_to @user
+      redirect_to root
       flash[:notice] = 'User was succesfully created.'
     else
-      render :new
+      if current_user.admin
+        redirect_to new_admin_path
+      else
+        render :new
+      end
     end
   end
 
@@ -59,15 +60,6 @@ class UsersController < ApplicationController
     redirect_to users_url, notice: "User was successfully destroyed."
   end
 
-  def activate
-    if (@user = User.load_from_activation_token(params[:id]))
-      @user.activate!
-      redirect_to login_path, notice: "User was successfully activated."
-    else
-      not_authenticated
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -76,7 +68,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
+      params.require(:user).permit(:email, :password, :password_confirmation, admin: 0)
     end
 
 

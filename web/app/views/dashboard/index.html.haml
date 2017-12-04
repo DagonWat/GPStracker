@@ -4,7 +4,7 @@
       .jumbotron
         %h1{:align => "center"} GPS Tracker
         %p{:align => "center"} This project allows you to track yourself!
-  -if @anyuser
+  -if current_user
     .row
       .content.col-md-12
         %h1{:align => "center"}
