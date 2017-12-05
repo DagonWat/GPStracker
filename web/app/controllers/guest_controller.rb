@@ -4,23 +4,6 @@ class GuestController < ApplicationController
   def index
   end
 
-  def create
-    @user = User.new(user_params)
-
-    if @user.save
-      UserMailer.activation_needed_email(@user).deliver_now
-      redirect_to @user
-      flash[:notice] = 'User was succesfully created.'
-    else
-      render :new
-    end
-  end
-
-  def new
-    @act = "New User"
-    @user = User.new
-  end
-
   def activate
     if (@user = User.load_from_activation_token(params[:id]))
       @user.activate!
@@ -40,5 +23,4 @@ class GuestController < ApplicationController
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation)
     end
-
 end

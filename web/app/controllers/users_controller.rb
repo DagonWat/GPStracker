@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :require_login, only: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -12,20 +13,18 @@ class UsersController < ApplicationController
       {start_date: @from, end_date: @until})
   end
 
-  # GET /users/1/edit
+  def show
+    @trackers = Tracker.order(:created_at)
+  end
+
   def edit
-    @act = "Edit User"
     @trackers = Tracker.order(:created_at)
   end
 
   def new
-    @act = "New User"
     @user = User.new
   end
 
-
-  # POST /users
-  # POST /users.json
   def create
     @user = User.new(user_params)
 
@@ -34,17 +33,12 @@ class UsersController < ApplicationController
       redirect_to root
       flash[:notice] = 'User was succesfully created.'
     else
-      if current_user.admin
-        redirect_to new_admin_path
-      else
-        render :new
-      end
+      render :new
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
+    @trackers = Tracker.order(:created_at)
     if @user.update(user_params)
       redirect_to @user, notice: "User was successfully updated."
     else
@@ -52,8 +46,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
   def destroy
     @user.destroy
     @trackers = Tracker.order(:created_at)
@@ -70,6 +62,4 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, admin: 0)
     end
-
-
 end

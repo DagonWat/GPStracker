@@ -15,7 +15,6 @@
             .form-group
               %label{:for => "exampleInputEmail1"} Email address
               = form.text_field :email, class: 'form-control', value: @email_f, placeholder: 'example@gmail.com'
-              -#%input#exampleInputEmail1.form-control{"aria-describedby" => "emailHelp", :placeholder => "example@gmail.com", :type => "email", name: :'user[email]'}/
               %small#emailHelp.form-text.text-muted We'll never share your email with anyone else.
           .field
             .form-group
@@ -32,4 +31,4 @@
               = button_to("Create", { action: "new" }, class: "btn btn-primary")
           -else
             .field{:align => "center"}
-              = button_to("Change", { action: "edit" }, class: "btn btn-primary")
+              =form.submit 'Change', class: "btn btn-primary"

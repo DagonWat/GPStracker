@@ -8,12 +8,12 @@ Rails.application.routes.draw do
 
   resources :user_sessions
 
-  resources :users, except: [:show, :new]
+  resources :users
 
   resources :admin, except: [:show]
   get 'admin/users'
 
-  resources :guest, only: [:index, :create, :new] do
+  resources :guest, only: [:index] do
     member do
       get :activate
     end
