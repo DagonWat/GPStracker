@@ -6,18 +6,20 @@ Rails.application.routes.draw do
 
   get 'password_resets/update'
 
-  resources :user_sessions
+  resources :user_sessions, only: [:new, :create, :destroy]
 
-  resources :users
+  resources :profile, only: [:show, :index]
 
-  resources :admin, except: [:show]
   get 'admin/users'
+  resources :admin
 
-  resources :guest, only: [:index] do
+  resources :users, only: [:new, :create, :edit, :update, :destroy] do
     member do
       get :activate
     end
   end
+
+  resources :guest, only: [:index]
 
   get 'login' => 'user_sessions#new', :as => :login
   post 'logout' => 'user_sessions#destroy', :as => :logout

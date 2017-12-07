@@ -1,21 +1,6 @@
 class UsersController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @trackers = Tracker.order(:created_at)
-
-    @from = Time.now.strftime("%Y-%m-%d 00:00:00")
-
-    @until = Time.now.strftime("%Y-%m-%d 23:59:59")
-
-    @today = Tracker.where("created_at >= :start_date AND created_at <= :end_date",
-      {start_date: @from, end_date: @until})
-  end
-
-  def show
-    @trackers = Tracker.order(:created_at)
-  end
+  skip_before_action :require_login, only: [:new, :create, :activate]
+  before_action :set_user, only: [:edit, :update, :destroy]
 
   def edit
     @trackers = Tracker.order(:created_at)
@@ -30,8 +15,8 @@ class UsersController < ApplicationController
 
     if @user.save
       UserMailer.activation_needed_email(@user).deliver_now
-      redirect_to root
-      flash[:notice] = 'User was succesfully created.'
+      redirect_to admin_index_path
+      flash[:notice] = 'User was succesfully created. We have sent you an email with activation.'
     else
       render :new
     end
@@ -40,16 +25,29 @@ class UsersController < ApplicationController
   def update
     @trackers = Tracker.order(:created_at)
     if @user.update(user_params)
-      redirect_to @user, notice: "User was successfully updated."
+      redirect_to admin_index_path, notice: 'Password for ' + @user.email + ' was successfully updated.'
     else
       render :edit
+    end
+  end
+
+  def activate
+    if (@user = User.load_from_activation_token(params[:id]))
+      @user.activate!
+      if !current_user
+        redirect_to login_path, notice: 'User was successfully activated.'
+      elsif current_user.admin
+        redirect_to admin_index_path, notice: 'User ' + @user.email + ' was successfully activated.'
+      end
+    else
+      not_authenticated
     end
   end
 
   def destroy
     @user.destroy
     @trackers = Tracker.order(:created_at)
-    redirect_to users_url, notice: "User was successfully destroyed."
+    redirect_to admin_users_path, notice: @user.email + ' was successfully destroyed.'
   end
 
   private
@@ -60,6 +58,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, admin: 0)
+      params.require(:user).permit(:email, :password, :password_confirmation)
     end
 end
