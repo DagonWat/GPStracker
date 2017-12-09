@@ -1,37 +1,38 @@
 Rails.application.routes.draw do
+  # UNREGISTERED ROUTES START
+  get  'login'  => 'user_sessions#new'
+  post 'login'  => 'user_sessions#create'
+  post 'logout' => 'user_sessions#destroy', :as => :logout
 
-  get 'password_resets/create'
+  resource :password_reset, only: [:edit, :update, :create, :new], controller: :password_reset
+  # UNREGISTERED ROUTES END
 
-  get 'password_resets/edit'
+  # ADMIN ROUTES START
+  namespace :admin do
+    resource  :dashboard,  only: [:show, :index],                   controller: :dashboard
+    resource  :profile,    only: [:show, :destroy],                 controller: :profile
+    resource  :users,      only: [:show]
+    resources :user,       only: [:show, :edit, :update, :destroy], controller: :user
+  end
+  # ADMIN ROUTES END
 
-  get 'password_resets/update'
-
-  resources :user_sessions, only: [:new, :create, :destroy]
-
-  resources :profile, only: [:show, :index]
-
-  get 'admin/users'
-  resources :admin
-
-  resources :users, only: [:new, :create, :edit, :update, :destroy] do
+  # USER ROUTES START
+  resource  :profile, only: [:show, :new, :create, :edit, :update, :destroy], controller: :profile
+  resources :profile, only: [] do
     member do
       get :activate
     end
   end
+  get 'profile/index' => 'profile#index'
+  # USER ROUTES END
 
-  resources :guest, only: [:index]
-
-  get 'login' => 'user_sessions#new', :as => :login
-  post 'logout' => 'user_sessions#destroy', :as => :logout
+  # TRACKER ROUTES START
+  resources :dashboard, only: [:show]
 
   namespace :api do
     resources :tracker, only: [:create]
   end
+  # TRACKER ROUTES END
 
-  root "admin#index"
-
-  resources :dashboard, only: [:show]
-
-  resources :password_resets
-
+  root "guest#index"
 end

@@ -13,9 +13,9 @@
           .field
             %p
               %strong Email:
-              = @user.email
+              = current_user.email
           .field
             %p
               %strong Created at:
-              = @user.created_at
-          = link_to 'Edit', edit_user_path(@user), class: 'btn btn-primary'
+              = current_user.created_at
+          = link_to 'Destroy User', profile_path, method: :delete, data: { confirm: 'Are you sure you want to delete your account?'}
