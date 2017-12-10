@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   post 'login'  => 'user_sessions#create'
   post 'logout' => 'user_sessions#destroy', :as => :logout
 
-  resource :password_reset, only: [:edit, :update, :create, :new], controller: :password_reset
+  resource  :password_reset, only: [:new],                    controller: :password_reset
+  resources :password_reset, only: [:edit, :update, :create], controller: :password_reset
   # UNREGISTERED ROUTES END
 
   # ADMIN ROUTES START
