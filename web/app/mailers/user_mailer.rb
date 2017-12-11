@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
   #
   def activation_needed_email(user)
     @user = user
-    @url = "http://0.0.0.0:3000/profile/#{user.activation_token}/activate"
+    @url = activate_registration_url(id: user.activation_token)
     mail(:to => user.email,
        :subject => "Welcome to My Awesome Site")
   end

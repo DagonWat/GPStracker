@@ -10,6 +10,7 @@ class UserSessionsController < ApplicationController
       redirect_back_or_to(:root)
     else
       flash.now[:alert] = 'Email or password is incorrect'
+      @email = params[:email]
       render action: 'new'
     end
   end

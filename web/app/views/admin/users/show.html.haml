@@ -1,35 +1,20 @@
-%h1{align: 'center'} Users
-
-- if flash[:notice]
+#main-container.container-fluid
+  - if flash[:notice]
+    .row
+      .content.col-md-4.col-md-offset-4
+        .jumbotron{align: 'center'}
+          .notice= flash[:notice]
   .row
     .content.col-md-4.col-md-offset-4
-      .jumbotron{align: 'center'}
-        .notice= flash[:notice]
-
-%%table.table.table-striped
-  %thead
-    %tr
-      %th Email
-      %th Status
-      %th Role
-      %th Crypted password
-      %th Created at
-      %th{colspan: "3"}
-  %tbody
-    - @users.each do |user|
-      %tr
-        %td= user.email
-        - if user.activation_state == 'active'
-          %td.bg-success= user.activation_state
-        -else
-          %td.bg-danger= user.activation_state
-        - if user.admin == 1
-          %td.bg-primary Admin
-        -else
-          %td.bg-success User
-        %td= user.crypted_password
-        %td= user.created_at
-
-        %td= link_to 'Show', admin_user_path(user.id), method: :get
-        %td= link_to 'Edit', edit_admin_user_path(user.id)
-        %td= link_to 'Destroy', admin_user_path(user.id), method: :delete, data: { confirm: 'Are you sure you want to delete ' + user.email + '?'}
+      .panel.panel-primary{align: 'center'}
+        .panel-heading{style: 'background-color : rgba(0,255,0, 0.5)'}
+          %h1 Users info
+        .panel-body
+          .field
+            %p
+              %strong Email:
+              = @user.email
+          .field
+            %p
+              %strong Created at:
+              = @user.created_at
