@@ -1,7 +1,5 @@
 module Admin
-  class ProfileController < ApplicationController
-    before_action :check_if_admin
-    before_action :require_login
+  class ProfileController < BaseController
     before_action :user_params, only: [:update]
 
     def edit

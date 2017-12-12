@@ -1,10 +1,7 @@
 module Admin
-  class DashboardController < BaseController
+  class BaseController < ApplicationController
     before_action :check_if_admin
     before_action :require_login
-
-    def show
-    end
 
     protected
       def check_if_admin

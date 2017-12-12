@@ -1,7 +1,5 @@
 module Admin
-  class UsersController < ApplicationController
-    before_action :check_if_admin
-    before_action :require_login
+  class UsersController < BaseController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
 
     def new
@@ -45,9 +43,6 @@ module Admin
     end
 
     protected
-      def check_if_admin
-        redirect_to profile_index_path unless current_user.admin
-      end
 
       def set_user
         @user = User.find(params[:id])
