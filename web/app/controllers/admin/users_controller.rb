@@ -17,8 +17,8 @@ module Admin
     end
 
     def update
-      if @user.update(user_params)
-        redirect_to admin_dashboard_path, notice: 'Password for ' + @user.email + ' was successfully updated.'
+      if @user.update(user_params_password)
+        redirect_to admin_dashboard_url, notice: "Password for #{@user.email} was successfully updated."
       else
         render :edit
       end
@@ -30,8 +30,7 @@ module Admin
 
       if @user.save
         @user.activate!
-        redirect_to admin_users_path
-        flash[:notice] = 'User ' + @user.email + ' was succesfully created.'
+        redirect_to admin_users_url, notice: "User #{@user.email} was succesfully created."
       else
         render :new
       end
@@ -39,17 +38,21 @@ module Admin
 
     def destroy
       @user.destroy
-      redirect_to admin_users_path, notice: @user.email + ' was successfully destroyed.'
+      redirect_to admin_users_url, notice: "#{@user.email} was successfully destroyed."
     end
 
     protected
 
-      def set_user
-        @user = User.find(params[:id])
-      end
+    def set_user
+      @user = User.find(params[:id])
+    end
 
-      def user_params
-        params.require(:user).permit(:email, :password, :password_confirmation)
-      end
+    def user_params_password
+      params.require(:user).permit(:password, :password_confirmation)
+    end
+
+    def user_params
+      params.require(:user).permit(:email, :password, :password_confirmation)
+    end
   end
 end

@@ -1,31 +1,48 @@
 class DashboardController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :require_login
+  before_action :check_if_admin
 
   def show
-    @from = Tracker.find(params[:id]).created_at.strftime('%Y-%m-%d 00:00:00')
+    if params[:id].present?
+      @from = Tracker.find(params[:id]).created_at.strftime('%Y-%m-%d 00:00:00')
 
-    @until = Tracker.find(params[:id]).created_at.strftime('%Y-%m-%d 23:59:59')
+      @until = Tracker.find(params[:id]).created_at.strftime('%Y-%m-%d 23:59:59')
 
-    @trackers = Tracker.order(:created_at)
+      @trackers = Tracker.order(:created_at)
 
-    @paths = []
-    current_path = []
+      @paths = []
+      current_path = []
 
-    Tracker.order(:created_at).where('created_at >= :start_date AND created_at <= :end_date', {start_date: @from, end_date: @until}).each do |tracker|
-      if current_path.empty?
-        current_path << tracker
-        next
+      Tracker.order(:created_at).where('created_at >= :start_date AND created_at <= :end_date', {start_date: @from, end_date: @until}).each do |tracker|
+        if current_path.empty?
+          current_path << tracker
+          next
+        end
+
+        if current_path.last.created_at + 15.minutes < tracker.created_at
+          @paths << current_path
+          current_path = [tracker]
+        else
+          current_path << tracker
+        end
       end
 
-      if current_path.last.created_at + 15.minutes < tracker.created_at
-        @paths << current_path
-        current_path = [tracker]
-      else
-        current_path << tracker
-      end
+      @paths << current_path if current_path.any?
+    else
+      @trackers = Tracker.order(:created_at)
+
+      @from = Time.now.strftime('%Y-%m-%d 00:00:00')
+      @until = Time.now.strftime('%Y-%m-%d 23:59:59')
+
+      @today = Tracker.where('created_at >= :start_date AND created_at <= :end_date',
+        {start_date: @from, end_date: @until})
     end
+  end
 
-    @paths << current_path if current_path.any?
+  protected
+
+  def check_if_admin
+    redirect_to admin_dashboard_url if current_user.admin?
   end
 end

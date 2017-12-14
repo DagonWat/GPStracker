@@ -3,7 +3,7 @@ class PasswordResetController < ApplicationController
 
   def new
   end
-  
+
   # request password reset.
   # you get here when the user entered his email in the reset password form and submitted it.
   def create

@@ -6,7 +6,8 @@ class GuestController < ApplicationController
   end
 
   protected
-    def check_user
-      redirect_to admin_dashboard_path if current_user
-    end
+
+  def check_user
+    redirect_to dashboard_url if current_user
+  end
 end

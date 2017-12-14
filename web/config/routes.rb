@@ -22,9 +22,8 @@ Rails.application.routes.draw do
 
   # USER ROUTES START
   resource  :profile, only: [:edit, :update], controller: :profile
-  get 'profile/index' => 'profile#index'
 
-  resources :dashboard, only: [:show]
+  resource :dashboard, only: [:show], controller: :dashboard
   # USER ROUTES END
 
   # TRACKER ROUTES START
