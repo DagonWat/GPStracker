@@ -22,8 +22,10 @@ Rails.application.routes.draw do
 
   # USER ROUTES START
   resource  :profile, only: [:edit, :update], controller: :profile
+  get 'profile/generate_token' => 'profile#generate_token'
 
-  resource :dashboard, only: [:show], controller: :dashboard
+  resource :dashboard, only: [:show],         controller: :dashboard
+  get 'calendar' => 'calendar#index'
   # USER ROUTES END
 
   # TRACKER ROUTES START

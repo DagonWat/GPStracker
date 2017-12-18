@@ -4,17 +4,17 @@ class DashboardController < ApplicationController
   before_action :check_if_admin
 
   def show
-    if params[:id].present?
+    if params[:id].present? && Tracker.find(params[:id]).user_id == current_user.id
       @from = Tracker.find(params[:id]).created_at.strftime('%Y-%m-%d 00:00:00')
 
       @until = Tracker.find(params[:id]).created_at.strftime('%Y-%m-%d 23:59:59')
 
-      @trackers = Tracker.order(:created_at)
+      @trackers = Tracker.where(user_id: current_user.id).order(:created_at)
 
       @paths = []
       current_path = []
 
-      Tracker.order(:created_at).where('created_at >= :start_date AND created_at <= :end_date', {start_date: @from, end_date: @until}).each do |tracker|
+      Tracker.order(:created_at).where(user_id: current_user.id).where('created_at >= :start_date AND created_at <= :end_date', {start_date: @from, end_date: @until}).each do |tracker|
         if current_path.empty?
           current_path << tracker
           next
@@ -30,12 +30,12 @@ class DashboardController < ApplicationController
 
       @paths << current_path if current_path.any?
     else
-      @trackers = Tracker.order(:created_at)
+      @trackers = Tracker.where(user_id: current_user.id).order(:created_at)
 
       @from = Time.now.strftime('%Y-%m-%d 00:00:00')
       @until = Time.now.strftime('%Y-%m-%d 23:59:59')
 
-      @today = Tracker.where('created_at >= :start_date AND created_at <= :end_date',
+      @today = Tracker.where(user_id: current_user.id).where('created_at >= :start_date AND created_at <= :end_date',
         {start_date: @from, end_date: @until})
     end
   end

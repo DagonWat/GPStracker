@@ -17,6 +17,7 @@ public class SendService extends Service {
 
     float latitude;
     float longitude;
+    String token;
     String url;
 
     @Override
@@ -29,6 +30,7 @@ public class SendService extends Service {
     {
         latitude = (float)intent.getExtras().getDouble(MainActivity.LAT);
         longitude = (float)intent.getExtras().getDouble(MainActivity.LON);
+        token = intent.getExtras().getString(MainActivity.TOK);
         url = intent.getExtras().getString(MainActivity.URL);
         new HttpAsyncTask().execute(url);
 
@@ -42,7 +44,7 @@ public class SendService extends Service {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public static String POST(String url, float lat, float lon)
+    public static String POST(String url, float lat, float lon, String tok)
     {
         String json;
 
@@ -55,6 +57,7 @@ public class SendService extends Service {
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("latitude", lat);
             jsonObject.accumulate("longitude", lon);
+            jsonObject.accumulate("token", tok);
 
             json = jsonObject.toString();
 
@@ -80,7 +83,7 @@ public class SendService extends Service {
         @Override
         protected String doInBackground(String... urls)
         {
-            return POST(urls[0], latitude, longitude);
+            return POST(urls[0], latitude, longitude, token);
         }
 
         @Override

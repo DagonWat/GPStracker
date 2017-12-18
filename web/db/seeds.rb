@@ -6,6 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.create(created_at: Time.zone.now.change(hour: 13) - 7.days, updated_at: Time.zone.now.change(hour: 13) - 7.days,
+              email: 'aa@bb', password: 'root', password_confirmation: 'root', tracker_token: '00000000')
+User.first.activate!
+
 track = [
   [Time.zone.now.change(hour: 16),
     [
@@ -112,7 +116,7 @@ track = [
 track.each do |time, list|
   i = 0
   list.each do |coordinates|
-    Tracker.create( created_at: time + i.minutes, updated_at: time + i.minutes, lat: coordinates[0], lon: coordinates[1])
+    Tracker.create(created_at: time + i.minutes, updated_at: time + i.minutes, lat: coordinates[0], lon: coordinates[1], user_id: 1)
     i += 1
   end
 end

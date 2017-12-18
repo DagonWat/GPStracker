@@ -27,6 +27,7 @@ module Admin
     def create
       @user = User.new(user_params)
       @user.admin = false
+      @user.tracker_token = SecureRandom.hex(4)
 
       if @user.save
         @user.activate!

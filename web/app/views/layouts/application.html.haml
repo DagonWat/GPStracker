@@ -24,12 +24,8 @@
               %ul.nav.navbar-nav.col-md-10
                 %li
                   = link_to 'GPS Tracker', root_path
-                %li.dropdown
-                  %a.dropdown-toggle{'data-toggle': 'dropdown', href: '#'}
-                    Tracks
-                    %span.caret
-                  %ul.dropdown-menu
-                    = render partial: 'dashboard/dates'
+                %li
+                  = link_to 'Calendar', calendar_path
                 %li
                   = link_to 'Edit Profile', edit_profile_path
               %ul.nav.navbar-nav.navbar-right.col-md-1

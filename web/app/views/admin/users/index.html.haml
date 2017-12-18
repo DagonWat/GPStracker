@@ -12,7 +12,8 @@
       %th Email
       %th Status
       %th Role
-      %th Crypted password
+      %th Tracks
+      %th Tracker token
       %th Created at
       %th{colspan: "3"}
   %tbody
@@ -27,7 +28,8 @@
           %td.bg-primary Admin
         -else
           %td.bg-success User
-        %td= user.crypted_password
+        %td= Tracker.where(user_id: user.id).length
+        %td= user.tracker_token
         %td= user.created_at
 
         %td= link_to 'Show', admin_user_path(id: user.id), method: :get

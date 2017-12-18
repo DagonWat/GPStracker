@@ -1,4 +1,4 @@
--if current_user
+- if Tracker.where(user_id: current_user).any?
   - m = ''
   - n = ''
   - @trackers.each do |tracker|
@@ -8,3 +8,5 @@
       %li
         = link_to tracker.created_at.strftime('%b  %e'),
                     dashboard_path(id: tracker)
+- else
+  %option{:disabled => "disabled", :selected => "selected"} You don't have any tracks

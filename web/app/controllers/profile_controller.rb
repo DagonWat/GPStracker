@@ -1,5 +1,6 @@
 class ProfileController < ApplicationController
   before_action :require_login
+  before_action :check_user
 
   def edit
     @trackers = Tracker.order(:created_at)
@@ -15,10 +16,18 @@ class ProfileController < ApplicationController
     end
   end
 
+  def generate_token
+    current_user.update(tracker_token: SecureRandom.hex(4))
+    redirect_to root_url
+  end
+
   protected
 
   def user_params
     params.require(:user).permit(:password, :password_confirmation)
   end
 
+  def check_user
+    redirect_to admin_dashboard_url if current_user.admin
+  end
 end

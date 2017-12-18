@@ -41,12 +41,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private TextView textLon;
     private EditText etUrl;
     private EditText etTime;
+    private EditText etToken;
     private LinearLayout llLog;
     Button btnSend;
     ArrayList<TextView> tvLog = new ArrayList<>();
     private Context context;
 
     public static final String URL = "url";
+    public static final String TOK = "token";
     public static final String LON = "longitude";
     public static final String LAT = "latitude";
 
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     PowerManager.WakeLock wl;
 
     double lat, lon;
+    String tok;
     boolean isSending;
     Timer tim1;
 
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         btnSend = findViewById(R.id.btSend);
         etUrl = findViewById(R.id.etUrl);
         etTime = findViewById(R.id.etTime);
+        etToken = findViewById(R.id.etToken);
         llLog = findViewById(R.id.llLog);
 
         pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -106,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public void start(View view) {
+        wl.acquire();
         locationManager.get();
     }
 
@@ -114,11 +119,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (!isSending)
         {
             wl.acquire();
-
             tim1 = new Timer();
             TimerTask bthh = new LocationTimer();
 
             int period = Integer.parseInt(etTime.getText().toString());
+            tok = etToken.getText().toString();
 
             if (period >= 20)
             {
@@ -168,10 +173,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 .useDefaultProviders(new DefaultProviderConfiguration.Builder()
                         .requiredTimeInterval(1 * 1000) //1 second
                         .requiredDistanceInterval(0)
-                        .acceptableAccuracy(5.0f)
-                        .acceptableTimePeriod(5 * 1000) //5 seconds
+                        .acceptableAccuracy(4.0f)
+                        .acceptableTimePeriod(4 * 1000) //4 seconds
                         .gpsMessage("Turn on GPS?")
-                        .setWaitPeriod(ProviderType.GPS, 20 * 1000) //200 seconds
+                        .setWaitPeriod(ProviderType.GPS, 200 * 1000) //200 seconds
                         .setWaitPeriod(ProviderType.NETWORK, 20 * 1000) //20 seconds
                         .build())
                 .build();
@@ -219,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         sendIntent.putExtra(LAT, lat);
         sendIntent.putExtra(LON, lon);
+        sendIntent.putExtra(TOK, tok);
         sendIntent.putExtra(URL, etUrl.getText().toString());
 
         startService(sendIntent);
