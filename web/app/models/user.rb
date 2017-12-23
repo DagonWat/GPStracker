@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
   validates :email, uniqueness: true
+
+  mount_uploader :image, ImageUploader
+
+  has_many :trackers
 end

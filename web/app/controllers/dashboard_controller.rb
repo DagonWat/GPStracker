@@ -4,17 +4,16 @@ class DashboardController < ApplicationController
   before_action :check_if_admin
 
   def show
-    if params[:id].present? && Tracker.find(params[:id]).user_id == current_user.id
-      @from = Tracker.find(params[:id]).created_at.strftime('%Y-%m-%d 00:00:00')
+    if params[:date].present?
+      date = Time.zone.parse(params[:date])
 
-      @until = Tracker.find(params[:id]).created_at.strftime('%Y-%m-%d 23:59:59')
-
-      @trackers = Tracker.where(user_id: current_user.id).order(:created_at)
+      @from = date.beginning_of_day
+      @until = date.end_of_day
 
       @paths = []
       current_path = []
 
-      Tracker.order(:created_at).where(user_id: current_user.id).where('created_at >= :start_date AND created_at <= :end_date', {start_date: @from, end_date: @until}).each do |tracker|
+      current_user.trackers.order(:created_at).where('created_at BETWEEN ? AND ?', @from, @until).each do |tracker|
         if current_path.empty?
           current_path << tracker
           next
@@ -36,7 +35,7 @@ class DashboardController < ApplicationController
       @until = Time.now.strftime('%Y-%m-%d 23:59:59')
 
       @today = Tracker.where(user_id: current_user.id).where('created_at >= :start_date AND created_at <= :end_date',
-        {start_date: @from, end_date: @until})
+                                                                       {start_date: @from, end_date: @until})
     end
   end
 

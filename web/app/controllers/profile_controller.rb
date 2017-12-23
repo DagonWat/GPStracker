@@ -9,8 +9,14 @@ class ProfileController < ApplicationController
   def update
     @trackers = Tracker.order(:created_at)
 
-    if current_user.update(user_params) && !params[:user][:password].blank?
-      redirect_to admin_dashboard_url, notice: "Password for #{current_user.email} was successfully updated."
+    if current_user.update(user_params)
+      if !params[:user][:password].blank?
+        redirect_to admin_dashboard_url, notice: "Password for #{current_user.email} was successfully updated."
+        current_user.update(image: params[:image])
+      else
+        redirect_to admin_dashboard_url, notice: "Image for #{current_user.email} was successfully changed."
+        current_user.update(image: params[:image])
+      end
     else
       render :edit
     end
