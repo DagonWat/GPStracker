@@ -13,7 +13,8 @@ class DashboardController < ApplicationController
       @paths = []
       current_path = []
 
-      current_user.trackers.order(:created_at).where('created_at BETWEEN ? AND ?', @from, @until).each do |tracker|
+      # checking if user trying to get his tracks or friends one
+      ((params[:id] && (current_user.friends.include? params[:id].to_i)) ? User.where(id: params[:id])[0] : current_user).trackers.order(:created_at).where('created_at BETWEEN ? AND ?', @from, @until).each do |tracker|
         if current_path.empty?
           current_path << tracker
           next

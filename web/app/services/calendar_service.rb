@@ -33,6 +33,10 @@ class CalendarService
     current_date.next_month.beginning_of_month
   end
 
+  def user_id
+    current_user.id
+  end
+
   protected
 
   def convert_current_date(current_date)

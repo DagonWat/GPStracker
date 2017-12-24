@@ -17,7 +17,6 @@
             = image_tag (current_user.image.medium.url)
             .p{style: 'margin-top: 15px;'}
               = link_to 'My Calendar', calendar_path, {class: 'button'}
-
             %hr.my-1/
             %h3= "Email: #{current_user.email}"
             %h3= "Here since: #{current_user.created_at.day.to_s}-#{current_user.created_at.month.to_s}-#{current_user.created_at.year.to_s}"

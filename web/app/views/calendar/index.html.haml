@@ -3,9 +3,9 @@
     .month{style: "background: #{@calendar_service.current_month_color}"}
       %ul
         %li.prev
-          = link_to '❮', calendar_path(date: @calendar_service.prev_month_start_date)
+          = link_to '❮', calendar_path(id: @calendar_service.user_id, date: @calendar_service.prev_month_start_date)
         %li.next
-          = link_to '❯', calendar_path(date: @calendar_service.next_month_start_date)
+          = link_to '❯', calendar_path(id: @calendar_service.user_id, date: @calendar_service.next_month_start_date)
         %li
           = @calendar_service.current_date.strftime('%B')
           %br/
@@ -26,6 +26,6 @@
         - week.each do |date|
           %li
             - if @calendar_service.dates_w_tracking_data.include?(date)
-              %span.active= link_to date.day, dashboard_path(date: date)
+              %span.active= link_to date.day, dashboard_path(id: @calendar_service.user_id, date: date)
             - else
               = date.day

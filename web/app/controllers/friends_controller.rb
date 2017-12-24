@@ -33,7 +33,7 @@ class FriendsController < ApplicationController
 
     # if the answer is YES
     if params[:ans] == '1'
-      frined1.update(friends: friend1.friends += [friend2.id])
+      friend1.update(friends: friend1.friends += [friend2.id])
       friend2.update(friends: friend2.friends += [friend1.id])
 
       text = "You have accepted friend request from #{friend2.email}."

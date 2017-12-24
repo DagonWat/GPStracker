@@ -58,6 +58,7 @@
               %td= friend.created_at
               - if current_user.friends.include? friend.id
                 %td= link_to 'Delete', remove_friends_path(id: friend.id)
+                %td= link_to 'Calendar', calendar_path(id: friend.id)
               - else
                 %td= link_to 'Add', propose_friends_path(id: friend.id)
 
