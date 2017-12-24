@@ -12,47 +12,46 @@ class FriendsController < ApplicationController
     end
   end
 
-  def remove
-    list = [current_user.id, params[:id]]
-
-    for i in 0..1
-      ActiveRecord::Base.connection.
-            execute("UPDATE #{"users"} SET #{"friends"} = array_remove(#{"friends"}, #{list[i]}) WHERE #{"users"}.#{"id"} = #{list[1 - i]}")
-    end
-
-    redirect_to friends_url, notice: "#{User.where(id: params[:id])[0].email} was successfully deleted from your friend list."
-  end
-
   def propose
-    if !User.where(id: params[:id])[0].friends_pending.include? current_user.id
-      ActiveRecord::Base.connection.
-        execute("UPDATE #{"users"} SET #{"friends_pending"} = array_append(#{"friends_pending"}, #{current_user.id}) WHERE #{"users"}.#{"id"} = #{params[:id]}")
-      text = "You have sent friend request to #{User.where(id: params[:id])[0].email}."
+    user = User.where(id: params[:id])[0]
+
+    if !user.friends_pending.include? current_user.id
+      user.update(friends_pending: user.friends_pending += [current_user.id])
+      text = "You have sent friend request to #{user.email}."
     else
-      text = "You have already sent request to #{User.where(id: params[:id])[0].email}!"
+      text = "You have already sent request to #{user.email}!"
     end
 
     redirect_to friends_url, notice: text
   end
 
   def answer
-    text = "You have rejected friend request from #{User.where(id: params[:id])[0].email}."
+    friend1 = User.where(id: current_user.id)[0]
+    friend2 = User.where(id: params[:id])[0]
 
+    text = "You have rejected friend request from #{friend2.email}."
+
+    # if the answer is YES
     if params[:ans] == '1'
-      list = [current_user.id, params[:id]]
+      frined1.update(friends: friend1.friends += [friend2.id])
+      friend2.update(friends: friend2.friends += [friend1.id])
 
-      for i in 0..1
-        ActiveRecord::Base.connection.
-          execute("UPDATE #{"users"} SET #{"friends"} = array_append(#{"friends"}, #{list[i]}) WHERE #{"users"}.#{"id"} = #{list[1 - i]}")
-      end
-
-      text = "You have accepted friend request from #{User.where(id: params[:id])[0].email}."
+      text = "You have accepted friend request from #{friend2.email}."
     end
 
-    ActiveRecord::Base.connection.
-      execute("UPDATE #{"users"} SET #{"friends_pending"} = array_remove(#{"friends_pending"}, #{params[:id]}) WHERE #{"users"}.#{"id"} = #{current_user[:id]}")
-
+    # anyway deleting user in params from pending friends
+    friend1.update(friends_pending: friend1.friends_pending -= [friend2.id])
     redirect_to friends_url, notice: text
+  end
+
+  def remove
+    friend1 = User.where(id: current_user.id)[0]
+    friend2 = User.where(id: params[:id])[0]
+
+    friend1.update(friends: friend1.friends -= [friend2.id])
+    friend2.update(friends: friend2.friends -= [friend1.id])
+
+    redirect_to friends_url, notice: "#{friend2.email} was successfully deleted from your friend list."
   end
 
   protected
