@@ -25,10 +25,14 @@ Rails.application.routes.draw do
   get 'profile/generate_token' => 'profile#generate_token'
 
   resource :dashboard, only: [:show],         controller: :dashboard
-  get 'friends'  => 'friends#index'
-  get 'remove_friends'  => 'friends#remove'
-  get 'propose_friends'  => 'friends#propose'
-  get 'answer_friends'  => 'friends#answer'
+  
+  resource :friends, only: [:show] do
+    member do
+      get :remove
+      get :propose
+      get :answer
+    end
+  end
   get 'calendar' => 'calendar#index'
   # USER ROUTES END
 

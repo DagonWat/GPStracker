@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   validates :email, uniqueness: true
 
-  mount_uploader :image, ImageUploader
+  mount_uploader :avatar, AvatarUploader
 
   has_many :trackers
 end

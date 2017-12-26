@@ -14,6 +14,8 @@
             .form-group
               .h2{align: 'center'}
                 %i=current_user.email
+              .p{align: 'center'}
+                = image_tag (User.find(current_user.id).avatar.thumb.url)
 
           .field
             = form.label :image

@@ -34,36 +34,49 @@
                 %td= link_to 'Dismiss', answer_friends_path(id: friend_id, ans: 0)
 
   .row
-    - if params[:email]
+    - if params[:email].present?
       %h1{align: 'center'} Search Results
+      .col-md-8.col-md-offset-2
+        %table.table.table-striped
+          %thead
+            %tr
+              %th
+              %th email
+              %th here since
+              %th
+          %tbody
+            - @friends.each do |friend|
+              %tr
+                %td= image_tag (friend.image.thumb.url)
+                %td= friend.email
+                %td= friend.created_at
+                - if current_user.friends.include? friend.id
+                  %td= link_to 'Delete', remove_friends_path(id: friend.id)
+                  %td= link_to 'Calendar', calendar_path(id: friend.id)
+                - else
+                  %td= link_to 'Add', propose_friends_path(id: friend.id)
+        - unless @friends.any?
+          .col-md-6.col-md-offset-3
+            .jumbotron{align: 'center'}
+              %h3 There are no users with email like that :(
+              %h3 Better luck next time!
     - else
       %h1{align: 'center'} Your Friends
-    .col-md-8.col-md-offset-2
-      %table.table.table-striped
-        %thead
-          %tr
-            %th
-            %th email
-            - if !params[:email]
-              %th tracks
-            %th here since
-            %th
-        %tbody
-          - @friends.each do |friend|
+      .col-md-8.col-md-offset-2
+        %table.table.table-striped
+          %thead
             %tr
-              %td= image_tag (friend.image.thumb.url)
-              %td= friend.email
-              - if !params[:email]
+              %th
+              %th email
+              %th tracks
+              %th here since
+              %th
+          %tbody
+            - @friends.each do |friend|
+              %tr
+                %td= image_tag (friend.image.thumb.url)
+                %td= friend.email
                 %td= Tracker.where(user_id: friend.id).length
-              %td= friend.created_at
-              - if current_user.friends.include? friend.id
+                %td= friend.created_at
                 %td= link_to 'Delete', remove_friends_path(id: friend.id)
                 %td= link_to 'Calendar', calendar_path(id: friend.id)
-              - else
-                %td= link_to 'Add', propose_friends_path(id: friend.id)
-
-      - if !@friends.any? && params[:email]
-        .col-md-6.col-md-offset-3
-          .jumbotron{align: 'center'}
-            %h3 There are no users with email like that :(
-            %h3 Better luck next time!

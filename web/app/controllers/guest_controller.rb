@@ -1,5 +1,6 @@
 class GuestController < ApplicationController
   skip_before_action :require_login
+  skip_before_action :check_if_admin
   before_action :check_user
 
   def index

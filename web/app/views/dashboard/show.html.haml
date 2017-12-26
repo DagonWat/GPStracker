@@ -14,7 +14,7 @@
       .row
         .content.col-md-4
           .jumbotron{align: 'center'}
-            = image_tag (current_user.image.medium.url)
+            = image_tag (current_user.avatar.medium.url)
             .p{style: 'margin-top: 15px;'}
               = link_to 'My Calendar', calendar_path, {class: 'button'}
             %hr.my-1/

@@ -1,5 +1,6 @@
 class PasswordResetController < ApplicationController
   skip_before_action :require_login
+  skip_before_action :check_if_admin
 
   def new
   end

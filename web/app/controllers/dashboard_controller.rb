@@ -1,7 +1,6 @@
 class DashboardController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :require_login
-  before_action :check_if_admin
 
   def show
     if params[:date].present?
@@ -38,11 +37,5 @@ class DashboardController < ApplicationController
       @today = Tracker.where(user_id: current_user.id).where('created_at >= :start_date AND created_at <= :end_date',
                                                                        {start_date: @from, end_date: @until})
     end
-  end
-
-  protected
-
-  def check_if_admin
-    redirect_to admin_dashboard_url if current_user.admin?
   end
 end
