@@ -2,7 +2,26 @@
   #main-container.container-fluid{data: {list: @paths.to_json}}
   %script{async: '', defer: 'defer',
     :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyBBJehlZdShzoTdNZUNrMncq9G4kK8y7cw&callback=initMap"}
-  #map
+  .row
+    .content.col-md-4.col-md-offset-1
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Name
+            %th Start
+            %th End
+        %tbody
+          - for i in @paths.first.group..@paths.last.group
+            %tr
+              - if @paths.last.created_at + 15.minutes > Time.zone.now
+                %td= "Current"
+              - else
+                %td= "Group #{i - @paths.first.group + 1}"
+
+              %td= @paths.where(group: i).first.created_at
+              %td= @paths.where(group: i).last.created_at
+
+    #map
 - else
   - if flash[:notice]
     .row

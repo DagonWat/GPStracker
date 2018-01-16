@@ -4,6 +4,7 @@ class GuestController < ApplicationController
   before_action :check_user
 
   def index
+    HardWorker.perform_in(10.seconds)
   end
 
   protected

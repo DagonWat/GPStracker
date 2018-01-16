@@ -9,25 +9,9 @@ class DashboardController < ApplicationController
       @from = date.beginning_of_day
       @until = date.end_of_day
 
-      @paths = []
-      current_path = []
+      tracks = ((params[:id] && (current_user.friends.include? params[:id].to_i)) ? User.where(id: params[:id])[0] : current_user).trackers.order(:created_at)
 
-      # checking if user trying to get his tracks or friends one
-      ((params[:id] && (current_user.friends.include? params[:id].to_i)) ? User.where(id: params[:id])[0] : current_user).trackers.order(:created_at).where('created_at BETWEEN ? AND ?', @from, @until).each do |tracker|
-        if current_path.empty?
-          current_path << tracker
-          next
-        end
-
-        if current_path.last.created_at + 15.minutes < tracker.created_at
-          @paths << current_path
-          current_path = [tracker]
-        else
-          current_path << tracker
-        end
-      end
-
-      @paths << current_path if current_path.any?
+      @paths = tracks.where('created_at BETWEEN ? AND ?', @from, @until).where(group: 0..Float::INFINITY)
     else
       @trackers = Tracker.where(user_id: current_user.id).order(:created_at)
 

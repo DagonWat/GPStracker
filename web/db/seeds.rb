@@ -116,7 +116,7 @@ track = [
 track.each do |time, list|
   i = 0
   list.each do |coordinates|
-    Tracker.create(created_at: time + i.minutes, updated_at: time + i.minutes, lat: coordinates[0], lon: coordinates[1], user_id: user.id)
+    Tracker.create(created_at: time + i.minutes, updated_at: time + i.minutes, lat: coordinates[0], lon: coordinates[1], user_id: user.id, group: -1)
     i += 1
   end
 end

@@ -5,15 +5,17 @@ function initMap(){
 
   var map = new google.maps.Map(document.getElementById('map'),{
     zoom: 15,
-    center: {lat: trackers[0][0].lat, lng: trackers[0][0].lon},
+    center: {lat: trackers[0].lat, lng: trackers[0].lon},
     mapTypeId: 'terrain'
   });
 
-  for (var i = 0; i < trackers.length; i++){
+  for (var i = trackers[0].group; i <= trackers[trackers.length - 1].group; i++){
     var flightPlanCoordinates = [];
 
-    for (var k = 0; k < trackers[i].length; k++){
-      flightPlanCoordinates.push({lat: trackers[i][k].lat, lng: trackers[i][k].lon});
+    for (var k = 0; k < trackers.length; k++){
+      if (trackers[k].group == i){
+        flightPlanCoordinates.push({lat: trackers[k].lat, lng: trackers[k].lon});
+      }
     }
 
     var flightPath = new google.maps.Polyline({
