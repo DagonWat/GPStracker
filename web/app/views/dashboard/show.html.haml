@@ -4,6 +4,8 @@
     :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyBBJehlZdShzoTdNZUNrMncq9G4kK8y7cw&callback=initMap"}
   .row
     .content.col-md-5.col-md-offset-1
+      %h1
+        ="#{@from.day} #{@from.strftime("%B")} #{@from.year}"
       %table.table.table-striped.table-bordered
         %thead
           %tr
