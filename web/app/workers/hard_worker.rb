@@ -2,20 +2,27 @@ class HardWorker
   include Sidekiq::Worker
   #Sidekiq::Cron::Job.create(name: '5 min worker', cron: '*/5 * * * *', class: 'HardWorker')
   def perform()
-    tracks = Tracker.order(:created_at).where(group: -1)
-    for i in 0..(tracks.length() - 1)
-      user = User.find(tracks[i].user_id)
-      saved_track = Tracker.order(:created_at).where(user_id: user.id).where(group: 0..Float::INFINITY)
+    while (Tracker.order(:created_at).where(group: -1).length() > 0)
+      tracks = Tracker.order(:created_at).where(group: -1)
+      user = User.find(tracks[0].user_id)
+      from = tracks[0].created_at.beginning_of_day
+      to = tracks[0].created_at.end_of_day
 
-      if (saved_track.any?)
-        last_tr = saved_track.last
-        if (tracks[i].created_at - 15.minutes > last_tr.created_at)
-          tracks[i].update(group: last_tr.group += 1)
+      tracks = Tracker.order(:created_at).where(group: -1).where(user_id: user.id).where('created_at BETWEEN ? AND ?', from, to)
+
+      p tracks.length()
+
+      i = 1
+      time = tracks[0].created_at
+
+      tracks.each do |track|
+        if (track.created_at > time + 15.minutes)
+          i += 1
+          time = track.created_at
         else
-          tracks[i].update(group: last_tr.group)
+          time = track.created_at
         end
-      else
-        tracks[i].update(group: 0)
+        track.update(group: i)
       end
     end
   end

@@ -3,8 +3,8 @@
   %script{async: '', defer: 'defer',
     :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyBBJehlZdShzoTdNZUNrMncq9G4kK8y7cw&callback=initMap"}
   .row
-    .content.col-md-4.col-md-offset-1
-      %table.table.table-striped
+    .content.col-md-5.col-md-offset-1
+      %table.table.table-striped.table-bordered
         %thead
           %tr
             %th Name
@@ -13,7 +13,7 @@
         %tbody
           - for i in @paths.first.group..@paths.last.group
             %tr
-              - if @paths.last.created_at + 15.minutes > Time.zone.now
+              - if @paths.last.group == -1
                 %td= "Current"
               - else
                 %td= "Group #{i - @paths.first.group + 1}"
