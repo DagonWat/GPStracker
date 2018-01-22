@@ -9,11 +9,10 @@ class HardWorker
       to = tracks[0].created_at.end_of_day
 
       tracks = Tracker.order(:created_at).where(group: -1).where(user_id: user.id).where('created_at BETWEEN ? AND ?', from, to)
+      used_tracks = Tracker.order(:created_at).where('"group" > 0').where(user_id: user.id).where('created_at BETWEEN ? AND ?', from, to)
 
-      p tracks.length()
-
-      i = 1
-      time = tracks[0].created_at
+      i = used_tracks.any? ? used_tracks.last.group : 1
+      time = used_tracks.any? ? used_tracks.last.created_at : tracks[0].created_at
 
       tracks.each do |track|
         if (track.created_at > time + 15.minutes)
