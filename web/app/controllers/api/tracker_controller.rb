@@ -12,5 +12,14 @@ module Api
 		 	  render json: {status: "success"}
       end
   	end
+
+    def change_name
+      respond_to do |format|
+        format.html
+        format.json
+      end
+    end
+
+
   end
 end

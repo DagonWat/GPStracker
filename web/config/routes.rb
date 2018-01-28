@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get 'profile/generate_token' => 'profile#generate_token'
 
   resource :dashboard, only: [:show],         controller: :dashboard
-  
+
   resource :friends, only: [:show] do
     member do
       get :remove
@@ -38,7 +38,11 @@ Rails.application.routes.draw do
 
   # TRACKER ROUTES START
   namespace :api do
-    resources :tracker, only: [:create]
+    resources :tracker, only: [:create] do
+      member do
+        get :change_name
+      end
+    end
   end
   # TRACKER ROUTES END
 

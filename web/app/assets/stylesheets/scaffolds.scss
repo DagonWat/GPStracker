@@ -56,6 +56,15 @@ pre {
   font-weight: bold;
 }
 
+.hover_text:hover + div.cartouche, div.cartouche:hover {
+  display: inline;
+}
+
+.cartouche {
+  display:none;
+}
+
+
 a {
   color: #000;
 
