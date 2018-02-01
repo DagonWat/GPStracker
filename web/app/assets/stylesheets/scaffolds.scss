@@ -56,14 +56,24 @@ pre {
   font-weight: bold;
 }
 
-.hover_text:hover + div.cartouche, div.cartouche:hover {
-  display: inline;
+.hover_text:hover > .wrapper_cart > div.cartouche {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.wrapper_cart{
+  display: inline-block;
+  width: 20px;
+}
+
+.input_window {
+  width: 100px;
+  display:none;
 }
 
 .cartouche {
   display:none;
 }
-
 
 a {
   color: #000;

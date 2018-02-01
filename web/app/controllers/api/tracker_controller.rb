@@ -13,13 +13,14 @@ module Api
       end
   	end
 
-    def change_name
+    def change_group
+      @tracker = Tracker.find(params[:id])
+      @tracker.update(custom_name: params[:group_name])
+
       respond_to do |format|
         format.html
         format.json
       end
     end
-
-
   end
 end

@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :tracker, only: [:create] do
       member do
-        get :change_name
+        post :change_group
       end
     end
   end
