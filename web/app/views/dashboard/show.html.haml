@@ -16,7 +16,7 @@
         id = $(this).data('track');
       });
 
-      $(document).on('click', 'button1', function(e) {
+      $(document).on('click', '.button1', function(e) {
         $.post("/api/tracker/" + id + "/change_group",
         {
             group_name: document.getElementById('input_name').value
@@ -25,9 +25,9 @@
         $(element).hide();
         element = document.getElementById(number);
         $(element).show();
-      });
+      }, null, 'js');
 
-      $(document).on('click', 'button2', function(e) {
+      $(document).on('click', '.button2', function(e) {
         element = document.getElementById("inp-" + number);
         $(element).hide();
         element = document.getElementById(number);
@@ -46,28 +46,7 @@
             %th End
         %tbody
           - for i in @paths.first.group..@paths.last.group
-            %tr
-              - if @paths.last.group == -1
-                %td
-                  = link_to "Current", change_name_api_tracker_path(@paths.first.id), remote: true
-              - else
-                %td
-                  .input_window{id: "inp-#{i}"}
-                    .form-group
-                      %input.form-control{placeholder: 'Forest walk', id: 'input_name'}
-                    %button1.btn.btn-success.glyphicon.glyphicon-ok{:type => "button"}
-                    %button2.btn.btn-danger.glyphicon.glyphicon-remove{:type => "button"}
-                  .hover_text{id: "#{i}"}
-                    - if @paths.first.custom_name == nil
-                      Group #{i - @paths.first.group + 1}
-                    - else
-                      =@paths.first.custom_name
-                    .wrapper_cart
-                      .cartouche{data: {'mydata': "#{i}", 'track': "#{@paths.where(group: i).first.id}"}}
-                        %span
-                          .glyphicon.glyphicon-pencil
-              %td= @paths.where(group: i).first.created_at
-              %td= @paths.where(group: i).last.created_at
+            = render partial: 'table', locals: {i: i}
 
     #map
 - else
