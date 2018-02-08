@@ -7,6 +7,7 @@
     $(document).ready(function(){
       number = 0;
       id = 0;
+
       $(document).on('click', '.cartouche', function(e) {
         number = $(this).data('mydata');
         element = document.getElementById(number);
@@ -19,7 +20,7 @@
       $(document).on('click', '.button1', function(e) {
         $.post("/api/tracker/" + id + "/change_group",
         {
-            group_name: document.getElementById('input_name').value
+            group_name: document.getElementById("input_name" + number).value
         });
         element = document.getElementById("inp-" + number);
         $(element).hide();

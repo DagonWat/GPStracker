@@ -1,4 +1,4 @@
-%tr{id: "group-#{@paths.first.id}"}
+%tr{id: "#group-#{@paths.where(group: i).first.id}"}
   - if @paths.last.group == -1
     %td
       = link_to "Current", change_name_api_tracker_path(@paths.first.id), remote: true
@@ -6,14 +6,14 @@
     %td
       .input_window{id: "inp-#{i}"}
         .form-group
-          %input.form-control{placeholder: 'Forest walk', id: 'input_name'}
+          %input.form-control{placeholder: 'Forest walk', id: "input_name#{i}"}
         %button.button1.btn.btn-success.glyphicon.glyphicon-ok
         %button.button2.btn.btn-danger.glyphicon.glyphicon-remove
       .hover_text{id: "#{i}"}
-        - if @paths.first.custom_name == nil
+        - if @paths.where(group: i).first.custom_name == nil || @paths.where(group: i).first.custom_name == ""
           Group #{i - @paths.first.group + 1}
         - else
-          =@paths.first.custom_name
+          =@paths.where(group: i).first.custom_name
         .wrapper_cart
           .cartouche{data: {'mydata': "#{i}", 'track': "#{@paths.where(group: i).first.id}"}}
             %span
