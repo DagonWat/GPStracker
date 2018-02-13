@@ -14,6 +14,13 @@ module Api
   	end
 
     def change_group
+      @from = Tracker.find(params[:id]).created_at.beginning_of_day
+      @until = Tracker.find(params[:id]).created_at.end_of_day
+
+      tracks = ((params[:id] && (current_user.friends.include? params[:id].to_i)) ? User.where(id: params[:id])[0] : current_user).trackers.order(:created_at)
+
+      @paths = tracks.where('created_at BETWEEN ? AND ?', @from, @until)
+      @i = Tracker.find(params[:id]).group
       @tracker = Tracker.find(params[:id])
       @tracker.update(custom_name: params[:group_name])
     end

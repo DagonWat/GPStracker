@@ -1,3 +1,2 @@
-$('#group-<%= @tracker.id %>').html('<%= j(render(partial: 'dashboard/table', locals: {i: i})) %>');
-$('#' + '<%= @tracker.group %>').html('<%= @tracker.custom_name %>');
-alert(1);
+$('#group-<%= @tracker.id %>').replaceWith("<%= j(render(partial: 'dashboard/table', locals: {i: @i, paths: @paths})) %>");
+alert('#group-<%= @tracker.id %>');

@@ -47,7 +47,7 @@
             %th End
         %tbody
           - for i in @paths.first.group..@paths.last.group
-            = render partial: 'table', locals: {i: i}
+            = render partial: 'table', locals: {i: i, paths: @paths}
 
     #map
 - else
