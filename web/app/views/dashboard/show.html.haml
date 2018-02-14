@@ -3,38 +3,6 @@
   %script{async: '', defer: 'defer',
     :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyBBJehlZdShzoTdNZUNrMncq9G4kK8y7cw&callback=initMap"}
   %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"}
-  :javascript
-    $(document).ready(function(){
-      number = 0;
-      id = 0;
-
-      $(document).on('click', '.cartouche', function(e) {
-        number = $(this).data('mydata');
-        element = document.getElementById(number);
-        $(element).hide();
-        element = document.getElementById("inp-" + number);
-        $(element).show();
-        id = $(this).data('track');
-      });
-
-      $(document).on('click', '.button1', function(e) {
-        $.post("/api/tracker/" + id + "/change_group",
-        {
-            group_name: document.getElementById("input_name" + number).value
-        });
-        element = document.getElementById("inp-" + number);
-        $(element).hide();
-        element = document.getElementById(number);
-        $(element).show();
-      }, null, 'js');
-
-      $(document).on('click', '.button2', function(e) {
-        element = document.getElementById("inp-" + number);
-        $(element).hide();
-        element = document.getElementById(number);
-        $(element).show();
-      });
-    });
   .row
     .content.col-md-5.col-md-offset-1
       %h1
