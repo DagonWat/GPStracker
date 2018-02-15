@@ -22,7 +22,8 @@ module Api
       @paths = tracks.where('created_at BETWEEN ? AND ?', @from, @until)
       @i = Tracker.find(params[:id]).group
       @tracker = Tracker.find(params[:id])
-      tracks.update_all(custom_name: params[:group_name])
+      tracks_to_change = @paths.where(group: @tracker.group)
+      tracks_to_change.update_all(custom_name: params[:group_name])
     end
   end
 end
