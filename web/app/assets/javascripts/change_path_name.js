@@ -1,9 +1,4 @@
 $(document).ready(function(){
-  $(document).on('click', '.cartouche', function(e) {
-    number = $(this).data('mydata');
-    element = document.getElementById("inp-" + number);
-    $(element).show();
-  });
 
   $(document).on('click', '.button2', function(e) {
     number = $(this).data('mydata');
@@ -13,4 +8,13 @@ $(document).ready(function(){
         group_name: document.getElementById("input_name" + number).value
     });
   }, null, 'js');
+
+  $('#myModal').on('show.bs.modal', function (event) {
+    alert(1);
+    var button = $(event.relatedTarget)
+    var info = button.data('iter')
+    alert(info);
+    var modal = $(this);
+    modal.find('.modal-body input').val(info);
+  })
 });
