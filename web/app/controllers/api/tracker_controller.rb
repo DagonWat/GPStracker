@@ -22,7 +22,7 @@ module Api
       @paths = tracks.where('created_at BETWEEN ? AND ?', @from, @until)
       @i = Tracker.find(params[:id]).group
       @tracker = Tracker.find(params[:id])
-      @tracker.update(custom_name: params[:group_name])
+      tracks.update_all(custom_name: params[:group_name])
     end
   end
 end

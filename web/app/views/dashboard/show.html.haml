@@ -2,7 +2,22 @@
   #main-container.container-fluid{data: {list: @paths.to_json}}
   %script{async: '', defer: 'defer',
     :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyBBJehlZdShzoTdNZUNrMncq9G4kK8y7cw&callback=initMap"}
-  %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"}
+  #myModal.modal.fade{'aria-labelledby': 'mySmallModalLabel', role: 'dialog', tabindex: '-1'}
+    .modal-dialog{role: 'document'}
+      .modal-content
+        .modal-header
+          %button.close{'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button'}
+            %span{'aria-hidden': 'true'} ×
+          %h4#myModalLabel.modal-title{align: 'center'}
+            Changing name...
+        .modal-body
+          .input_window
+            .form-group
+              %input.form-control{placeholder: 'Forest walk', id: 'input_name'}
+        .modal-footer
+          %button.button1.btn.btn-danger{'data-dismiss': 'modal'}
+            .glyphicon.glyphicon-remove
+          %button.button2.btn.btn-success.glyphicon.glyphicon-ok{'data-dismiss': 'modal'}
   .row
     .content.col-md-5.col-md-offset-1
       %h1
