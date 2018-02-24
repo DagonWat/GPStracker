@@ -68,7 +68,7 @@ Rails.application.configure do
     :address => "smtp.mailgun.org",
     :port => 587,
     :domain => "sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
-    :user_name => "postmaster@sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
+    :user_name => "postmaster%40sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
     :password => "mypassword"
   }
 
