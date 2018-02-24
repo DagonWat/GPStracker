@@ -19,7 +19,7 @@ class UserMailer < ApplicationMailer
   #
   def activation_success_email(user)
     @user = user
-    @url  = "http://0.0.0.0:3000/login"
+    @url  = "http://quiet-coast-64416.herokuapp.com/login"
     mail(:to => user.email,
        :subject => "Your account is now activated")
   end

@@ -62,6 +62,15 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "blog_#{Rails.env}"
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = {host: "www.uiet-coast-64416.herokuapp.com" }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :authentication => :plain,
+    :address => "smtp.mailgun.org",
+    :port => 587,
+    :domain => "sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
+    :user_name => "postmaster@sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
+    :password => "mypassword"
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
