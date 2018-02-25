@@ -60,16 +60,19 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "blog_#{Rails.env}"
+
+  # HOST, ADDRESS, DOMAIN, USER_NAME, PASSWORD in heroku config
+
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = {host: "www.uiet-coast-64416.herokuapp.com" }
+  config.action_mailer.default_url_options = {host: ENV['HOST']}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :authentication => :plain,
-    :address => "smtp.mailgun.org",
+    :address => ENV['ADDRESS'],
     :port => 587,
-    :domain => "sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
-    :user_name => "postmaster@sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
-    :password => "b284ad43421d8685bebaf76c69f830ce-fab099d8-71237fd9"
+    :domain => ENV['DOMAIN'],
+    :user_name => ENV['USER_NAME'],
+    :password => ENV['PASSWORD']
   }
   config.action_mailer.sendmail_settings = {
     :arguments => '-i'
