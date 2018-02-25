@@ -71,6 +71,9 @@ Rails.application.configure do
     :user_name => "postmaster@sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
     :password => "b284ad43421d8685bebaf76c69f830ce-fab099d8-71237fd9"
   }
+  config.action_mailer.sendmail_settings = {
+    :arguments => '-i'
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

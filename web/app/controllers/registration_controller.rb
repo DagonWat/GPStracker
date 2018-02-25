@@ -11,7 +11,7 @@ class RegistrationController < ApplicationController
     @user.tracker_token = SecureRandom.hex(4)
 
     if @user.save
-      UserMailer.activation_needed_email(@user).deliver_now
+      UserMailer.activation_needed_email(@user)
       redirect_to root_url
       flash[:notice] = 'User was succesfully created. We have sent you an email with activation.'
     else
