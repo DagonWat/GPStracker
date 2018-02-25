@@ -68,8 +68,8 @@ Rails.application.configure do
     :address => "smtp.mailgun.org",
     :port => 587,
     :domain => "sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
-    :user_name => "postmaster%40sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
-    :password => "mypassword"
+    :user_name => "postmaster@sandbox573bf61218ef425282713a92f7e9a6dd.mailgun.org",
+    :password => "b284ad43421d8685bebaf76c69f830ce-fab099d8-71237fd9"
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
