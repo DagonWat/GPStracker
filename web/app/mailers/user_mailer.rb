@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
   #
   def activation_needed_email(user)
     @user = user
-    @url = activate_registration_url(id: user.activation_token)
+    @url = "http://quiet-coast-64416.herokuapp.com/registration/activate?id=#{user.activation_token}"
     mail(:to => user.email,
        :subject => "Welcome to My Awesome Site")
   end
