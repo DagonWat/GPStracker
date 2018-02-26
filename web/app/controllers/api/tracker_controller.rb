@@ -6,9 +6,8 @@ module Api
 
     def create
       user = User.where(tracker_token: params[:token])[0]
-
-      if params[:latitude].abs < 90 && params[:longitude].abs < 90 && user
-        @tracker = Tracker.new(lat: params[:latitude], lon: params[:longitude], user_id: user.id, group: -1)
+      if params[:latitude].to_i.abs < 90 && params[:longitude].to_i.abs < 90 && user
+        @tracker = Tracker.new(lat: params[:latitude].to_i, lon: params[:longitude].to_i, user_id: user.id, group: -1)
 		    @tracker.save
 		 	  render json: {status: "success"}
       end
