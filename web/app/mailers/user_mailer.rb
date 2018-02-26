@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
   #
   def activation_needed_email(user)
     @user = user
-    @url = "http://quiet-coast-64416.herokuapp.com/registration/activate?id=#{user.activation_token}"
+    @url = "http://http://tracker-dev.sharkus.net/registration/activate?id=#{user.activation_token}"
     mail(:to => user.email,
        :subject => "Welcome to My Awesome Site")
   end
@@ -19,7 +19,7 @@ class UserMailer < ApplicationMailer
   #
   def activation_success_email(user)
     @user = user
-    @url  = "http://quiet-coast-64416.herokuapp.com/login"
+    @url  = "http://http://tracker-dev.sharkus.net/login"
     mail(:to => user.email,
        :subject => "Your account is now activated")
   end

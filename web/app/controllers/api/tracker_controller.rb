@@ -2,6 +2,7 @@ module Api
   class TrackerController < ApplicationController
     skip_before_action :verify_authenticity_token
     skip_before_action :require_login
+    skip_before_action :check_if_admin
 
     def create
       user = User.where(tracker_token: params[:token])[0]
