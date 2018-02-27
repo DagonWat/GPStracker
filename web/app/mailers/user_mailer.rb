@@ -1,5 +1,4 @@
 class UserMailer < ApplicationMailer
-  default from: "no-reply@gpstracker.com"
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -7,7 +6,7 @@ class UserMailer < ApplicationMailer
   #
   def activation_needed_email(user)
     @user = user
-    @url = "http://http://tracker-dev.sharkus.net/registration/activate?id=#{user.activation_token}"
+    @url = activate_registration_url(id: user.activation_token)
     mail(:to => user.email,
        :subject => "Welcome to My Awesome Site")
   end
@@ -19,7 +18,7 @@ class UserMailer < ApplicationMailer
   #
   def activation_success_email(user)
     @user = user
-    @url  = "http://http://tracker-dev.sharkus.net/login"
+    @url  = login_url()
     mail(:to => user.email,
        :subject => "Your account is now activated")
   end

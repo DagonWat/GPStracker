@@ -61,22 +61,20 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "blog_#{Rails.env}"
 
-  # HOST, ADDRESS, DOMAIN, USER_NAME, PASSWORD in heroku config
+  # HOST, SMTP_ADDRESS, SMTP_PORT, SMTP_DOMAIN, SMTP_USER_NAME, SMTP_PASSWORD in heroku config
 
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = {host: ENV['HOST']}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :authentication => :plain,
-    :address => ENV['ADDRESS'],
-    :port => 587,
-    :domain => ENV['DOMAIN'],
-    :user_name => ENV['USER_NAME'],
-    :password => ENV['PASSWORD']
+    :address => ENV['SMTP_ADDRESS'],
+    :port => ENV['SMTP_PORT'].to_i,
+    :domain => ENV['SMTP_DOMAIN'],
+    :user_name => ENV['SMTP_USER_NAME'],
+    :password => ENV['SMTP_PASSWORD']
   }
-  config.action_mailer.sendmail_settings = {
-    :arguments => '-i'
-  }
+  config.action_mailer.default_options = {from: 'no-reply@gpstracker.com'}
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

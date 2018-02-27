@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private TextView textLat;
     private TextView textLon;
-    private EditText etUrl;
     private EditText etTime;
     private EditText etToken;
     private LinearLayout llLog;
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         textLon = findViewById(R.id.tvLon);
 
         btnSend = findViewById(R.id.btSend);
-        etUrl = findViewById(R.id.etUrl);
         etTime = findViewById(R.id.etTime);
         etToken = findViewById(R.id.etToken);
         llLog = findViewById(R.id.llLog);
@@ -225,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         sendIntent.putExtra(LAT, lat);
         sendIntent.putExtra(LON, lon);
         sendIntent.putExtra(TOK, tok);
-        sendIntent.putExtra(URL, etUrl.getText().toString());
+        sendIntent.putExtra(URL, "http://tracker-dev.sharkus.net/api/tracker");
 
         startService(sendIntent);
     }
