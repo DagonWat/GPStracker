@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     double lat, lon;
     String tok;
     boolean isSending;
+    boolean offClicked;
     Timer tim1;
 
     @Override
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         context = this;
 
         isSending = false;
+        offClicked = false;
 
         textLat = findViewById(R.id.tvLat);
         textLon = findViewById(R.id.tvLon);
@@ -102,19 +104,31 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         locationManager.onDestroy();
         super.onDestroy();
     }
 
-    public void start(View view) {
+    public void start(View view)
+    {
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                continue_sending();
+            }
+        });
         wl.acquire();
         locationManager.get();
     }
 
+    public void continue_sending()
+    {
+        offClicked = false;
+    }
+
     public void startSending()
     {
-        if (!isSending)
+        if (!isSending && !offClicked)
         {
             wl.acquire();
             tim1 = new Timer();
@@ -157,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             llLog.addView(tvLog.get(tvLog.size() - 1));
 
             isSending = false;
+            offClicked = true;
 
             wl.release();
         }
@@ -277,7 +292,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     public void exit(View view)
     {
-        finish();
-        System.exit(0);
+        this.finishAffinity();
     }
 }
