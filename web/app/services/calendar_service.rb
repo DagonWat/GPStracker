@@ -16,8 +16,7 @@ class CalendarService
             map(&:date)
     p 111111111111111111111
     p 111111111111111111111
-    p @available_dates.first.id
-    p @available_dates.last.id
+    p @available_dates.last
   end
 
   def current_month_color
