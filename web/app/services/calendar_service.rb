@@ -14,6 +14,10 @@ class CalendarService
             trackers.select('DISTINCT DATE(created_at) AS date').
             where('created_at BETWEEN ? AND ?', current_date.beginning_of_month, current_date.end_of_month).
             map(&:date)
+    p 111111111111111111111
+    p 111111111111111111111
+    p @available_dates.first.id
+    p @available_dates.last.id
   end
 
   def current_month_color
