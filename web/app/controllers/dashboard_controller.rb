@@ -14,6 +14,7 @@ class DashboardController < ApplicationController
       p 1111111111
       p tracks.last.id
       @paths = tracks.where('created_at BETWEEN ? AND ?', @from, @until)
+      p @paths.last.id
     else
       @trackers = Tracker.where(user_id: current_user.id).order(:created_at)
 
