@@ -10,6 +10,9 @@ class DashboardController < ApplicationController
       @until = date.end_of_day
 
       tracks = ((params[:id] && (current_user.friends.include? params[:id].to_i)) ? User.where(id: params[:id])[0] : current_user).trackers.order(:created_at)
+      p 1111111111
+      p 1111111111
+      p tracks.last.id
       @paths = tracks.where('created_at BETWEEN ? AND ?', @from, @until)
     else
       @trackers = Tracker.where(user_id: current_user.id).order(:created_at)
