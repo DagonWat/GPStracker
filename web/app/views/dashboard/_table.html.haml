@@ -1,7 +1,6 @@
-- name = !paths.where(group: i).first.custom_name.present? ? "Group #{i - paths.first.group + 1}" : "#{paths.where(group: i).first.custom_name}"
 %tr{id: "group-#{paths.where(group: i).first.id}"}
   %td
-    - if paths.last.group == -1
+    - if i == -1
       Current
     - else
       .hover_text{id: "#{i}"}

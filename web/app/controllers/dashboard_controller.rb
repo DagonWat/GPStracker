@@ -11,10 +11,10 @@ class DashboardController < ApplicationController
 
       tracks = ((params[:id] && (current_user.friends.include? params[:id].to_i)) ? User.where(id: params[:id])[0] : current_user).trackers.order(:created_at)
       @paths = tracks.where('created_at BETWEEN ? AND ?', @from, @until)
-      p 111111111111111111
-      p 111111111111111111
-      p @paths.first
-      p @paths.last
+
+      @paths_filtered = @paths.where('group >= :number',{number: 1})
+      @paths_not_filtered = @paths.where(group: -1)
+
     else
       @trackers = Tracker.where(user_id: current_user.id).order(:created_at)
 

@@ -29,8 +29,10 @@
             %th Start
             %th End
         %tbody
-          - for i in @paths.first.group..@paths.last.group
-            = render partial: 'table', locals: {i: i, paths: @paths}
+          - for i in @paths_filtered.first.group..@paths_filtered.last.group
+            = render partial: 'table', locals: {i: i, paths: @paths_filtered}
+          - if @paths_not_filtered.any?
+            = render partial: 'table', locals: {i: -1, paths: @paths_not_filtered}
 
     #map
 - else
