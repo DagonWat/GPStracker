@@ -7,9 +7,9 @@ class DistanceService
   end
 
   def make_good()
-    p track_old
-    p track_old
-    p track_old
+    p track_old.created_at
+    p track_old.created_at
+    p track_old.created_at
     distance_x = (track_old.lat - track_new.lat) * 71.2403572324
     distance_y = (track_old.lon - track_new.lon) * 111.13486111
     distance = Math.hypot(distance_y, distance_x);
