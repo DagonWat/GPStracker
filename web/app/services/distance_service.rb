@@ -1,10 +1,12 @@
 class DistanceService
+  attr_reader :track_old, :track_new
 
-  def cool()
-    retrun 111111111111111
+  def initialize(track1, track2)
+    @track_old = track1
+    @track_new = track2
   end
 
-  def make_good(track_old, track_new)
+  def make_good()
     distance_x = (track_old.lat - track_new.lat) * 71.2403572324
     distance_y = (track_old.lon - track_new.lon) * 111.13486111
     distance = Math.hypot(distance_y, distance_x);
