@@ -9,7 +9,7 @@ module Api
       if params[:latitude].to_f.abs < 90 && params[:longitude].to_f.abs < 90 && user
         @tracker = Tracker.new(lat: params[:latitude].to_f, lon: params[:longitude].to_f, user_id: user.id, group: -1)
         @tracker.save
-        distance_service = DistanceService.new(user.trackers.last, @tracker)
+        distance_service = DistanceService.new(user.trackers.last(2)[0], user.trackers.last(2)[1])
         new_coords = distance_service.make_good()
         @tracker.update(lat: new_coords.first, lon: new_coords.second)
 
