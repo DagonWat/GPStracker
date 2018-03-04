@@ -13,7 +13,7 @@ class DistanceService
 
     # 3 is pretty big speed of person in m/s
     max_distance = (track_new.created_at - track_old.created_at) * 3
-    p max_distance
+    p distance
 
     if (max_distance < distance)
       new_x = Math.sin(Math.atan2(distance_x, distance_y)) * max_distance
