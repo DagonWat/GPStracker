@@ -8,13 +8,11 @@ module Api
       user = User.where(tracker_token: params[:token])[0]
       if params[:latitude].to_f.abs < 90 && params[:longitude].to_f.abs < 90 && user
         @tracker = Tracker.new(lat: params[:latitude].to_f, lon: params[:longitude].to_f, user_id: user.id, group: -1)
-
+        @tracker.save
         distance_service = DistanceService.new(user.trackers.last, @tracker)
         new_coords = distance_service.make_good()
-        @tracker.lat = new_coords.first
-        @tracker.lon = new_coords.second
+        @tracker.update(lat: new_coords.first, lon: new_coords.second)
 
-        @tracker.save
 		 	  render json: {status: 'success'}
       end
   	end
