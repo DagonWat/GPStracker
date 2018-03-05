@@ -7,8 +7,8 @@ class DistanceService
   end
 
   def make_good()
-    distance_x = (track_old.lat - track_new.lat) * 71.2403572324
-    distance_y = (track_old.lon - track_new.lon) * 111.13486111
+    distance_x = (track_old.lat - track_new.lat) * 71000.2403572324
+    distance_y = (track_old.lon - track_new.lon) * 111000.13486111
     distance = Math.hypot(distance_y, distance_x);
 
     # 3 is pretty big speed of person in m/s
