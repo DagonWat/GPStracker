@@ -9,14 +9,17 @@ class DistanceService
   def make_good()
     diff_x = (track_old.lat - track_new.lat) * 71240.3572324
     diff_y = (track_old.lon - track_new.lon) * 111134.86111
-    distance = Math.hypot(diff_x, diff_y);
+    distance = Math.hypot(diff_x, diff_y)
+
+    p (track_old.lat - track_new.lat)
+    p (track_old.lon - track_new.lon)
 
     # 3 is pretty big speed of person in m/s
     max_distance = (track_new.created_at - track_old.created_at) * 3
     p distance
     p max_distance
 
-    if (max_distance < distance)
+    if (max_distance < distance && (track_new.created_at - track_old.created_at) < 1800)
       new_x_distance = Math.sin(Math.atan2(diff_x, diff_y)) * max_distance
       new_y_distance = Math.cos(Math.atan2(diff_x, diff_y)) * max_distance
       p new_x_distance
