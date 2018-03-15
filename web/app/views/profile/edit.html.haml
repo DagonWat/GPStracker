@@ -16,11 +16,6 @@
                 %i=current_user.email
               .p{align: 'center'}
                 = image_tag (User.find(current_user.id).avatar.thumb.url)
-
-          .field
-            = form.label :image
-            %br/
-            = form.file_field :image
           .field
             .form-group
               %label{for: 'exampleInputPassword1'} Password

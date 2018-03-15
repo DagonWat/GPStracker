@@ -47,6 +47,9 @@
         .content.col-md-4
           .jumbotron{align: 'center'}
             = image_tag (current_user.avatar.medium.url)
+            %h4
+              = link_to 'new avatar!', profile_generate_avatar_path
+            %hr.my-1/
             .p{style: 'margin-top: 15px;'}
               = link_to 'My Calendar', calendar_path, {class: 'button'}
             %hr.my-1/

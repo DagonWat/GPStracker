@@ -11,10 +11,6 @@ class ProfileController < ApplicationController
     if current_user.update(user_params)
       if params[:user][:password].present?
         redirect_to admin_dashboard_url, notice: "Password for #{current_user.email} was successfully updated."
-        current_user.update(avatar: params[:image])
-      else
-        redirect_to admin_dashboard_url, notice: "Image for #{current_user.email} was successfully changed."
-        current_user.update(avatar: params[:image])
       end
     else
       render :edit
@@ -23,6 +19,19 @@ class ProfileController < ApplicationController
 
   def generate_token
     current_user.update(tracker_token: SecureRandom.hex(4))
+    redirect_to root_url
+  end
+
+  def generate_avatar
+    images = Dir.glob("public/assets/fallback/*_medium.png")
+
+    #changing number while random image is the same as current image
+    loop do
+      @number = rand(images.length)
+      break if current_user.avatar.medium.file.file.split("/").last != "medium_" + images[@number].split("/").last
+    end
+
+    current_user.update(avatar: Rails.root.join(images[@number]).open)
     redirect_to root_url
   end
 

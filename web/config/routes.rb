@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   # USER ROUTES START
   resource  :profile, only: [:edit, :update], controller: :profile
   get 'profile/generate_token' => 'profile#generate_token'
+  get 'profile/generate_avatar' => 'profile#generate_avatar'
 
   resource :dashboard, only: [:show],         controller: :dashboard
 
