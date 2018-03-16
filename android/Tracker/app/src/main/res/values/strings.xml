@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">GPSTracker</string>
+    <string name = "app_name">GPSTracker</string>
+    <string name = "web_address">http://www.tracker-dev.sharkus.net/api/tracker</string>
+    <string name = "user_name">address</string>
 </resources>

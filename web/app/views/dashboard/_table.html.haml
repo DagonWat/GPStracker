@@ -1,0 +1,16 @@
+- name = !paths.where(group: i).first.custom_name.present? ? "Group #{i - paths.first.group + 1}" : "#{paths.where(group: i).first.custom_name}"
+%tr{id: "group-#{paths.where(group: i).first.id}"}
+  %td
+    - if paths.last.group == -1
+      Current
+    - else
+      .hover_text{id: "#{i}"}
+        =name
+        .wrapper_cart
+          .cartouche
+            %span{'data-target': '#myModal', 'data-toggle': 'modal', 'data-tracker': "#{paths.where(group: i).first.id}",
+            'data-name': "#{name}", type: 'button'}
+              .glyphicon.glyphicon-pencil
+
+  %td= paths.where(group: i).first.created_at
+  %td= paths.where(group: i).last.created_at

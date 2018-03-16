@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion versions.compileSdkVersion
-    buildToolsVersion versions.buildToolsVersion
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0-beta2"
 
     defaultConfig {
         applicationId "com.yayandroid.locationmanager.sample"
@@ -11,12 +11,14 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {
     compile project(':library')
     compile libraries.appCompat
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile files('libs/android-async-http-1.4.9.jar')
     compile files('libs/apache-httpcomponents-httpcore.jar')
     compile files('libs/httpclient-4.2.2.jar')

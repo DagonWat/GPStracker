@@ -1,0 +1,65 @@
+- if params[:date].present?
+  #main-container.container-fluid{data: {list: @paths_filtered.to_json}}
+  %script{async: '', defer: 'defer',
+    :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyBBJehlZdShzoTdNZUNrMncq9G4kK8y7cw&callback=initMap"}
+  #myModal.modal.fade{'aria-labelledby': 'mySmallModalLabel', role: 'dialog', tabindex: '-1'}
+    .modal-dialog{role: 'document'}
+      .modal-content
+        .modal-header
+          %button.close{'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button'}
+            %span{'aria-hidden': 'true'} ×
+          %h4#myModalLabel.modal-title{align: 'center'}
+            Changing name...
+        .modal-body
+          .input_window
+            .form-group
+              %input.form-control{placeholder: 'Forest walk', id: 'input_name'}
+        .modal-footer
+          %button.button1.btn.btn-danger{'data-dismiss': 'modal'}
+            .glyphicon.glyphicon-remove
+          %button.button2.btn.btn-success.glyphicon.glyphicon-ok{'data-dismiss': 'modal'}
+  .row
+    .content.col-md-5.col-md-offset-1
+      %h1
+        ="#{@from.day} #{@from.strftime("%B")} #{@from.year}"
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th Name
+            %th Start
+            %th End
+        %tbody
+          - for i in @paths_filtered.first.group..@paths_filtered.last.group
+            = render partial: 'table', locals: {i: i, paths: @paths_filtered}
+          - if @paths_not_filtered.any?
+            = render partial: 'table', locals: {i: -1, paths: @paths_not_filtered}
+
+    #map
+- else
+  - if flash[:notice]
+    .row
+      .content.col-md-4.col-md-offset-4
+        .jumbotron{align: 'center'}
+          .notice= flash[:notice]
+  - else
+    #main-container.container-fluid{data: {way: @today.to_json}}
+      .row
+        .content.col-md-4
+          .jumbotron{align: 'center'}
+            = image_tag (current_user.avatar.medium.url)
+            %h4
+              = link_to 'new avatar!', profile_generate_avatar_path
+            %hr.my-1/
+            .p{style: 'margin-top: 15px;'}
+              = link_to 'My Calendar', calendar_path, {class: 'button'}
+            %hr.my-1/
+            %h3= "Email: #{current_user.email}"
+            %h3= "Here since: #{current_user.created_at.day.to_s}-#{current_user.created_at.month.to_s}-#{current_user.created_at.year.to_s}"
+            %h3= "Your token: #{current_user.tracker_token}"
+            = link_to '(generate new token)', profile_generate_token_path
+        .content.col-md-8
+          .jumbotron{align: 'center'}
+            %h1 GPS Tracker
+            %p Welcome back to our cool web-site!
+          %h1{align: 'center'}
+            #number
