@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180201190820) do
 
   # These are extensions that must be enabled in order to support this database
@@ -49,18 +48,6 @@ ActiveRecord::Schema.define(version: 20180201190820) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
-=======
-ActiveRecord::Schema.define(version: 20170920191707) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "trackers", force: :cascade do |t|
-    t.float "lat"
-    t.float "lon"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
->>>>>>> master
   end
 
 end

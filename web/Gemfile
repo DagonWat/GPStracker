@@ -9,13 +9,9 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.3'
 # NO IM GONNA USE POSTGRES
-<<<<<<< HEAD
 gem 'pg', '~> 0.21.0'
 # Use Haml for BUTIFAL code style
 gem 'haml'
-=======
-gem 'pg'
->>>>>>> master
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
