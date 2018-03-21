@@ -1,0 +1,163 @@
+Started GET "/" for 127.0.0.1 at 2018-03-20 23:13:32 +0300
+  [1m[35m (40.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by GuestController#index as HTML
+  [1m[36mUser Load (18.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering guest/index.html.haml within layouts/application
+  Rendered guest/index.html.haml within layouts/application (42.8ms)
+Completed 500 Internal Server Error in 7649ms (ActiveRecord: 74.6ms)
+
+
+  
+ActionView::Template::Error (File to import not found or unreadable: bootstrap-sass/assets/stylesheets/bootstrap-sprockets.
+Load paths:
+  /home/egor/GPStracker/web/app/assets/config
+  /home/egor/GPStracker/web/app/assets/images
+  /home/egor/GPStracker/web/app/assets/javascripts
+  /home/egor/GPStracker/web/app/assets/stylesheets
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/coffee-rails-4.2.2/lib/assets/javascripts
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/actioncable-5.1.5/lib/assets/compiled
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/actionview-5.1.5/lib/assets/compiled
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/rails-ujs-0.1.0/dist
+  /home/egor/GPStracker/web/node_modules):
+    3:   %head
+    4:     %title GPS Tracker
+    5:     = csrf_meta_tags
+    6:     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    7:     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    8: 
+    9:   %body
+  
+app/assets/stylesheets/include_bootstrap.css.scss:2
+app/views/layouts/application.html.haml:6:in `_app_views_layouts_application_html_haml___290959346812817259_70264729009900'
+Started GET "/" for 127.0.0.1 at 2018-03-20 23:19:07 +0300
+Processing by GuestController#index as HTML
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering guest/index.html.haml within layouts/application
+  Rendered guest/index.html.haml within layouts/application (9.1ms)
+Completed 500 Internal Server Error in 71ms (ActiveRecord: 1.5ms)
+
+
+  
+ActionView::Template::Error (File to import not found or unreadable: bootstrap-sass/assets/stylesheets/bootstrap-sprockets.
+Load paths:
+  /home/egor/GPStracker/web/app/assets/config
+  /home/egor/GPStracker/web/app/assets/images
+  /home/egor/GPStracker/web/app/assets/javascripts
+  /home/egor/GPStracker/web/app/assets/stylesheets
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/coffee-rails-4.2.2/lib/assets/javascripts
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/actioncable-5.1.5/lib/assets/compiled
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/actionview-5.1.5/lib/assets/compiled
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/rails-ujs-0.1.0/dist
+  /home/egor/GPStracker/web/node_modules):
+    3:   %head
+    4:     %title GPS Tracker
+    5:     = csrf_meta_tags
+    6:     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    7:     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    8: 
+    9:   %body
+  
+app/assets/stylesheets/include_bootstrap.css.scss:2
+app/views/layouts/application.html.haml:6:in `_app_views_layouts_application_html_haml___290959346812817259_70264739957700'
+Started GET "/" for 127.0.0.1 at 2018-03-20 23:19:16 +0300
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by GuestController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering guest/index.html.haml within layouts/application
+  Rendered guest/index.html.haml within layouts/application (27.8ms)
+Completed 500 Internal Server Error in 429ms (ActiveRecord: 3.4ms)
+
+
+  
+ActionView::Template::Error (File to import not found or unreadable: bootstrap-sass/assets/stylesheets/bootstrap-sprockets.
+Load paths:
+  /home/egor/GPStracker/web/app/assets/config
+  /home/egor/GPStracker/web/app/assets/images
+  /home/egor/GPStracker/web/app/assets/javascripts
+  /home/egor/GPStracker/web/app/assets/stylesheets
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/coffee-rails-4.2.2/lib/assets/javascripts
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/actioncable-5.1.5/lib/assets/compiled
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/actionview-5.1.5/lib/assets/compiled
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/rails-ujs-0.1.0/dist
+  /home/egor/GPStracker/web/node_modules):
+    3:   %head
+    4:     %title GPS Tracker
+    5:     = csrf_meta_tags
+    6:     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    7:     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    8: 
+    9:   %body
+  
+app/assets/stylesheets/include_bootstrap.css.scss:2
+app/views/layouts/application.html.haml:6:in `_app_views_layouts_application_html_haml___3944272857770091161_31649580'
+Started GET "/" for 127.0.0.1 at 2018-03-20 23:24:53 +0300
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by GuestController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering guest/index.html.haml within layouts/application
+  Rendered guest/index.html.haml within layouts/application (10.0ms)
+Completed 500 Internal Server Error in 481ms (ActiveRecord: 3.3ms)
+
+
+  
+ActionView::Template::Error (File to import not found or unreadable: bootstrap-sass/assets/stylesheets/bootstrap-sprockets.
+Load paths:
+  /home/egor/GPStracker/web/app/assets/config
+  /home/egor/GPStracker/web/app/assets/images
+  /home/egor/GPStracker/web/app/assets/javascripts
+  /home/egor/GPStracker/web/app/assets/stylesheets
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/coffee-rails-4.2.2/lib/assets/javascripts
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/actioncable-5.1.5/lib/assets/compiled
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/actionview-5.1.5/lib/assets/compiled
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/rails-ujs-0.1.0/dist
+  /home/egor/GPStracker/web/node_modules):
+    3:   %head
+    4:     %title GPS Tracker
+    5:     = csrf_meta_tags
+    6:     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    7:     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    8: 
+    9:   %body
+  
+app/assets/stylesheets/include_bootstrap.css.scss:2
+app/views/layouts/application.html.haml:6:in `_app_views_layouts_application_html_haml___1012460190295735592_47933100'
+Started GET "/" for 127.0.0.1 at 2018-03-20 23:25:51 +0300
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by GuestController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering guest/index.html.haml within layouts/application
+  Rendered guest/index.html.haml within layouts/application (9.3ms)
+Completed 500 Internal Server Error in 449ms (ActiveRecord: 3.3ms)
+
+
+  
+ActionView::Template::Error (File to import not found or unreadable: bootstrap-sass/assets/stylesheets/bootstrap-sprockets.
+Load paths:
+  /home/egor/GPStracker/web/app/assets/config
+  /home/egor/GPStracker/web/app/assets/images
+  /home/egor/GPStracker/web/app/assets/javascripts
+  /home/egor/GPStracker/web/app/assets/stylesheets
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/coffee-rails-4.2.2/lib/assets/javascripts
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/actioncable-5.1.5/lib/assets/compiled
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/actionview-5.1.5/lib/assets/compiled
+  /home/egor/.rvm/gems/ruby-2.4.1/gems/rails-ujs-0.1.0/dist
+  /home/egor/GPStracker/web/node_modules):
+    3:   %head
+    4:     %title GPS Tracker
+    5:     = csrf_meta_tags
+    6:     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    7:     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    8: 
+    9:   %body
+  
+app/assets/stylesheets/include_bootstrap.css.scss:2
+app/views/layouts/application.html.haml:6:in `_app_views_layouts_application_html_haml__1105051931553484100_37528400'
+Started GET "/" for 127.0.0.1 at 2018-03-20 23:28:34 +0300
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by GuestController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering guest/index.html.haml within layouts/application
+  Rendered guest/index.html.haml within layouts/application (13.9ms)
+Completed 200 OK in 1280ms (Views: 957.2ms | ActiveRecord: 3.3ms)
+
+
