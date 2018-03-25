@@ -28,10 +28,12 @@ class ProfileController < ApplicationController
     #changing number while random image is the same as current image
     loop do
       @number = rand(images.length)
-      break if current_user.avatar.medium.file.file.split("/").last != "medium_" + images[@number].split("/").last
+      break if current_user.custom_avatar == nil || current_user.custom_avatar != images[@number]
     end
 
-    current_user.update(avatar: Rails.root.join(images[@number]).open)
+    current_user.update(custom_avatar: images[@number][6..-1])
+    thumb = images[@number].split("_")[0][6..-1] + "_thumb.png"
+    current_user.update(custom_avatar_thumb: thumb)
     redirect_to root_url
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180201190820) do
+ActiveRecord::Schema.define(version: 20180325142004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,10 +44,21 @@ ActiveRecord::Schema.define(version: 20180201190820) do
     t.string "avatar"
     t.integer "friends_pending", default: [], array: true
     t.integer "friends", default: [], array: true
+    t.string "custom_avatar"
+    t.string "custom_avatar_thumb"
     t.index ["activation_token"], name: "index_users_on_activation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
+  end
+
+  create_table "weapons", force: :cascade do |t|
+    t.string "name"
+    t.float "price_usd"
+    t.float "price_euro"
+    t.string "quality"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

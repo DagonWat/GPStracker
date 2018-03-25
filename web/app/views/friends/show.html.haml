@@ -25,7 +25,7 @@
           %tbody
             - current_user.friends_pending.each do |friend_id|
               %tr
-                %td= image_tag (User.where(id: friend_id)[0].avatar.thumb.url)
+                %td= image_tag (User.where(id: friend_id)[0].custom_avatar==nil ? User.where(id: friend_id)[0].avatar.thumb.url : User.where(id: friend_id)[0].custom_avatar_thumb)
                 %td= User.where(id: friend_id)[0].email
                 %td= User.where(id: friend_id)[0].created_at
 
@@ -47,7 +47,7 @@
           %tbody
             - @friends.each do |friend|
               %tr
-                %td= image_tag (friend.avatar.thumb.url)
+                %td= image_tag (friend.custom_avatar==nil ? friend.avatar.thumb.url : friend.custom_avatar_thumb)
                 %td= friend.email
                 %td= friend.created_at
                 - if current_user.friends.include? friend.id
@@ -74,7 +74,7 @@
           %tbody
             - @friends.each do |friend|
               %tr
-                %td= image_tag (friend.avatar.thumb.url)
+                %td= image_tag (friend.custom_avatar==nil ? friend.avatar.thumb.url : friend.custom_avatar_thumb)
                 %td= friend.email
                 %td= Tracker.where(user_id: friend.id).length
                 %td= friend.created_at

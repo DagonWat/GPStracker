@@ -15,7 +15,7 @@
               .h2{align: 'center'}
                 %i=current_user.email
               .p{align: 'center'}
-                = image_tag (User.find(current_user.id).avatar.thumb.url)
+                = image_tag (current_user.custom_avatar==nil ? current_user.avatar.thumb.url : current_user.custom_avatar_thumb)
           .field
             .form-group
               %label{for: 'exampleInputPassword1'} Password
