@@ -23,16 +23,16 @@ class ProfileController < ApplicationController
   end
 
   def generate_avatar
-    images = Dir.glob("public/assets/fallback/*_medium.png")
+    images = Dir.glob("app/assets/images/*_medium.png")
 
     #changing number while random image is the same as current image
     loop do
       @number = rand(images.length)
-      break if current_user.custom_avatar == nil || current_user.custom_avatar != images[@number]
+      break if current_user.custom_avatar == nil || current_user.custom_avatar != images[@number][18..-1]
     end
 
-    current_user.update(custom_avatar: images[@number][6..-1])
-    thumb = images[@number].split("_")[0][6..-1] + "_thumb.png"
+    current_user.update(custom_avatar: images[@number][18..-1])
+    thumb = images[@number].split("_")[0][18..-1] + "_thumb.png"
     current_user.update(custom_avatar_thumb: thumb)
     redirect_to root_url
   end

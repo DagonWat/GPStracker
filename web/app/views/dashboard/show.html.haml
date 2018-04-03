@@ -46,7 +46,7 @@
       .row
         .content.col-md-4
           .jumbotron{align: 'center'}
-            = image_tag (current_user.custom_avatar==nil ? current_user.avatar.medium.url : current_user.custom_avatar)
+            = image_tag (user_avatar_medium(current_user))
             %h4
               = link_to 'new avatar!', profile_generate_avatar_path
             %hr.my-1/
