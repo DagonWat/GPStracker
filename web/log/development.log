@@ -3944,3 +3944,304 @@ Processing by GuestController#index as HTML
 Completed 200 OK in 144ms (Views: 141.0ms | ActiveRecord: 0.0ms)
 
 
+Started GET "/" for 127.0.0.1 at 2018-04-07 15:50:20 +0300
+  [1m[35m (59.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by GuestController#index as HTML
+  Rendering guest/index.html.haml within layouts/application
+  Rendered guest/index.html.haml within layouts/application (52.0ms)
+Completed 200 OK in 3910ms (Views: 3766.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2018-04-07 15:50:29 +0300
+Processing by UserSessionsController#new as HTML
+  Rendering user_sessions/new.html.haml within layouts/application
+  Rendered user_sessions/_form.html.haml (46.1ms)
+  Rendered user_sessions/new.html.haml within layouts/application (52.9ms)
+Completed 200 OK in 900ms (Views: 145.8ms | ActiveRecord: 92.4ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2018-04-07 15:50:36 +0300
+Processing by UserSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"zkgHS87UIIF4GPyiK7/AFAmO7fOa5/4z1UB2qZUTYB8LhFYc/Qlo92WmKdzFcMYSR/EjgONof6HJiyI4+6cOPA==", "email"=>"aa@bb", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (164.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = 'aa@bb' ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Completed 302 Found in 457ms (ActiveRecord: 164.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-04-07 15:50:36 +0300
+Processing by GuestController#index as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://localhost:3000/dashboard
+Filter chain halted as :check_user rendered or redirected
+Completed 302 Found in 8ms (ActiveRecord: 1.3ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2018-04-07 15:50:36 +0300
+Processing by DashboardController#show as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering dashboard/show.html.haml within layouts/application
+  [1m[36mTracker Load (65.2ms)[0m  [1m[34mSELECT "trackers".* FROM "trackers" WHERE "trackers"."user_id" = $1 AND (created_at >= '2018-04-07 00:00:00' AND created_at <= '2018-04-07 23:59:59')[0m  [["user_id", 1]]
+  Rendered dashboard/show.html.haml within layouts/application (133.0ms)
+Completed 500 Internal Server Error in 216ms (ActiveRecord: 69.1ms)
+
+
+  
+ActionView::Template::Error (undefined method `present!' for "ghost_medium.png":String
+Did you mean?  present?
+               presence):
+    46:       .row
+    47:         .content.col-md-4
+    48:           .jumbotron{align: 'center'}
+    49:             = image_tag (user_avatar_medium(current_user))
+    50:             %h4
+    51:               = link_to 'new avatar!', profile_generate_avatar_path
+    52:             %hr.my-1/
+  
+app/helpers/avatar_helper.rb:7:in `user_avatar_medium'
+app/views/dashboard/show.html.haml:49:in `_app_views_dashboard_show_html_haml__3263084402742547460_69937017269560'
+Started GET "/dashboard" for 127.0.0.1 at 2018-04-07 15:51:24 +0300
+Processing by DashboardController#show as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering dashboard/show.html.haml within layouts/application
+  [1m[36mTracker Load (1.8ms)[0m  [1m[34mSELECT "trackers".* FROM "trackers" WHERE "trackers"."user_id" = $1 AND (created_at >= '2018-04-07 00:00:00' AND created_at <= '2018-04-07 23:59:59')[0m  [["user_id", 1]]
+  Rendered dashboard/show.html.haml within layouts/application (40.1ms)
+Completed 200 OK in 269ms (Views: 173.7ms | ActiveRecord: 9.8ms)
+
+
+Started GET "/profile/generate_avatar" for 127.0.0.1 at 2018-04-07 15:51:26 +0300
+Processing by ProfileController#generate_avatar as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.7ms)
+
+
+  
+NoMethodError (undefined method `present!' for "ghost_medium.png":String
+Did you mean?  present?
+               presence):
+  
+app/controllers/profile_controller.rb:31:in `block in generate_avatar'
+app/controllers/profile_controller.rb:29:in `loop'
+app/controllers/profile_controller.rb:29:in `generate_avatar'
+Started GET "/profile/generate_avatar" for 127.0.0.1 at 2018-04-07 15:51:41 +0300
+  
+SyntaxError (/home/egor/GPStracker/web/app/controllers/profile_controller.rb:31: syntax error, unexpected ||
+ser.custom_avatar.present?! || current_user.custom_avatar !=
+                              ^):
+  
+app/controllers/profile_controller.rb:31: syntax error, unexpected ||
+Started GET "/profile/generate_avatar" for 127.0.0.1 at 2018-04-07 15:51:42 +0300
+  
+SyntaxError (/home/egor/GPStracker/web/app/controllers/profile_controller.rb:31: syntax error, unexpected ||
+ser.custom_avatar.present?! || current_user.custom_avatar !=
+                              ^):
+  
+app/controllers/profile_controller.rb:31: syntax error, unexpected ||
+Started GET "/profile/generate_avatar" for 127.0.0.1 at 2018-04-07 15:51:44 +0300
+  
+SyntaxError (/home/egor/GPStracker/web/app/controllers/profile_controller.rb:31: syntax error, unexpected ||
+ser.custom_avatar.present?! || current_user.custom_avatar !=
+                              ^):
+  
+app/controllers/profile_controller.rb:31: syntax error, unexpected ||
+Started GET "/profile/generate_avatar" for 127.0.0.1 at 2018-04-07 15:51:59 +0300
+Processing by ProfileController#generate_avatar as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "aa@bb"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.3ms)[0m  [1m[33mUPDATE "users" SET "custom_avatar" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["custom_avatar", "ker/web/app/assets/images/heart_medium.png"], ["updated_at", "2018-04-07 12:51:59.589174"], ["id", 1]]
+  [1m[35m (27.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "aa@bb"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.3ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = $1, "custom_avatar_thumb" = $2 WHERE "users"."id" = $3[0m  [["updated_at", "2018-04-07 12:51:59.629634"], ["custom_avatar_thumb", "ker/web/app/assets/images/heart_thumb.png"], ["id", 1]]
+  [1m[35m (6.8ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 178ms (ActiveRecord: 48.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-04-07 15:51:59 +0300
+Processing by GuestController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://localhost:3000/dashboard
+Filter chain halted as :check_user rendered or redirected
+Completed 302 Found in 8ms (ActiveRecord: 0.7ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2018-04-07 15:51:59 +0300
+Processing by DashboardController#show as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering dashboard/show.html.haml within layouts/application
+  [1m[36mTracker Load (0.7ms)[0m  [1m[34mSELECT "trackers".* FROM "trackers" WHERE "trackers"."user_id" = $1 AND (created_at >= '2018-04-07 00:00:00' AND created_at <= '2018-04-07 23:59:59')[0m  [["user_id", 1]]
+  Rendered dashboard/show.html.haml within layouts/application (47.6ms)
+Completed 500 Internal Server Error in 79ms (ActiveRecord: 4.7ms)
+
+
+  
+ActionView::Template::Error (The asset "ker/web/app/assets/images/heart_medium.png" is not present in the asset pipeline.):
+    46:       .row
+    47:         .content.col-md-4
+    48:           .jumbotron{align: 'center'}
+    49:             = image_tag (user_avatar_medium(current_user))
+    50:             %h4
+    51:               = link_to 'new avatar!', profile_generate_avatar_path
+    52:             %hr.my-1/
+  
+app/views/dashboard/show.html.haml:49:in `_app_views_dashboard_show_html_haml__3263084402742547460_69937020384860'
+Started GET "/dashboard" for 127.0.0.1 at 2018-04-07 15:52:31 +0300
+Processing by DashboardController#show as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering dashboard/show.html.haml within layouts/application
+  [1m[36mTracker Load (0.6ms)[0m  [1m[34mSELECT "trackers".* FROM "trackers" WHERE "trackers"."user_id" = $1 AND (created_at >= '2018-04-07 00:00:00' AND created_at <= '2018-04-07 23:59:59')[0m  [["user_id", 1]]
+  Rendered dashboard/show.html.haml within layouts/application (27.3ms)
+Completed 500 Internal Server Error in 38ms (ActiveRecord: 1.2ms)
+
+
+  
+ActionView::Template::Error (The asset "ker/web/app/assets/images/heart_medium.png" is not present in the asset pipeline.):
+    46:       .row
+    47:         .content.col-md-4
+    48:           .jumbotron{align: 'center'}
+    49:             = image_tag (user_avatar_medium(current_user))
+    50:             %h4
+    51:               = link_to 'new avatar!', profile_generate_avatar_path
+    52:             %hr.my-1/
+  
+app/views/dashboard/show.html.haml:49:in `_app_views_dashboard_show_html_haml__3263084402742547460_69937104688860'
+Started GET "/dashboard" for 127.0.0.1 at 2018-04-07 15:52:32 +0300
+Processing by DashboardController#show as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering dashboard/show.html.haml within layouts/application
+  [1m[36mTracker Load (0.6ms)[0m  [1m[34mSELECT "trackers".* FROM "trackers" WHERE "trackers"."user_id" = $1 AND (created_at >= '2018-04-07 00:00:00' AND created_at <= '2018-04-07 23:59:59')[0m  [["user_id", 1]]
+  Rendered dashboard/show.html.haml within layouts/application (49.9ms)
+Completed 500 Internal Server Error in 61ms (ActiveRecord: 1.6ms)
+
+
+  
+ActionView::Template::Error (The asset "ker/web/app/assets/images/heart_medium.png" is not present in the asset pipeline.):
+    46:       .row
+    47:         .content.col-md-4
+    48:           .jumbotron{align: 'center'}
+    49:             = image_tag (user_avatar_medium(current_user))
+    50:             %h4
+    51:               = link_to 'new avatar!', profile_generate_avatar_path
+    52:             %hr.my-1/
+  
+app/views/dashboard/show.html.haml:49:in `_app_views_dashboard_show_html_haml__3263084402742547460_25804840'
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+Started GET "/dashboard" for 127.0.0.1 at 2018-04-07 15:54:01 +0300
+Processing by DashboardController#show as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering dashboard/show.html.haml within layouts/application
+  [1m[36mTracker Load (0.7ms)[0m  [1m[34mSELECT "trackers".* FROM "trackers" WHERE "trackers"."user_id" = $1 AND (created_at >= '2018-04-07 00:00:00' AND created_at <= '2018-04-07 23:59:59')[0m  [["user_id", 1]]
+  Rendered dashboard/show.html.haml within layouts/application (23.3ms)
+Completed 500 Internal Server Error in 96ms (ActiveRecord: 8.2ms)
+
+
+  
+ActionView::Template::Error (The asset "ker/web/app/assets/images/heart_medium.png" is not present in the asset pipeline.):
+    46:       .row
+    47:         .content.col-md-4
+    48:           .jumbotron{align: 'center'}
+    49:             = image_tag (user_avatar_medium(current_user))
+    50:             %h4
+    51:               = link_to 'new avatar!', profile_generate_avatar_path
+    52:             %hr.my-1/
+  
+app/views/dashboard/show.html.haml:49:in `_app_views_dashboard_show_html_haml__3263084402742547460_69937103809280'
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (2.0ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "aa@bb"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.6ms)[0m  [1m[33mUPDATE "users" SET "custom_avatar" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["custom_avatar", "heart_medium.png"], ["updated_at", "2018-04-07 12:54:42.958361"], ["id", 1]]
+  [1m[35m (22.1ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/dashboard" for 127.0.0.1 at 2018-04-07 15:54:44 +0300
+Processing by DashboardController#show as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering dashboard/show.html.haml within layouts/application
+  [1m[36mTracker Load (0.8ms)[0m  [1m[34mSELECT "trackers".* FROM "trackers" WHERE "trackers"."user_id" = $1 AND (created_at >= '2018-04-07 00:00:00' AND created_at <= '2018-04-07 23:59:59')[0m  [["user_id", 1]]
+  Rendered dashboard/show.html.haml within layouts/application (40.2ms)
+Completed 200 OK in 132ms (Views: 122.3ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/profile/generate_avatar" for 127.0.0.1 at 2018-04-07 15:54:45 +0300
+Processing by ProfileController#generate_avatar as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "aa@bb"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[33mUPDATE "users" SET "custom_avatar" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["custom_avatar", "bant_medium.png"], ["updated_at", "2018-04-07 12:54:45.841513"], ["id", 1]]
+  [1m[35m (20.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "aa@bb"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = $1, "custom_avatar_thumb" = $2 WHERE "users"."id" = $3[0m  [["updated_at", "2018-04-07 12:54:45.869307"], ["custom_avatar_thumb", "bant_thumb.png"], ["id", 1]]
+  [1m[35m (4.0ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 45ms (ActiveRecord: 28.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-04-07 15:54:45 +0300
+Processing by GuestController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://localhost:3000/dashboard
+Filter chain halted as :check_user rendered or redirected
+Completed 302 Found in 3ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2018-04-07 15:54:45 +0300
+Processing by DashboardController#show as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering dashboard/show.html.haml within layouts/application
+  [1m[36mTracker Load (0.6ms)[0m  [1m[34mSELECT "trackers".* FROM "trackers" WHERE "trackers"."user_id" = $1 AND (created_at >= '2018-04-07 00:00:00' AND created_at <= '2018-04-07 23:59:59')[0m  [["user_id", 1]]
+  Rendered dashboard/show.html.haml within layouts/application (27.4ms)
+Completed 200 OK in 119ms (Views: 114.4ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/profile/generate_avatar" for 127.0.0.1 at 2018-04-07 15:54:46 +0300
+Processing by ProfileController#generate_avatar as HTML
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.0ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "aa@bb"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.1ms)[0m  [1m[33mUPDATE "users" SET "custom_avatar" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["custom_avatar", "kastil_medium.png"], ["updated_at", "2018-04-07 12:54:46.670946"], ["id", 1]]
+  [1m[35m (22.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.9ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "aa@bb"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = $1, "custom_avatar_thumb" = $2 WHERE "users"."id" = $3[0m  [["updated_at", "2018-04-07 12:54:46.704044"], ["custom_avatar_thumb", "kastil_thumb.png"], ["id", 1]]
+  [1m[35m (13.0ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 63ms (ActiveRecord: 42.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-04-07 15:54:46 +0300
+Processing by GuestController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://localhost:3000/dashboard
+Filter chain halted as :check_user rendered or redirected
+Completed 302 Found in 4ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2018-04-07 15:54:46 +0300
+Processing by DashboardController#show as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering dashboard/show.html.haml within layouts/application
+  [1m[36mTracker Load (0.8ms)[0m  [1m[34mSELECT "trackers".* FROM "trackers" WHERE "trackers"."user_id" = $1 AND (created_at >= '2018-04-07 00:00:00' AND created_at <= '2018-04-07 23:59:59')[0m  [["user_id", 1]]
+  Rendered dashboard/show.html.haml within layouts/application (30.4ms)
+Completed 200 OK in 134ms (Views: 128.5ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/friends" for 127.0.0.1 at 2018-04-07 15:54:59 +0300
+Processing by FriendsController#show as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering friends/show.html.haml within layouts/application
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE 1=0[0m
+  Rendered friends/show.html.haml within layouts/application (18.3ms)
+Completed 200 OK in 115ms (Views: 95.9ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/friends?utf8=%E2%9C%93&email=bb&commit=Search%21" for 127.0.0.1 at 2018-04-07 15:56:09 +0300
+Processing by FriendsController#show as HTML
+  Parameters: {"utf8"=>"✓", "email"=>"bb", "commit"=>"Search!"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1[0m  [["id", 1]]
+  [1m[36mUser Load (3.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE (email LIKE 'bb%')[0m
+  Rendering friends/show.html.haml within layouts/application
+  Rendered friends/show.html.haml within layouts/application (27.6ms)
+Completed 200 OK in 148ms (Views: 132.5ms | ActiveRecord: 5.4ms)
+
+

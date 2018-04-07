@@ -24,10 +24,11 @@
               %th
           %tbody
             - current_user.friends_pending.each do |friend_id|
+              - person = User.where(id: friend_id)[0]
               %tr
-                %td= image_tag (user_avatar_thumb(User.where(id: friend_id)[0]))
-                %td= User.where(id: friend_id)[0].email
-                %td= User.where(id: friend_id)[0].created_at
+                %td= image_tag (user_avatar_thumb(person))
+                %td= person.email
+                %td= person.created_at
 
                 <!-- According to your choice ans is either 1 or 0 -->
                 %td= link_to 'Accept', answer_friends_path(id: friend_id, ans: 1)
